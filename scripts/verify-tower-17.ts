@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import { load } from 'cheerio';
+import { writeFile } from 'node:fs/promises';
+import { AccessPolicy } from '../src/crawl.js';
+import { extractJobs } from '../src/extract.js';
+const policy = new AccessPolicy(1000,15000);
+const map = await policy.html('https://www.jobs.towerhamlets.gov.uk/apply/live-jobs.xml');
+const $ = load(map.body,{xmlMode:true});
+const urls = $('url > loc').map((_,e)=>$(e).text()).get();
+assert.ok(urls.length > 0);
+const page = await policy.html(urls[0]!);
+const jobs = extractJobs(page.body,page.url,'Tower Hamlets');
+assert.ok(jobs.length > 0,'Vacancy must expose details');
+assert.ok(jobs[0]!.title && jobs[0]!.description && jobs[0]!.jobId);
+await writeFile('output/batch 17-9-2026/inspection/tower-detail.html',page.body);
+console.log(JSON.stringify({advertised:urls.length,url:page.url,jobs:jobs.map(({title,jobId,locations})=>({title,jobId,locations}))},null,2));

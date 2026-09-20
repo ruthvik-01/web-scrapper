@@ -1,0 +1,134 @@
+[
+  {
+    "name": "Nayax",
+    "slug": "nayax",
+    "careersUrl": "https://www.comeet.com/jobs/nayax/13.009/",
+    "originalUrl": "https://www.comeet.com/jobs/nayax/13.009/account-manager/EC.76D",
+    "exportCompanyName": "Nayax",
+    "sourceNote": "User-supplied website: https://www.nayax.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Empathy",
+    "slug": "empathy",
+    "careersUrl": "https://www.comeet.com/jobs/empathy/F8.007/",
+    "originalUrl": "https://www.comeet.com/jobs/empathy/F8.007/care-manager/3B.161",
+    "exportCompanyName": "Empathy",
+    "sourceNote": "User-supplied website: https://empathy.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Checkmarx",
+    "slug": "checkmarx",
+    "careersUrl": "https://www.comeet.com/jobs/checkmarx/C0.008/",
+    "originalUrl": "https://www.comeet.com/jobs/checkmarx/C0.008/strategic-account-executive/BD.762",
+    "exportCompanyName": "Checkmarx",
+    "sourceNote": "User-supplied website: https://www.checkmarx.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Frame Security",
+    "slug": "framesecurity",
+    "careersUrl": "https://www.comeet.com/jobs/framesecurity/FA.002/",
+    "originalUrl": "https://www.comeet.com/jobs/framesecurity/FA.002/channel-account-manager---uk/C6.A68",
+    "exportCompanyName": "Frame Security",
+    "sourceNote": "User-supplied website: https://framesecurity.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Cyera",
+    "slug": "cyera",
+    "careersUrl": "https://www.comeet.com/jobs/cyera/17.008/",
+    "originalUrl": "https://www.comeet.com/jobs/cyera/17.008/sdr-team-lead---emea/E7.967",
+    "exportCompanyName": "Cyera",
+    "sourceNote": "User-supplied website: https://www.cyera.io/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Optibus",
+    "slug": "optibus",
+    "careersUrl": "https://www.comeet.com/jobs/optibus/D1.00C/",
+    "originalUrl": "https://www.comeet.com/jobs/optibus/D1.00C/technical-writer/49.769",
+    "exportCompanyName": "Optibus",
+    "sourceNote": "User-supplied website: https://www.optibus.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Aqua Security",
+    "slug": "aquasec",
+    "careersUrl": "https://www.comeet.com/jobs/aquasec/91.001/",
+    "originalUrl": "https://www.comeet.com/jobs/aquasec/91.001/regional-sales-manager/AB.76D",
+    "exportCompanyName": "Aqua Security",
+    "sourceNote": "User-supplied website: https://www.aquasecurity.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Coralogix",
+    "slug": "coralogix",
+    "careersUrl": "https://www.comeet.com/jobs/coralogix/06.004/",
+    "originalUrl": "https://www.comeet.com/jobs/coralogix/06.004/major-enterprise-account-executive/2D.B64",
+    "exportCompanyName": "Coralogix",
+    "sourceNote": "User-supplied website: https://coralogix.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Earnix",
+    "slug": "earnix",
+    "careersUrl": "https://www.comeet.com/jobs/earnix/93.00B/",
+    "originalUrl": "https://www.comeet.com/jobs/earnix/93.00B/sales-director/0C.56E",
+    "exportCompanyName": "Earnix",
+    "sourceNote": "User-supplied website: https://earnix.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Cycode",
+    "slug": "cycode",
+    "careersUrl": "https://www.comeet.com/jobs/cycode/A8.00D/",
+    "originalUrl": "https://www.comeet.com/jobs/cycode/A8.00D/account-executive--rsm---uk/FA.E55",
+    "exportCompanyName": "Cycode",
+    "sourceNote": "User-supplied website: https://cycode.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Upwind Security",
+    "slug": "upwind",
+    "careersUrl": "https://www.comeet.com/jobs/upwind/49.004/",
+    "originalUrl": "https://www.comeet.com/jobs/upwind/49.004/pre-sales-engineer-uk--remote/4E.B62",
+    "exportCompanyName": "Upwind Security",
+    "sourceNote": "User-supplied website: https://www.upwind.io/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  }
+]

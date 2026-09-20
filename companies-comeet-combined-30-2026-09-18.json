@@ -1,0 +1,362 @@
+[
+  {
+    "name": "Alice",
+    "slug": "alice",
+    "careersUrl": "https://www.comeet.com/jobs/alice/D5.005/",
+    "originalUrl": "https://www.comeet.com/jobs/alice/D5.005/security-researcher/8D.A66",
+    "exportCompanyName": "Alice",
+    "sourceNote": "User-supplied website: http://aliceandolivia.com/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence. IDENTITY MISMATCH: this board identifies Alice at https://alice.io/, not Alice + Olivia. Export follows the explicitly supplied Comeet board.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Aviation Inc",
+    "slug": "persivalenic",
+    "careersUrl": "https://www.comeet.com/jobs/persivalenic/D8.006/",
+    "originalUrl": "https://www.comeet.com/jobs/persivalenic/D8.006/sales-lead/79.93C",
+    "exportCompanyName": "Aviation Inc",
+    "sourceNote": "User-supplied website: http://www.flyglobalnow.com. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence. DEMO BOARD: 23 positions explicitly disclaim any real employer or active hiring process and are excluded; the other 2 do not have qualifying UK locations. This is not verified as flyglobalnow.com.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Thetaray",
+    "slug": "thetaray",
+    "careersUrl": "https://www.comeet.com/jobs/thetaray/72.00F/",
+    "originalUrl": "https://www.comeet.com/jobs/thetaray/72.00F/regional-sales-manager-uk/B3.960",
+    "exportCompanyName": "Thetaray",
+    "sourceNote": "User-supplied website: https://www.thetaray.com/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Viber",
+    "slug": "viber",
+    "careersUrl": "https://www.comeet.com/jobs/viber/04.002/",
+    "originalUrl": "https://www.comeet.com/jobs/viber/04.002/fraud-director-fintech/39.765",
+    "exportCompanyName": "Viber",
+    "sourceNote": "User-supplied website: https://www.viber.com/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Kaltura",
+    "slug": "kaltura",
+    "careersUrl": "https://www.comeet.com/jobs/kaltura/E2.00D/",
+    "originalUrl": "https://www.comeet.com/jobs/kaltura/E2.00D/grc-specialist/B3.B6E",
+    "exportCompanyName": "Kaltura",
+    "sourceNote": "User-supplied website: http://kaltural.com. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence. Board identifies the official website as https://corp.kaltura.com/, not the supplied kaltural.com.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Blockaid",
+    "slug": "blockaid",
+    "careersUrl": "https://www.comeet.com/jobs/blockaid/69.00B/",
+    "originalUrl": "https://www.comeet.com/jobs/blockaid/69.00B/business-development-representative-london/3E.A6A",
+    "exportCompanyName": "Blockaid",
+    "sourceNote": "User-supplied website: https://blockaid.io/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Noma Security",
+    "slug": "noma-security",
+    "careersUrl": "https://www.comeet.com/jobs/noma_security/3A.005/",
+    "originalUrl": "https://www.comeet.com/jobs/noma_security/3A.005/vp-finance/6E.66B",
+    "exportCompanyName": "Noma Security",
+    "sourceNote": "User-supplied website: http://www.noma.security. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Personetics",
+    "slug": "personetics",
+    "careersUrl": "https://www.comeet.com/jobs/personetics/83.00A/",
+    "originalUrl": "https://www.comeet.com/jobs/personetics/83.00A/project-manager/92.C63",
+    "exportCompanyName": "Personetics",
+    "sourceNote": "User-supplied website: http://www.personetics.com. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Trullion",
+    "slug": "trullion",
+    "careersUrl": "https://www.comeet.com/jobs/trullion/07.000/",
+    "originalUrl": "https://www.comeet.com/jobs/trullion/07.000/product-data-analyst/51.B65",
+    "exportCompanyName": "Trullion",
+    "sourceNote": "User-supplied website: http://trullion.com/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Port",
+    "slug": "port",
+    "careersUrl": "https://www.comeet.com/jobs/port/59.004/",
+    "originalUrl": "https://www.comeet.com/jobs/port/59.004/technical-success-engineer/E6.46B",
+    "exportCompanyName": "Port",
+    "sourceNote": "User-supplied website: https://port.io. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Nayax",
+    "slug": "nayax",
+    "careersUrl": "https://www.comeet.com/jobs/nayax/13.009/",
+    "originalUrl": "https://www.comeet.com/jobs/nayax/13.009/account-manager/EC.76D",
+    "exportCompanyName": "Nayax",
+    "sourceNote": "User-supplied website: https://www.nayax.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Empathy",
+    "slug": "empathy",
+    "careersUrl": "https://www.comeet.com/jobs/empathy/F8.007/",
+    "originalUrl": "https://www.comeet.com/jobs/empathy/F8.007/care-manager/3B.161",
+    "exportCompanyName": "Empathy",
+    "sourceNote": "User-supplied website: https://empathy.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Checkmarx",
+    "slug": "checkmarx",
+    "careersUrl": "https://www.comeet.com/jobs/checkmarx/C0.008/",
+    "originalUrl": "https://www.comeet.com/jobs/checkmarx/C0.008/strategic-account-executive/BD.762",
+    "exportCompanyName": "Checkmarx",
+    "sourceNote": "User-supplied website: https://www.checkmarx.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Frame Security",
+    "slug": "framesecurity",
+    "careersUrl": "https://www.comeet.com/jobs/framesecurity/FA.002/",
+    "originalUrl": "https://www.comeet.com/jobs/framesecurity/FA.002/channel-account-manager---uk/C6.A68",
+    "exportCompanyName": "Frame Security",
+    "sourceNote": "User-supplied website: https://framesecurity.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Cyera",
+    "slug": "cyera",
+    "careersUrl": "https://www.comeet.com/jobs/cyera/17.008/",
+    "originalUrl": "https://www.comeet.com/jobs/cyera/17.008/sdr-team-lead---emea/E7.967",
+    "exportCompanyName": "Cyera",
+    "sourceNote": "User-supplied website: https://www.cyera.io/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Optibus",
+    "slug": "optibus",
+    "careersUrl": "https://www.comeet.com/jobs/optibus/D1.00C/",
+    "originalUrl": "https://www.comeet.com/jobs/optibus/D1.00C/technical-writer/49.769",
+    "exportCompanyName": "Optibus",
+    "sourceNote": "User-supplied website: https://www.optibus.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Aqua Security",
+    "slug": "aquasec",
+    "careersUrl": "https://www.comeet.com/jobs/aquasec/91.001/",
+    "originalUrl": "https://www.comeet.com/jobs/aquasec/91.001/regional-sales-manager/AB.76D",
+    "exportCompanyName": "Aqua Security",
+    "sourceNote": "User-supplied website: https://www.aquasecurity.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Coralogix",
+    "slug": "coralogix",
+    "careersUrl": "https://www.comeet.com/jobs/coralogix/06.004/",
+    "originalUrl": "https://www.comeet.com/jobs/coralogix/06.004/major-enterprise-account-executive/2D.B64",
+    "exportCompanyName": "Coralogix",
+    "sourceNote": "User-supplied website: https://coralogix.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Earnix",
+    "slug": "earnix",
+    "careersUrl": "https://www.comeet.com/jobs/earnix/93.00B/",
+    "originalUrl": "https://www.comeet.com/jobs/earnix/93.00B/sales-director/0C.56E",
+    "exportCompanyName": "Earnix",
+    "sourceNote": "User-supplied website: https://earnix.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Cycode",
+    "slug": "cycode",
+    "careersUrl": "https://www.comeet.com/jobs/cycode/A8.00D/",
+    "originalUrl": "https://www.comeet.com/jobs/cycode/A8.00D/account-executive--rsm---uk/FA.E55",
+    "exportCompanyName": "Cycode",
+    "sourceNote": "User-supplied website: https://cycode.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Upwind Security",
+    "slug": "upwind",
+    "careersUrl": "https://www.comeet.com/jobs/upwind/49.004/",
+    "originalUrl": "https://www.comeet.com/jobs/upwind/49.004/pre-sales-engineer-uk--remote/4E.B62",
+    "exportCompanyName": "Upwind Security",
+    "sourceNote": "User-supplied website: https://www.upwind.io/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Papaya Global",
+    "slug": "papayaglobal",
+    "careersUrl": "https://www.comeet.com/jobs/papayaglobal/16.005/",
+    "originalUrl": "https://www.comeet.com/jobs/papayaglobal/16.005/senior-account-executive/62.567",
+    "exportCompanyName": "Papaya Global",
+    "sourceNote": "User-supplied website: https://papayaglobal.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Remedio",
+    "slug": "remedio",
+    "careersUrl": "https://www.comeet.com/jobs/remedio/CA.000/",
+    "originalUrl": "https://www.comeet.com/jobs/remedio/CA.000/customer-success-engineer-emea/D9.96E",
+    "exportCompanyName": "Remedio",
+    "sourceNote": "User-supplied website: https://www.remedio.io/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Cellebrite",
+    "slug": "cellebrite",
+    "careersUrl": "https://www.comeet.com/jobs/Cellebrite/C3.00F/",
+    "originalUrl": "https://www.comeet.com/jobs/Cellebrite/C3.00F/systems-integrators-channel-manager/F2.96F",
+    "exportCompanyName": "Cellebrite",
+    "sourceNote": "User-supplied website: https://www.cellebrite.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Curve",
+    "slug": "curve",
+    "careersUrl": "https://www.comeet.com/jobs/curve/E4.001/",
+    "originalUrl": "https://www.comeet.com/jobs/curve/E4.001/infosec-analyst/FD.461",
+    "exportCompanyName": "Curve",
+    "sourceNote": "User-supplied website: https://www.curve.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates. The supplied Comeet board returned an explicit empty position array on September 18, 2026. This does not establish absence of vacancies on other careers platforms.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Overwolf",
+    "slug": "overwolf",
+    "careersUrl": "https://www.comeet.com/jobs/overwolf/B1.001/",
+    "originalUrl": "https://www.comeet.com/jobs/overwolf/B1.001/head-of-agency-partnerships/AE.B60",
+    "exportCompanyName": "Overwolf",
+    "sourceNote": "User-supplied website: https://www.overwolf.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Mindspace",
+    "slug": "mindspace",
+    "careersUrl": "https://www.comeet.com/jobs/mindspace/71.00B/",
+    "originalUrl": "https://www.comeet.com/jobs/mindspace/71.00B/regional-lead/B6.B66",
+    "exportCompanyName": "Mindspace",
+    "sourceNote": "User-supplied website: https://www.mindspace.me/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Classiq",
+    "slug": "classiq",
+    "careersUrl": "https://www.comeet.com/jobs/classiq/F7.008/",
+    "originalUrl": "https://www.comeet.com/jobs/classiq/F7.008/customer-success-manager/AD.A65",
+    "exportCompanyName": "Classiq",
+    "sourceNote": "User-supplied website: http://www.classiquelimo.com. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates. IDENTITY MISMATCH: board identifies Classiq at https://www.classiq.io/, not the supplied classiquelimo.com transportation company. Export follows the supplied ATS board.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "monday.com",
+    "slug": "monday",
+    "careersUrl": "https://www.comeet.com/jobs/monday/41.00B/",
+    "originalUrl": "https://www.comeet.com/jobs/monday/41.00B/technical-consultant/DC.B66",
+    "exportCompanyName": "monday.com",
+    "sourceNote": "User-supplied website: https://monday.com/. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates. The supplied Comeet board returned an explicit empty position array on September 18, 2026. This does not establish absence of vacancies on other careers platforms.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Solidus Labs",
+    "slug": "soliduslabs",
+    "careersUrl": "https://www.comeet.com/jobs/soliduslabs/E6.007/",
+    "originalUrl": "https://www.comeet.com/jobs/soliduslabs/E6.007/senior-data-engineer---infra/D1.C65",
+    "exportCompanyName": "Solidus Labs",
+    "sourceNote": "User-supplied website: http://www.soliduslabs.com. Scope follows supplied Comeet board. Missing posting dates and deadlines use disclosed run-date fallback, not verified publication dates.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  }
+]

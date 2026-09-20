@@ -1,0 +1,12 @@
+{
+  "name": "Tower Hamlets",
+  "slug": "tower-hamlets",
+  "careersUrl": "https://www.jobs.towerhamlets.gov.uk/apply/vacancies/vacancy-search-results.aspx",
+  "options": {
+    "mode": "static",
+    "maxPages": 1000,
+    "timeoutMs": 15000,
+    "sitemapUrl": "https://www.jobs.towerhamlets.gov.uk/apply/live-jobs.xml"
+  },
+  "exportCompanyName": "Tower Hamlets"
+}

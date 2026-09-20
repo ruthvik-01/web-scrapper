@@ -1,0 +1,470 @@
+[
+  {
+    "name": "Kent Communi",
+    "slug": "kent-communit",
+    "careersUrl": "https://www.kentcht.nhs.uk/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 1. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "London Acade",
+    "slug": "laat",
+    "careersUrl": "https://laat.ac.uk/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 2. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Long Term Fut",
+    "slug": "long-term-futur",
+    "careersUrl": "https://www.longtermfutures.co.uk/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 3. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Louis Vuitton",
+    "slug": "louisvuitton",
+    "careersUrl": "https://jobs.louisvuitton.com/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 4. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Marc Daniels",
+    "slug": "marcdanielsco",
+    "careersUrl": "https://www.marcdanielsconnect.co.uk/jobs/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 5. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "McGinnis Loy",
+    "slug": "mcginnis-loy",
+    "careersUrl": "https://www.mcginnisloy.com/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 6. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Meridial",
+    "slug": "meridial",
+    "careersUrl": "https://www.meridial.ai/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 7. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Michael Page T",
+    "slug": "michaelpage",
+    "careersUrl": "https://www.michaelpage.co.uk/careers",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 9. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Mitchell Adam",
+    "slug": "mitchelladam",
+    "careersUrl": "https://www.mitchelladam.co.uk/careers",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 10. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Morgan Law",
+    "slug": "morgan-law",
+    "careersUrl": "https://www.morgan-law.com/careers",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 11. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Morson Edge",
+    "slug": "munson-edge",
+    "careersUrl": "https://morson-edge.com/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 12. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "New Appointm",
+    "slug": "newappointme",
+    "careersUrl": "https://www.newappointmentsgroup.co.uk/jobs/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 13. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "NHS Essex Int",
+    "slug": "essex-icb",
+    "careersUrl": "https://www.essex.icb.nhs.uk/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 14. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "North Hampshi",
+    "slug": "nhuc",
+    "careersUrl": "https://www.nhuc.co.uk/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 15. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "NORTH LOND",
+    "slug": "nlggta",
+    "careersUrl": "https://nlggta.co.uk/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 16. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Osborne Clark",
+    "slug": "osborneclarke",
+    "careersUrl": "https://www.osborneclarke.com/careers",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 18. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Paysafe",
+    "slug": "paysafe",
+    "careersUrl": "https://www.paysafe.com/en/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 19. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "People First Pe",
+    "slug": "peoplefirstpers",
+    "careersUrl": "https://www.peoplefirstpersonnel.co.uk/jobs/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 20. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Poundland",
+    "slug": "poundland",
+    "careersUrl": "https://www.poundland.co.uk/careers",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 21. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Proactive Appo",
+    "slug": "proactive",
+    "careersUrl": "https://www.proactive.it/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 22. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Queen Victoria",
+    "slug": "qvh",
+    "careersUrl": "https://www.qvh.nhs.uk/work-for-us/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 23. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Royal London",
+    "slug": "royallondon",
+    "careersUrl": "https://www.royallondon.com/about-us/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 24. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "SDG2 Advocac",
+    "slug": "sdg2advocacy",
+    "careersUrl": "https://sdg2advocacyhub.org/work-with-us/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 25. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Seetec",
+    "slug": "seetec",
+    "careersUrl": "https://www.seetec.co.uk/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 26. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Sellick Partner",
+    "slug": "sellickpartners",
+    "careersUrl": "https://www.sellickpartnership.co.uk/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 27. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "SF Partners",
+    "slug": "sfgroup",
+    "careersUrl": "https://www.sfgroup.ca/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 28. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "SJC Partners",
+    "slug": "sjcpartners",
+    "careersUrl": "https://www.sjcpartners.com/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 29. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Smart Educatio",
+    "slug": "smarted",
+    "careersUrl": "https://smarted.co.uk/jobs/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 30. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Smiths Group",
+    "slug": "smiths-group",
+    "careersUrl": "https://www.smiths.com/careers",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 31. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Sodexo",
+    "slug": "sodexo",
+    "careersUrl": "https://www.sodexo.com/careers",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 32. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Stannah",
+    "slug": "stannah",
+    "careersUrl": "https://www.stannah.com/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 34. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Sue Ryder",
+    "slug": "sueryder",
+    "careersUrl": "https://www.sueryder.org/careers",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 35. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "The Bread Fac",
+    "slug": "breadltd",
+    "careersUrl": "https://www.breadltd.co.uk/careers/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 38. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Exchange Stre",
+    "slug": "exchange-stree",
+    "careersUrl": "https://www.exchange-street.co.uk/candidate/search/resul",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 41. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Fusion People",
+    "slug": "fusionpeople",
+    "careersUrl": "https://www.fusionpeople.com/jobs/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 43. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Get Recruited (",
+    "slug": "get-recruited",
+    "careersUrl": "https://www.get-recruited.co.uk/jobs",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 44. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Graham Rose",
+    "slug": "grahamrose",
+    "careersUrl": "https://www.cv-library.co.uk/list-jobs/250622/Graham-Rose",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 45. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Hackney Borou",
+    "slug": "hackney",
+    "careersUrl": "https://recruitment.hackney.gov.uk/job-search/",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 46. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Harper May Ltd",
+    "slug": "harpermay",
+    "careersUrl": "https://www.harpermay.com/cm/jobs",
+    "sourceNote": "Source: Akhil team - Google Sheets.pdf, data row 47. Company label is retained as printed; PDF cells may be clipped. Spreadsheet headquarters are not evidence of a vacancy's UK location. Recruitment agencies' supplied careers pages are used without silently switching between internal vacancies and client job boards.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000
+    }
+  }
+]

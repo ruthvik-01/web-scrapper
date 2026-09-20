@@ -1,0 +1,28 @@
+{
+  "name": "jev-job-scraper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Fast careers scraper where TypeSafe Jev makes the judgment calls and code handles I/O, dates and verbatim extraction.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "scrape": "tsx src/cli.ts",
+    "smoke": "tsx scripts/smoke.ts",
+    "e2e": "tsx scripts/e2e-local.ts",
+    "debug:links": "tsx scripts/debug-links.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts",
+    "check": "npm run typecheck && npm test"
+  },
+  "dependencies": {
+    "cheerio": "1.2.0",
+    "robots-parser": "3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "26.5.1",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2"
+  }
+}

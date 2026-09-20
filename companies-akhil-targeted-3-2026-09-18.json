@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Long Term Futures",
+    "slug": "long-term-futures",
+    "careersUrl": "https://www.longtermfutures.co.uk/job-search/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 3; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "static",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": ".global-jobsCard a[href*='/external_job/']",
+        "title": ".job-hero > h3",
+        "description": ".job-content .wysiwyg",
+        "postedDate": ".job-hero > p",
+        "location": ".job-hero > div > p",
+        "next": "a[href*='/job-search/page/']"
+      }
+    },
+    "originalUrl": "https://www.longtermfutures.co.uk/careers/"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "name": "Frasers Hospitality",
+  "slug": "frasers-hospitality",
+  "careersUrl": "https://jobs.malhdv.co.uk/vacancies/",
+  "sourceNote": "User-supplied Malmaison/Hotel du Vin portal. Original hiring-brand names are retained in source rows and reports; the exported company label is Frasers Hospitality.",
+  "options": {
+    "mode": "static",
+    "maxPages": 1000,
+    "timeoutMs": 20000,
+    "sitemapUrl": "https://jobs.malhdv.co.uk/live-jobs.xml"
+  },
+  "exportCompanyName": "Frasers Hospitality"
+}

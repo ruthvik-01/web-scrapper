@@ -1,0 +1,14 @@
+{
+  "name": "Compass Schools",
+  "slug": "compass-schools",
+  "careersUrl": "https://careers.compasscommunity.co.uk/vacancies/vacancy-search-results.aspx",
+  "sourceNote": "Group careers portal. Export only vacancies whose source hiringOrganization is Compass Schools.",
+  "employerNames": [
+    "Compass Schools"
+  ],
+  "options": {
+    "mode": "auto",
+    "maxPages": 1000,
+    "sitemapUrl": "https://careers.compasscommunity.co.uk/sitemap.xml"
+  }
+}

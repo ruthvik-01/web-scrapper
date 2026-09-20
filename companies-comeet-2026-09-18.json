@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Alice",
+    "slug": "alice",
+    "careersUrl": "https://www.comeet.com/jobs/alice/D5.005/",
+    "originalUrl": "https://www.comeet.com/jobs/alice/D5.005/security-researcher/8D.A66",
+    "exportCompanyName": "Alice",
+    "sourceNote": "User-supplied website: http://aliceandolivia.com/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence. IDENTITY MISMATCH: this board identifies Alice at https://alice.io/, not Alice + Olivia. Export follows the explicitly supplied Comeet board.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Aviation Inc",
+    "slug": "persivalenic",
+    "careersUrl": "https://www.comeet.com/jobs/persivalenic/D8.006/",
+    "originalUrl": "https://www.comeet.com/jobs/persivalenic/D8.006/sales-lead/79.93C",
+    "exportCompanyName": "Aviation Inc",
+    "sourceNote": "User-supplied website: http://www.flyglobalnow.com. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence. DEMO BOARD: 23 positions explicitly disclaim any real employer or active hiring process and are excluded; the other 2 do not have qualifying UK locations. This is not verified as flyglobalnow.com.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Thetaray",
+    "slug": "thetaray",
+    "careersUrl": "https://www.comeet.com/jobs/thetaray/72.00F/",
+    "originalUrl": "https://www.comeet.com/jobs/thetaray/72.00F/regional-sales-manager-uk/B3.960",
+    "exportCompanyName": "Thetaray",
+    "sourceNote": "User-supplied website: https://www.thetaray.com/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Viber",
+    "slug": "viber",
+    "careersUrl": "https://www.comeet.com/jobs/viber/04.002/",
+    "originalUrl": "https://www.comeet.com/jobs/viber/04.002/fraud-director-fintech/39.765",
+    "exportCompanyName": "Viber",
+    "sourceNote": "User-supplied website: https://www.viber.com/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Kaltura",
+    "slug": "kaltura",
+    "careersUrl": "https://www.comeet.com/jobs/kaltura/E2.00D/",
+    "originalUrl": "https://www.comeet.com/jobs/kaltura/E2.00D/grc-specialist/B3.B6E",
+    "exportCompanyName": "Kaltura",
+    "sourceNote": "User-supplied website: http://kaltural.com. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence. Board identifies the official website as https://corp.kaltura.com/, not the supplied kaltural.com.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Blockaid",
+    "slug": "blockaid",
+    "careersUrl": "https://www.comeet.com/jobs/blockaid/69.00B/",
+    "originalUrl": "https://www.comeet.com/jobs/blockaid/69.00B/business-development-representative-london/3E.A6A",
+    "exportCompanyName": "Blockaid",
+    "sourceNote": "User-supplied website: https://blockaid.io/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Noma Security",
+    "slug": "noma-security",
+    "careersUrl": "https://www.comeet.com/jobs/noma_security/3A.005/",
+    "originalUrl": "https://www.comeet.com/jobs/noma_security/3A.005/vp-finance/6E.66B",
+    "exportCompanyName": "Noma Security",
+    "sourceNote": "User-supplied website: http://www.noma.security. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Personetics",
+    "slug": "personetics",
+    "careersUrl": "https://www.comeet.com/jobs/personetics/83.00A/",
+    "originalUrl": "https://www.comeet.com/jobs/personetics/83.00A/project-manager/92.C63",
+    "exportCompanyName": "Personetics",
+    "sourceNote": "User-supplied website: http://www.personetics.com. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Trullion",
+    "slug": "trullion",
+    "careersUrl": "https://www.comeet.com/jobs/trullion/07.000/",
+    "originalUrl": "https://www.comeet.com/jobs/trullion/07.000/product-data-analyst/51.B65",
+    "exportCompanyName": "Trullion",
+    "sourceNote": "User-supplied website: http://trullion.com/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Port",
+    "slug": "port",
+    "careersUrl": "https://www.comeet.com/jobs/port/59.004/",
+    "originalUrl": "https://www.comeet.com/jobs/port/59.004/technical-success-engineer/E6.46B",
+    "exportCompanyName": "Port",
+    "sourceNote": "User-supplied website: https://port.io. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  }
+]

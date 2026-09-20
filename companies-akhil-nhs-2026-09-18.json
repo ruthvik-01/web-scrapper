@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Sutton Primary Care Networks",
+    "slug": "sutton-primary-care-networks",
+    "careersUrl": "https://www.jobs.nhs.uk/candidate/search/results?employerCode=A2700&language=en",
+    "sourceNote": "Official NHS Jobs employer code A2700, verified against five exact-employer advertisements. This avoids the broad employer-name text search that includes unrelated networks. The supplied company website denies crawler access; NHS Jobs is an independent public official source.",
+    "employerNames": [
+      "Sutton Primary Care Networks"
+    ],
+    "options": {
+      "mode": "static",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/candidate/jobadvert/']",
+        "next": "a[href*='page=']"
+      }
+    }
+  },
+  {
+    "name": "Kent Community Health NHS Foundation Trust",
+    "slug": "kent-community-health-nhs-foundation-trust",
+    "careersUrl": "https://www.jobs.nhs.uk/candidate/search/results?employerCode=C9846&language=en",
+    "originalUrl": "https://www.kentcht.nhs.uk/careers/",
+    "sourceNote": "Official NHS Jobs employer code C9846, derived from exact-employer vacancy references. Uses the independently public NHS Jobs board rather than bypassing the Trac widget's access restriction.",
+    "employerNames": [
+      "Kent Community Health NHS Foundation Trust"
+    ],
+    "options": {
+      "mode": "static",
+      "maxPages": 1000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/candidate/jobadvert/']",
+        "next": "a[href*='page=']"
+      }
+    }
+  },
+  {
+    "name": "NHS Essex Integrated Care Board",
+    "slug": "essex-icb",
+    "careersUrl": "https://www.essex.icb.nhs.uk/careers/current-vacancies/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 14; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "static",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://www.essex.icb.nhs.uk/careers/"
+  },
+  {
+    "name": "North Hampshire Urgent Care",
+    "slug": "nhuc",
+    "careersUrl": "https://www.nhuc.co.uk/careers/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 15; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "static",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  }
+]

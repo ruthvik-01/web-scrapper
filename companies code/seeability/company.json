@@ -1,0 +1,10 @@
+{
+  "name": "SeeAbility",
+  "slug": "seeability",
+  "careersUrl": "https://careers.seeability.org/vacancies/vacancy-search-results.aspx",
+  "options": {
+    "mode": "auto",
+    "maxPages": 1000,
+    "sitemapUrl": "https://careers.seeability.org/sitemap.xml"
+  }
+}

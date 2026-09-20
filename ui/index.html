@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101b2b">
+  <title>Fieldwork — UK Job Collector</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Fieldwork home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>fieldwork<span class="brand-sub">UK JOB COLLECTOR</span></span>
+    </a>
+    <div class="workspace-label">YOUR WORKSPACE</div>
+    <nav aria-label="Main navigation">
+      <button class="nav-link active" data-view="companies"><span data-icon="building"></span>Companies <span id="nav-count" class="nav-count">—</span></button>
+      <button class="nav-link" data-view="runs"><span data-icon="activity"></span>Run history <span id="run-indicator"></span></button>
+      <button class="nav-link" data-view="exports"><span data-icon="folder"></span>Exports</button>
+    </nav>
+    <div class="sidebar-note">
+      <span class="small-label">A SMALL DAILY HABIT</span>
+      <p>Five companies.<br>One focused batch.</p>
+      <div class="five-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="source-file"><span class="file-x">X</span><div><strong>Company list</strong><span id="workbook-count">Reading workbook…</span></div><span data-icon="check"></span></div>
+      <div class="server-health"><span id="health-dot" class="health-dot"></span><span id="health-label">Connecting to localhost</span></div>
+      <div class="profile"><span class="avatar user-avatar">Y</span><div><strong>Your local workspace</strong><small>Files stay on this computer</small></div></div>
+    </div>
+  </aside>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="breadcrumb"><span>WORKSPACE</span><span>/</span><strong id="breadcrumb-view">COMPANIES</strong></div>
+      <div class="topbar-actions"><button id="upload-open" class="primary-button"><span data-icon="upload"></span>Upload data</button><span class="local-chip"><i></i>LOCAL</span><time id="today">—</time><button id="refresh" class="icon-button" aria-label="Refresh dashboard" title="Refresh dashboard"><span data-icon="refresh"></span></button></div>
+    </header>
+    <main id="main">
+      <div id="connection-error" class="connection-error" role="alert" hidden>The local server is unavailable. Your selection is safe. Keep the server terminal open and retry.</div>
+      <section class="page-heading">
+        <div><div class="eyebrow"><span class="eyebrow-line"></span>THE COLLECTION DESK</div><h1 id="page-title">Your next five.</h1><p id="page-subtitle">Choose your companies. We’ll take care of the collection.</p></div>
+        <div class="heading-note"><span data-icon="shield"></span><span>Public sources only.<br><strong>Every result stays traceable.</strong></span></div>
+      </section>
+
+      <section class="stats-strip" aria-label="Workspace statistics">
+        <div class="stat"><span class="stat-label">CAREERS SITES <span data-icon="building"></span></span><strong id="stat-companies">—</strong><small id="stat-ready">Loading companies</small></div>
+        <div class="stat"><span class="stat-label">COLLECTED <span data-icon="check-circle"></span></span><strong id="stat-completed">—</strong><small>companies with complete runs</small></div>
+        <div class="stat"><span class="stat-label">EXPORTED ROWS <span data-icon="table"></span></span><strong id="stat-rows">—</strong><small>from your latest company outputs</small></div>
+        <div class="stat"><span class="stat-label">LOCATION NOTES <span data-icon="flag"></span></span><strong id="stat-notes" class="amber-text">—</strong><small>source details worth reviewing</small></div>
+      </section>
+
+      <section id="companies-view" class="view">
+        <div class="workspace-grid">
+          <section class="directory panel">
+            <div class="panel-heading"><div><h2>Company directory <span id="directory-count" class="count-badge">—</span></h2><p>From your workbook. Duplicate careers sites are grouped.</p></div><button id="quick-select" class="text-button"><span data-icon="spark"></span>Pick 5 ready</button></div>
+            <div class="directory-tools">
+              <div class="filter-tabs" role="group" aria-label="Filter companies">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="ready">Ready</button>
+                <button class="filter-tab" data-filter="completed">Collected</button>
+                <button class="filter-tab" data-filter="taken">Taken</button>
+                <button class="filter-tab" data-filter="needs-review">Review</button>
+              </div>
+              <label class="search-field"><span data-icon="search"></span><input id="company-search" type="search" placeholder="Search companies…" aria-label="Search companies"></label>
+              <label class="source-filter"><span>Source</span><select id="source-filter" aria-label="Filter by imported source"><option value="all">All sources</option></select></label>
+            </div>
+            <div class="table-scroll">
+              <table class="company-table">
+                <thead><tr><th class="check-cell"><span class="sr-only">Select</span></th><th>COMPANY</th><th>STATUS</th><th class="number-cell">ROWS</th><th class="method-cell">METHOD</th><th><span class="sr-only">Actions</span></th></tr></thead>
+                <tbody id="company-rows"><tr><td colspan="6"><div class="loading-state"><span class="spinner"></span> Loading your company workbook…</div></td></tr></tbody>
+              </table>
+            </div>
+            <footer class="table-footer"><span id="page-summary">—</span><div><button id="page-prev" class="icon-button small" aria-label="Previous company page"><span data-icon="chevron-left"></span></button><span id="page-number" class="page-number">1 / 1</span><button id="page-next" class="icon-button small" aria-label="Next company page"><span data-icon="chevron-right"></span></button></div></footer>
+          </section>
+
+          <aside class="batch-column">
+            <section class="batch-panel panel">
+              <div class="batch-title"><span class="batch-icon" data-icon="layers"></span><div><span class="small-label">BUILD YOUR BATCH</span><h2>Five at a time.</h2></div><span id="selection-count" class="selection-count">0/5</span></div>
+              <div class="selection-progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+              <div id="selected-companies" class="selected-companies"></div>
+              <button id="run-selected" class="primary-button full" disabled><span data-icon="play"></span><span>Run selected companies</span><span data-icon="arrow-right"></span></button>
+              <button id="clear-selection" class="clear-selection" disabled>Clear selection</button>
+              <div class="batch-hint"><span data-icon="users"></span><span>Check your friend’s list first. “Taken” is tracked locally, not synced.</span></div>
+            </section>
+            <section class="rules-panel">
+              <div class="small-label">YOUR COLLECTION RULES <span data-icon="lock"></span></div>
+              <div class="rule"><span class="rule-number">01</span><span><strong>UK locations only</strong><small>Verified country evidence</small></span><span data-icon="check"></span></div>
+              <div class="rule"><span class="rule-number">02</span><span><strong>Last two calendar months</strong><small id="date-window">Calculating date window…</small></span><span data-icon="check"></span></div>
+              <div class="rule"><span class="rule-number">03</span><span><strong>Missing date → run day</strong><small>Disclosed in the reason column</small></span><span data-icon="check"></span></div>
+            </section>
+            <div class="output-note"><span data-icon="folder"></span><div><strong>One company. One folder.</strong><p>CSV, portable TypeScript, and a detailed scrape report.</p></div></div>
+          </aside>
+        </div>
+      </section>
+      <section id="runs-view" class="view" hidden><div id="run-list"></div></section>
+      <section id="exports-view" class="view" hidden><div id="export-list" class="export-grid"></div></section>
+      <section id="live-run" class="live-run panel" aria-label="Current batch" hidden></section>
+      <footer class="page-footer"><span>FIELDWORK <span class="footer-divider">/</span> Less repetition. More useful data.</span><span>17 columns · Empty fields stay empty</span></footer>
+    </main>
+  </div>
+
+  <dialog id="confirm-dialog" class="confirm-dialog">
+    <form method="dialog">
+      <button class="dialog-close icon-button" aria-label="Close confirmation" value="cancel"><span data-icon="x"></span></button>
+      <span class="confirm-icon" data-icon="layers"></span>
+      <h2 id="confirm-title">Start this batch?</h2><p id="confirm-description"></p><div id="confirm-companies"></div>
+      <div class="dialog-actions"><button class="secondary-button" value="cancel">Not now</button><button id="confirm-action" class="primary-button" value="confirm">Start scraping</button></div>
+    </form>
+  </dialog>
+  <dialog id="detail-dialog" class="detail-dialog">
+    <div class="detail-header"><div id="detail-identity"></div><button id="detail-close" class="icon-button" aria-label="Close company details"><span data-icon="x"></span></button></div>
+    <div id="detail-metrics" class="detail-metrics"></div>
+    <div class="detail-toolbar"><div class="detail-tabs" role="group" aria-label="Company detail view"><button class="active" data-detail-tab="jobs">Job preview</button><button data-detail-tab="report">Review report</button><button data-detail-tab="code">Code & files</button><button data-detail-tab="settings">Extraction settings</button></div><a id="detail-download" class="primary-button" href="#"><span data-icon="download"></span>Download CSV</a></div>
+    <div id="detail-body"></div>
+  </dialog>
+  <dialog id="import-dialog" class="import-dialog">
+    <div class="detail-header"><div><div class="eyebrow">BRING YOUR OWN DATA</div><h2>Import company sources</h2></div><button id="import-close" class="icon-button" aria-label="Close file import"><span data-icon="x"></span></button></div>
+    <div class="import-content">
+      <div id="upload-zone" class="upload-zone">
+        <span data-icon="upload"></span><h3>Drop a spreadsheet here</h3><p>Excel, CSV, or TSV · up to 10 MB</p>
+        <button id="choose-file" class="secondary-button" type="button">Choose file</button>
+        <input id="workbook-file" type="file" accept=".xlsx,.xls,.xlsm,.xlsb,.csv,.tsv" aria-label="Upload company spreadsheet">
+        <small>.xlsx · .xls · .xlsm · .xlsb · .csv · .tsv</small>
+      </div>
+      <div id="import-error" class="connection-error" role="alert" hidden></div>
+      <p id="import-progress" class="import-progress" role="status"></p>
+      <div id="import-configuration" hidden>
+        <div class="import-file"><span data-icon="table"></span><div><strong id="import-filename"></strong><small>Only mapped company fields are kept. Macros and formulas are never run.</small></div></div>
+        <div class="form-grid">
+          <label class="field-label">Worksheet<select id="import-sheet" aria-label="Worksheet"></select></label>
+          <label class="field-label">Header row<input id="import-header" type="number" min="0" max="10000" aria-label="Header row"><small>Use 0 if there is no header row.</small></label>
+          <label class="field-label">Company name<select id="map-name" aria-label="Company name column"></select></label>
+          <label class="field-label">Careers / website URL <strong>*</strong><select id="map-url" aria-label="Website URL column"></select></label>
+          <label class="field-label">Company website <span>(optional)</span><select id="map-website" aria-label="Company website column"></select></label>
+          <label class="field-label">Public API URL <span>(optional)</span><select id="map-api" aria-label="API URL column"></select></label>
+          <label class="field-label">Job sitemap URL <span>(optional)</span><select id="map-sitemap" aria-label="Sitemap URL column"></select></label>
+        </div>
+        <div class="import-preview-heading"><strong>Data preview</strong><span id="import-row-count"></span></div>
+        <div id="import-preview" class="table-scroll"></div>
+        <p class="import-caption">Showing up to five rows and eight columns. Hyperlink targets are used for mapped URL fields. Matching URLs merge; existing outputs and taken assignments stay unchanged.</p>
+      </div>
+      <div id="import-result" hidden></div>
+      <div class="dialog-actions"><button id="import-cancel" class="secondary-button">Cancel</button><button id="import-commit" class="primary-button" disabled>Add companies</button></div>
+    </div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
