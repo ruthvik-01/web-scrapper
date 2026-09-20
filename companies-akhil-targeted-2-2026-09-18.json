@@ -1,0 +1,312 @@
+[
+  {
+    "name": "Marc Daniels",
+    "slug": "marcdanielsconnect",
+    "careersUrl": "https://www.marcdanielsconnect.co.uk/jobs/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 5; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  },
+  {
+    "name": "Meridial",
+    "slug": "meridial",
+    "careersUrl": "https://www.meridial.ai/projects",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 7; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://www.meridial.ai/careers/"
+  },
+  {
+    "name": "Michael Page Technology",
+    "slug": "michaelpage",
+    "careersUrl": "https://www.michaelpage.co.uk/careers",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 9; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  },
+  {
+    "name": "Mitchell Adam",
+    "slug": "mitchelladam",
+    "careersUrl": "https://mitchelladam.co.uk/work-for-us/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 10; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://www.mitchelladam.co.uk/careers"
+  },
+  {
+    "name": "Morson Edge",
+    "slug": "munson-edge",
+    "careersUrl": "https://morson-edge.com/careers/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 12; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  },
+  {
+    "name": "New Appointments Group",
+    "slug": "newappointmentsgroup",
+    "careersUrl": "https://www.newappointmentsgroup.co.uk/jobs/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 13; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  },
+  {
+    "name": "NORTH LONDON GARAGES GTA",
+    "slug": "nlggta",
+    "careersUrl": "https://www.nlggta.co.uk/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 16; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://nlggta.co.uk/careers/"
+  },
+  {
+    "name": "Osborne Clarke",
+    "slug": "osborneclarke",
+    "careersUrl": "https://www.osborneclarke.com/careers",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 18; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  },
+  {
+    "name": "Paysafe",
+    "slug": "paysafe",
+    "careersUrl": "https://paysafe.careers.hibob.com/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 19; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://www.paysafe.com/en/careers/"
+  },
+  {
+    "name": "Queen Victoria Hospital NHS Foundation Trust",
+    "slug": "qvh",
+    "careersUrl": "http://jobs.qvh.nhs.uk/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 23; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://www.qvh.nhs.uk/work-for-us/"
+  },
+  {
+    "name": "SDG2 Advocacy Hub",
+    "slug": "sdg2advocacyhub",
+    "careersUrl": "https://sdg2advocacyhub.org/about-us/opportunities/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 25; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://sdg2advocacyhub.org/work-with-us/"
+  },
+  {
+    "name": "Sellick Partnership",
+    "slug": "sellickpartnership",
+    "careersUrl": "https://www.sellickpartnership.co.uk/careers/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 27; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  },
+  {
+    "name": "SJC Partners",
+    "slug": "sjcpartners",
+    "careersUrl": "https://sjcpartners.com/jobs/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 29; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://www.sjcpartners.com/careers/"
+  },
+  {
+    "name": "Smart Education Recruitment Ltd",
+    "slug": "smarted",
+    "careersUrl": "https://www.smarted.co.uk/teaching-jobs-in-birmingham",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 30; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://smarted.co.uk/jobs/"
+  },
+  {
+    "name": "Smiths Group",
+    "slug": "smiths-group",
+    "careersUrl": "https://www.smiths.com/careers/job-search",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 31; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://www.smiths.com/careers"
+  },
+  {
+    "name": "Sodexo",
+    "slug": "sodexo",
+    "careersUrl": "http://www.sodexojobs.co.uk/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 32; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    },
+    "originalUrl": "https://www.sodexo.com/careers"
+  },
+  {
+    "name": "Fusion People Ltd",
+    "slug": "fusionpeople",
+    "careersUrl": "https://www.fusionpeople.com/jobs/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 43; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  },
+  {
+    "name": "Get Recruited (UK) Ltd",
+    "slug": "get-recruited",
+    "careersUrl": "https://www.get-recruited.co.uk/jobs",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 44; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  },
+  {
+    "name": "Graham Rose Recruitment",
+    "slug": "grahamrose",
+    "careersUrl": "https://www.cv-library.co.uk/list-jobs/250622/Graham-Rose",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 45; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  },
+  {
+    "name": "Hackney Borough Council",
+    "slug": "hackney",
+    "careersUrl": "https://recruitment.hackney.gov.uk/job-search/",
+    "sourceNote": "Source: Akhil team - ruthvik.csv, data row 46; supersedes the PDF. Headquarters cells are not vacancy-location evidence. Use the supplied careers page, without silently switching agency internal vacancies to client job boards. Full source row retained in csv-source-audit.json. Target URL follows links inspected on the employer's official public pages; evidence is retained under output/akhil-ruthvik-2026-09-18/research. Agency client boards remain labelled as agency sources, not as direct-employer vacancies.",
+    "options": {
+      "mode": "auto",
+      "maxPages": 3000,
+      "delayMs": 1000,
+      "timeoutMs": 30000,
+      "selectors": {
+        "jobLinksOnly": "a[href*='/job/'],a[href*='/jobs/'],a[href*='/vacanc'],a[href*='/Vacanc'],a[href*='jobadvert'],a[href*='/search-page/job/'],a[href*='/job-detail'],a[href*='/jobDetail']"
+      }
+    }
+  }
+]

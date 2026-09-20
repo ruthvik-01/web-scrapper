@@ -1,0 +1,13 @@
+{
+  "name": "Wren Kitchens",
+  "slug": "wren-kitchens",
+  "careersUrl": "https://vacancies.wrencareers.com/vacancies/",
+  "sourceNote": "Replaces Phase Eight in the second batch at the user's request. Public Wren careers sitemap links to canonical wrenweb.eploy.net detail pages; each origin's robots.txt is respected. Live listings with old posting dates remain subject to the two-calendar-month window.",
+  "options": {
+    "mode": "static",
+    "maxPages": 1000,
+    "timeoutMs": 20000,
+    "sitemapUrl": "https://vacancies.wrencareers.com/live-jobs.xml"
+  },
+  "exportCompanyName": "Wren Kitchens"
+}

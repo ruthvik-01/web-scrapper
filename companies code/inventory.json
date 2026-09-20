@@ -1,0 +1,779 @@
+{
+  "batchesInspected": [
+    "17-9-26 second batch",
+    "akhil-ruthvik-2026-09-18",
+    "akhil-team-2026-09-18",
+    "batch 15-9-2026",
+    "batch 17-9-2026",
+    "batch-2026-09-16",
+    "combined 17-9-26 batches",
+    "combined-all-jobs-2026-09-18",
+    "combined-both-batches",
+    "comeet-2026-09-18",
+    "comeet-combined-21-2026-09-18",
+    "comeet-combined-30-2026-09-18",
+    "comeet-company-summary-2026-09-18",
+    "comeet-second-2026-09-18",
+    "comeet-third-2026-09-18",
+    "comeet-updated-fields-2026-09-18",
+    "company-job-counts-2026-09-17",
+    "eploy-sheet6-corrected-2026-09-18",
+    "eploy-sheet6-salary-corrected-2026-09-18",
+    "fourcompany-annual-salary-corrected-2026-09-18",
+    "intercity-technology-c37fb",
+    "mencap-e328f",
+    "stantec-clulow-legion-2026-09-17"
+  ],
+  "selectionSource": "scripts/company-code-selection.json",
+  "excluded": [
+    "output/_history: superseded checkpoints",
+    "output/_tracking: administrative tracking",
+    "companies-akhil-team-2026-09-18.json: superseded by replacement CSV manifest",
+    "Eight held Akhil entries: no approved company configuration",
+    "Uploaded job-sheet corrections: data processing only, no company scraper source supplied",
+    "All companies outside the user's explicit 48-company selection"
+  ],
+  "companies": [
+    {
+      "company": "Alice",
+      "slug": "alice",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/alice",
+      "sources": [
+        "companies-comeet-2026-09-18.json",
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-2026-09-18/code/alice/company.json",
+        "output/comeet-combined-21-2026-09-18/code/alice/company.json",
+        "output/comeet-combined-30-2026-09-18/code/alice/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/alice/company.json"
+      ]
+    },
+    {
+      "company": "Alzheimer's Society",
+      "slug": "alzheimers-society",
+      "kind": "self-contained sitemap scraper",
+      "implementation": "legacy-sitemap",
+      "configurationSource": "output/batch 15-9-2026/code/alzheimers-society/scrape.ts",
+      "packagedSource": "output/batch 15-9-2026/code/alzheimers-society",
+      "sources": [
+        "output/batch 15-9-2026/code/alzheimers-society/scrape.ts"
+      ]
+    },
+    {
+      "company": "Aqua Security",
+      "slug": "aquasec",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/aquasec",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/aquasec/company.json",
+        "output/comeet-combined-30-2026-09-18/code/aquasec/company.json",
+        "output/comeet-second-2026-09-18/code/aquasec/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/aquasec/company.json"
+      ]
+    },
+    {
+      "company": "Blockaid",
+      "slug": "blockaid",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/blockaid",
+      "sources": [
+        "companies-comeet-2026-09-18.json",
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-2026-09-18/code/blockaid/company.json",
+        "output/comeet-combined-21-2026-09-18/code/blockaid/company.json",
+        "output/comeet-combined-30-2026-09-18/code/blockaid/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/blockaid/company.json"
+      ]
+    },
+    {
+      "company": "B&M",
+      "slug": "bmstores",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/combined 17-9-26 batches/code/bmstores/company.json",
+      "packagedSource": "output/combined 17-9-26 batches/code/bmstores",
+      "sources": [
+        "companies-batch-17-9-2026.json",
+        "output/batch 17-9-2026/code/bmstores/company.json",
+        "output/combined 17-9-26 batches/code/bmstores/company.json"
+      ]
+    },
+    {
+      "company": "CC Nurseries",
+      "slug": "cc-nurseries",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/combined 17-9-26 batches/code/cc-nurseries/company.json",
+      "packagedSource": "output/combined 17-9-26 batches/code/cc-nurseries",
+      "sources": [
+        "companies-batch-17-9-2026.json",
+        "output/batch 17-9-2026/code/cc-nurseries/company.json",
+        "output/combined 17-9-26 batches/code/cc-nurseries/company.json"
+      ]
+    },
+    {
+      "company": "Cellebrite",
+      "slug": "cellebrite",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/cellebrite",
+      "sources": [
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-third-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-30-2026-09-18/code/cellebrite/company.json",
+        "output/comeet-third-2026-09-18/code/cellebrite/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/cellebrite/company.json"
+      ]
+    },
+    {
+      "company": "Checkmarx",
+      "slug": "checkmarx",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/checkmarx",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/checkmarx/company.json",
+        "output/comeet-combined-30-2026-09-18/code/checkmarx/company.json",
+        "output/comeet-second-2026-09-18/code/checkmarx/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/checkmarx/company.json"
+      ]
+    },
+    {
+      "company": "Classiq",
+      "slug": "classiq",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/classiq",
+      "sources": [
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-third-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-30-2026-09-18/code/classiq/company.json",
+        "output/comeet-third-2026-09-18/code/classiq/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/classiq/company.json"
+      ]
+    },
+    {
+      "company": "Compass Schools",
+      "slug": "compass-schools",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/batch-2026-09-16/code/compass-schools/company.json",
+      "packagedSource": "output/batch-2026-09-16/code/compass-schools",
+      "sources": [
+        "companies-next-five.json",
+        "output/batch-2026-09-16/code/compass-schools/company.json"
+      ]
+    },
+    {
+      "company": "Coralogix",
+      "slug": "coralogix",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/coralogix",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/coralogix/company.json",
+        "output/comeet-combined-30-2026-09-18/code/coralogix/company.json",
+        "output/comeet-second-2026-09-18/code/coralogix/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/coralogix/company.json"
+      ]
+    },
+    {
+      "company": "Curve",
+      "slug": "curve",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/curve",
+      "sources": [
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-third-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-30-2026-09-18/code/curve/company.json",
+        "output/comeet-third-2026-09-18/code/curve/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/curve/company.json"
+      ]
+    },
+    {
+      "company": "Cycode",
+      "slug": "cycode",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/cycode",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/cycode/company.json",
+        "output/comeet-combined-30-2026-09-18/code/cycode/company.json",
+        "output/comeet-second-2026-09-18/code/cycode/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/cycode/company.json"
+      ]
+    },
+    {
+      "company": "Cyera",
+      "slug": "cyera",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/cyera",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/cyera/company.json",
+        "output/comeet-combined-30-2026-09-18/code/cyera/company.json",
+        "output/comeet-second-2026-09-18/code/cyera/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/cyera/company.json"
+      ]
+    },
+    {
+      "company": "Earnix",
+      "slug": "earnix",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/earnix",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/earnix/company.json",
+        "output/comeet-combined-30-2026-09-18/code/earnix/company.json",
+        "output/comeet-second-2026-09-18/code/earnix/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/earnix/company.json"
+      ]
+    },
+    {
+      "company": "Empathy",
+      "slug": "empathy",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/empathy",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/empathy/company.json",
+        "output/comeet-combined-30-2026-09-18/code/empathy/company.json",
+        "output/comeet-second-2026-09-18/code/empathy/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/empathy/company.json"
+      ]
+    },
+    {
+      "company": "Frame Security",
+      "slug": "framesecurity",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/framesecurity",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/framesecurity/company.json",
+        "output/comeet-combined-30-2026-09-18/code/framesecurity/company.json",
+        "output/comeet-second-2026-09-18/code/framesecurity/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/framesecurity/company.json"
+      ]
+    },
+    {
+      "company": "Frasers Hospitality",
+      "slug": "frasers-hospitality",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/combined 17-9-26 batches/code/frasers-hospitality/company.json",
+      "packagedSource": "output/combined 17-9-26 batches/code/frasers-hospitality",
+      "sources": [
+        "companies-17-9-26-second-batch.json",
+        "output/17-9-26 second batch/code/frasers-hospitality/company.json",
+        "output/combined 17-9-26 batches/code/frasers-hospitality/company.json"
+      ]
+    },
+    {
+      "company": "Guide Dogs",
+      "slug": "guide-dogs",
+      "kind": "self-contained sitemap scraper",
+      "implementation": "legacy-sitemap",
+      "configurationSource": "output/batch 15-9-2026/code/guide-dogs/scrape.ts",
+      "packagedSource": "output/batch 15-9-2026/code/guide-dogs",
+      "sources": [
+        "output/batch 15-9-2026/code/guide-dogs/scrape.ts"
+      ]
+    },
+    {
+      "company": "Intercity Technology",
+      "slug": "intercity-technology",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/batch-2026-09-16/code/intercity-technology/company.json",
+      "packagedSource": "output/batch-2026-09-16/code/intercity-technology",
+      "sources": [
+        "companies-next-five.json",
+        "output/batch-2026-09-16/code/intercity-technology/company.json"
+      ]
+    },
+    {
+      "company": "Kaltura",
+      "slug": "kaltura",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/kaltura",
+      "sources": [
+        "companies-comeet-2026-09-18.json",
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-2026-09-18/code/kaltura/company.json",
+        "output/comeet-combined-21-2026-09-18/code/kaltura/company.json",
+        "output/comeet-combined-30-2026-09-18/code/kaltura/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/kaltura/company.json"
+      ]
+    },
+    {
+      "company": "London Borough of Bexley",
+      "slug": "london-borough-of-bexley",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/batch-2026-09-16/code/london-borough-of-bexley/company.json",
+      "packagedSource": "output/batch-2026-09-16/code/london-borough-of-bexley",
+      "sources": [
+        "companies-next-five.json",
+        "output/batch-2026-09-16/code/london-borough-of-bexley/company.json"
+      ]
+    },
+    {
+      "company": "London Borough of Hillingdon",
+      "slug": "london-borough-of-hillingdon",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/combined 17-9-26 batches/code/london-borough-of-hillingdon/company.json",
+      "packagedSource": "output/combined 17-9-26 batches/code/london-borough-of-hillingdon",
+      "sources": [
+        "companies-batch-17-9-2026.json",
+        "output/batch 17-9-2026/code/london-borough-of-hillingdon/company.json",
+        "output/combined 17-9-26 batches/code/london-borough-of-hillingdon/company.json"
+      ]
+    },
+    {
+      "company": "Mencap",
+      "slug": "mencap",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/batch-2026-09-16/code/mencap/company.json",
+      "packagedSource": "output/batch-2026-09-16/code/mencap",
+      "sources": [
+        "companies-next-five.json",
+        "output/batch-2026-09-16/code/mencap/company.json"
+      ]
+    },
+    {
+      "company": "Mindspace",
+      "slug": "mindspace",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/mindspace",
+      "sources": [
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-third-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-30-2026-09-18/code/mindspace/company.json",
+        "output/comeet-third-2026-09-18/code/mindspace/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/mindspace/company.json"
+      ]
+    },
+    {
+      "company": "monday.com",
+      "slug": "monday",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/monday",
+      "sources": [
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-third-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-30-2026-09-18/code/monday/company.json",
+        "output/comeet-third-2026-09-18/code/monday/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/monday/company.json"
+      ]
+    },
+    {
+      "company": "MWH Treatment",
+      "slug": "mwh-treatment",
+      "kind": "self-contained sitemap scraper",
+      "implementation": "legacy-sitemap",
+      "configurationSource": "output/batch 15-9-2026/code/mwh-treatment/scrape.ts",
+      "packagedSource": "output/batch 15-9-2026/code/mwh-treatment",
+      "sources": [
+        "output/batch 15-9-2026/code/mwh-treatment/scrape.ts"
+      ]
+    },
+    {
+      "company": "Nayax",
+      "slug": "nayax",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/nayax",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/nayax/company.json",
+        "output/comeet-combined-30-2026-09-18/code/nayax/company.json",
+        "output/comeet-second-2026-09-18/code/nayax/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/nayax/company.json"
+      ]
+    },
+    {
+      "company": "News UK",
+      "slug": "news-uk",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/combined 17-9-26 batches/code/news-uk/company.json",
+      "packagedSource": "output/combined 17-9-26 batches/code/news-uk",
+      "sources": [
+        "companies-batch-17-9-2026.json",
+        "output/batch 17-9-2026/code/news-uk/company.json",
+        "output/combined 17-9-26 batches/code/news-uk/company.json"
+      ]
+    },
+    {
+      "company": "Noma Security",
+      "slug": "noma-security",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/noma-security",
+      "sources": [
+        "companies-comeet-2026-09-18.json",
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-2026-09-18/code/noma-security/company.json",
+        "output/comeet-combined-21-2026-09-18/code/noma-security/company.json",
+        "output/comeet-combined-30-2026-09-18/code/noma-security/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/noma-security/company.json"
+      ]
+    },
+    {
+      "company": "Optibus",
+      "slug": "optibus",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/optibus",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/optibus/company.json",
+        "output/comeet-combined-30-2026-09-18/code/optibus/company.json",
+        "output/comeet-second-2026-09-18/code/optibus/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/optibus/company.json"
+      ]
+    },
+    {
+      "company": "Overwolf",
+      "slug": "overwolf",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/overwolf",
+      "sources": [
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-third-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-30-2026-09-18/code/overwolf/company.json",
+        "output/comeet-third-2026-09-18/code/overwolf/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/overwolf/company.json"
+      ]
+    },
+    {
+      "company": "Papaya Global",
+      "slug": "papayaglobal",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/papayaglobal",
+      "sources": [
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-third-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-30-2026-09-18/code/papayaglobal/company.json",
+        "output/comeet-third-2026-09-18/code/papayaglobal/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/papayaglobal/company.json"
+      ]
+    },
+    {
+      "company": "Aviation Inc",
+      "slug": "persivalenic",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/persivalenic",
+      "sources": [
+        "companies-comeet-2026-09-18.json",
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-2026-09-18/code/persivalenic/company.json",
+        "output/comeet-combined-21-2026-09-18/code/persivalenic/company.json",
+        "output/comeet-combined-30-2026-09-18/code/persivalenic/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/persivalenic/company.json"
+      ]
+    },
+    {
+      "company": "Personetics",
+      "slug": "personetics",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/personetics",
+      "sources": [
+        "companies-comeet-2026-09-18.json",
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-2026-09-18/code/personetics/company.json",
+        "output/comeet-combined-21-2026-09-18/code/personetics/company.json",
+        "output/comeet-combined-30-2026-09-18/code/personetics/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/personetics/company.json"
+      ]
+    },
+    {
+      "company": "Port",
+      "slug": "port",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/port",
+      "sources": [
+        "companies-comeet-2026-09-18.json",
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-2026-09-18/code/port/company.json",
+        "output/comeet-combined-21-2026-09-18/code/port/company.json",
+        "output/comeet-combined-30-2026-09-18/code/port/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/port/company.json"
+      ]
+    },
+    {
+      "company": "Remedio",
+      "slug": "remedio",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/remedio",
+      "sources": [
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-third-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-30-2026-09-18/code/remedio/company.json",
+        "output/comeet-third-2026-09-18/code/remedio/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/remedio/company.json"
+      ]
+    },
+    {
+      "company": "Restore",
+      "slug": "restore",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/combined 17-9-26 batches/code/restore/company.json",
+      "packagedSource": "output/combined 17-9-26 batches/code/restore",
+      "sources": [
+        "companies-17-9-26-second-batch.json",
+        "output/17-9-26 second batch/code/restore/company.json",
+        "output/combined 17-9-26 batches/code/restore/company.json"
+      ]
+    },
+    {
+      "company": "SeeAbility",
+      "slug": "seeability",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/batch-2026-09-16/code/seeability/company.json",
+      "packagedSource": "output/batch-2026-09-16/code/seeability",
+      "sources": [
+        "companies-next-five.json",
+        "output/batch-2026-09-16/code/seeability/company.json"
+      ]
+    },
+    {
+      "company": "Solidus Labs",
+      "slug": "soliduslabs",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/soliduslabs",
+      "sources": [
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-third-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-30-2026-09-18/code/soliduslabs/company.json",
+        "output/comeet-third-2026-09-18/code/soliduslabs/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/soliduslabs/company.json"
+      ]
+    },
+    {
+      "company": "Thetaray",
+      "slug": "thetaray",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/thetaray",
+      "sources": [
+        "companies-comeet-2026-09-18.json",
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-2026-09-18/code/thetaray/company.json",
+        "output/comeet-combined-21-2026-09-18/code/thetaray/company.json",
+        "output/comeet-combined-30-2026-09-18/code/thetaray/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/thetaray/company.json"
+      ]
+    },
+    {
+      "company": "Thinking Schools Academy Trust",
+      "slug": "thinking-schools-academy-trust",
+      "kind": "self-contained sitemap scraper",
+      "implementation": "legacy-sitemap",
+      "configurationSource": "output/batch 15-9-2026/code/thinking-schools-academy-trust/scrape.ts",
+      "packagedSource": "output/batch 15-9-2026/code/thinking-schools-academy-trust",
+      "sources": [
+        "output/batch 15-9-2026/code/thinking-schools-academy-trust/scrape.ts"
+      ]
+    },
+    {
+      "company": "Tower Hamlets",
+      "slug": "tower-hamlets",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/combined 17-9-26 batches/code/tower-hamlets/company.json",
+      "packagedSource": "output/combined 17-9-26 batches/code/tower-hamlets",
+      "sources": [
+        "companies-batch-17-9-2026.json",
+        "output/batch 17-9-2026/code/tower-hamlets/company.json",
+        "output/combined 17-9-26 batches/code/tower-hamlets/company.json"
+      ]
+    },
+    {
+      "company": "Trullion",
+      "slug": "trullion",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/trullion",
+      "sources": [
+        "companies-comeet-2026-09-18.json",
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-2026-09-18/code/trullion/company.json",
+        "output/comeet-combined-21-2026-09-18/code/trullion/company.json",
+        "output/comeet-combined-30-2026-09-18/code/trullion/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/trullion/company.json"
+      ]
+    },
+    {
+      "company": "Upwind Security",
+      "slug": "upwind",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/upwind",
+      "sources": [
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-second-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-combined-21-2026-09-18/code/upwind/company.json",
+        "output/comeet-combined-30-2026-09-18/code/upwind/company.json",
+        "output/comeet-second-2026-09-18/code/upwind/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/upwind/company.json"
+      ]
+    },
+    {
+      "company": "Viber",
+      "slug": "viber",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "companies-comeet-updated-fields-2026-09-18.json",
+      "packagedSource": "output/comeet-updated-fields-2026-09-18/code/viber",
+      "sources": [
+        "companies-comeet-2026-09-18.json",
+        "companies-comeet-combined-21-2026-09-18.json",
+        "companies-comeet-combined-30-2026-09-18.json",
+        "companies-comeet-updated-fields-2026-09-18.json",
+        "output/comeet-2026-09-18/code/viber/company.json",
+        "output/comeet-combined-21-2026-09-18/code/viber/company.json",
+        "output/comeet-combined-30-2026-09-18/code/viber/company.json",
+        "output/comeet-updated-fields-2026-09-18/code/viber/company.json"
+      ]
+    },
+    {
+      "company": "Walkers — Walker's Shortbread",
+      "slug": "walkers-shortbread",
+      "kind": "self-contained sitemap scraper",
+      "implementation": "legacy-sitemap",
+      "configurationSource": "output/batch 15-9-2026/code/walkers-shortbread/scrape.ts",
+      "packagedSource": "output/batch 15-9-2026/code/walkers-shortbread",
+      "sources": [
+        "output/batch 15-9-2026/code/walkers-shortbread/scrape.ts"
+      ]
+    },
+    {
+      "company": "Wren Kitchens",
+      "slug": "wren-kitchens",
+      "kind": "self-contained full-framework scraper",
+      "implementation": "full-framework",
+      "configurationSource": "output/combined 17-9-26 batches/code/wren-kitchens/company.json",
+      "packagedSource": "output/combined 17-9-26 batches/code/wren-kitchens",
+      "sources": [
+        "companies-17-9-26-second-batch.json",
+        "output/17-9-26 second batch/code/wren-kitchens/company.json",
+        "output/combined 17-9-26 batches/code/wren-kitchens/company.json"
+      ]
+    }
+  ]
+}

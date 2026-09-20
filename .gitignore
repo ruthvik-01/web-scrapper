@@ -1,0 +1,12 @@
+node_modules/
+output/
+.env
+.env.*
+!.env.example
+*.log
+.freebuff/
+.playwright-mcp/
+Sessions/
+jev-scraper/node_modules/
+COMPANIE LIST.xlsx
+

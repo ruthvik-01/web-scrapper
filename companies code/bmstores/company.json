@@ -1,0 +1,12 @@
+{
+  "name": "B&M",
+  "slug": "bmstores",
+  "careersUrl": "https://jobs.bmstores.co.uk/vacancies/",
+  "options": {
+    "mode": "static",
+    "maxPages": 1000,
+    "timeoutMs": 15000,
+    "sitemapUrl": "https://jobs.bmstores.co.uk/live-jobs.xml"
+  },
+  "exportCompanyName": "B&M"
+}

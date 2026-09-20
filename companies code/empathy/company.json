@@ -1,0 +1,12 @@
+{
+  "name": "Empathy",
+  "slug": "empathy",
+  "careersUrl": "https://www.comeet.com/jobs/empathy/F8.007/",
+  "originalUrl": "https://www.comeet.com/jobs/empathy/F8.007/care-manager/3B.161",
+  "exportCompanyName": "Empathy",
+  "sourceNote": "User-requested policy: postedDate uses time_updated, not publication; two-month filtering uses update dates. Check workplace_type against location.is_remote. Employment type only from explicit source fields. User-supplied website: https://empathy.com/. Scope follows supplied Comeet board.",
+  "options": {
+    "mode": "static",
+    "maxPages": 1000
+  }
+}

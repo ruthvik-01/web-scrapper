@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Frasers Hospitality",
+    "slug": "frasers-hospitality",
+    "careersUrl": "https://jobs.malhdv.co.uk/vacancies/",
+    "sourceNote": "User-supplied Malmaison/Hotel du Vin portal. Source hiring-organisation brand names are retained in individual job rows; all outputs are grouped under Frasers Hospitality.",
+    "options": {
+      "mode": "static", "maxPages": 1000, "timeoutMs": 20000,
+      "sitemapUrl": "https://jobs.malhdv.co.uk/live-jobs.xml"
+    }
+  },
+  {
+    "name": "Restore",
+    "slug": "restore",
+    "careersUrl": "https://apply.restoreplc.com/vacancies/",
+    "sourceNote": "Current vacancies from the supplied Restore portal, not only the example Head of Fleet URL.",
+    "options": {
+      "mode": "static", "maxPages": 1000, "timeoutMs": 20000,
+      "sitemapUrl": "https://apply.restoreplc.com/live-jobs.xml"
+    }
+  },
+  {
+    "name": "Wren Kitchens",
+    "slug": "wren-kitchens",
+    "careersUrl": "https://vacancies.wrencareers.com/vacancies/",
+    "sourceNote": "Replaces Phase Eight in the second batch at the user's request. Public Wren careers sitemap links to canonical wrenweb.eploy.net detail pages; each origin's robots.txt is respected. Live listings with old posting dates remain subject to the two-calendar-month window.",
+    "options": {
+      "mode": "static", "maxPages": 1000, "timeoutMs": 20000,
+      "sitemapUrl": "https://vacancies.wrencareers.com/live-jobs.xml"
+    }
+  }
+]

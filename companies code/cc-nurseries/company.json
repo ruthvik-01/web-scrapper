@@ -1,0 +1,13 @@
+{
+  "name": "CC Nurseries",
+  "slug": "cc-nurseries",
+  "careersUrl": "https://www.jobtrain.co.uk/ccnurseries/Home/Job",
+  "originalUrl": "https://www.jobtrain.co.uk/ccnurseries/vacancies.aspx",
+  "sourceNote": "Original URL returns 404. Official ccnurseries.com redirects to wildflowerchildcare.co.uk, which links to the same Jobtrain tenant at /ccnurseries. Current board branded Wildflower Childcare; verified 2026-09-17.",
+  "options": {
+    "mode": "static",
+    "maxPages": 100,
+    "timeoutMs": 15000
+  },
+  "exportCompanyName": "CC Nurseries"
+}
