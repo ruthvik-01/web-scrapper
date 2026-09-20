@@ -43,6 +43,7 @@ const state = {
   online: false, pending: false, revision: -1, detail: null, detailTab: "jobs",
   detailRows: null, jobOffset: 0, jobQuery: "", onlyNotes: false, expanded: null,
   source: "all", importPreview: null, importBusy: false, importMapping: null, importSample: null, importSequence: 0,
+  exportQuery: "", exportSort: "newest",
 };
 let toastTimer, searchTimer;
 function toast(message, error = false) {
@@ -232,14 +233,24 @@ function renderRuns() {
     : `<div class="panel empty-state">${icon("clock")}<h3>Your first dashboard run starts here</h3><p>Choose companies and start a batch. Existing command-line exports are already available in the Exports section.</p></div>`;
 }
 function renderExports() {
-  const companies = (state.data?.companies || []).filter(company => company.hasOutput);
+  let companies = (state.data?.companies || []).filter(company => company.hasOutput);
+  const query = state.exportQuery.trim().toLowerCase();
+  if (query) {
+    companies = companies.filter(company =>
+      `${company.name} ${company.aliases.join(" ")} ${company.careersUrl} ${company.summary?.process || ""}`.toLowerCase().includes(query));
+  }
+  companies.sort((a, b) => {
+    const da = new Date(a.summary?.scrapedAt || 0).getTime() || 0;
+    const db = new Date(b.summary?.scrapedAt || 0).getTime() || 0;
+    return state.exportSort === "oldest" ? da - db : db - da;
+  });
   $("#export-list").innerHTML = companies.length ? companies.map(company => `<article class="panel export-card">
     <div class="export-top">${avatar(company)}${statusTag(company.status === "taken" ? "completed" : company.status)}</div>
     <h2>${esc(company.name)}</h2><p>Collected ${day(company.summary.scrapedAt)} · ${esc(company.summary.process || "Auto")}</p>
     <div class="export-meta"><div><strong>${number(company.summary.locationRows)}</strong><small>CSV ROWS</small></div><div><strong>${number(company.summary.jobs)}</strong><small>JOBS</small></div>${company.summary.jevCalls !== undefined ? `<div><strong>${number(company.summary.jevCalls)}</strong><small>JEV CALLS</small></div>` : `<div><strong>${number(company.summary.reviewNotes)}</strong><small>LOCATION NOTES</small></div>`}</div>
     <div class="export-actions"><a class="primary-button" href="${downloadUrl(company.id, "csv")}">${icon("download")}CSV</a><a class="secondary-button" href="${downloadUrl(company.id, "code")}">${icon("code")}Code ZIP</a></div>
     <button class="export-review" data-open="${company.id}">Preview data & review report →</button>
-  </article>`).join("") : `<div class="panel empty-state">${icon("folder")}<h3>No exports yet</h3><p>Your CSVs, reusable code, and reports will appear here after a run.</p></div>`;
+  </article>`).join("") : `<div class="panel empty-state">${icon("search")}<h3>${query ? "No matching exports" : "No exports yet"}</h3><p>${query ? "Try a different search term." : "Your CSVs, reusable code, and reports will appear here after a run."}</p></div>`;
 }
 async function openCompany(id, tab = "jobs") {
   state.detail = state.data.companies.find(company => company.id === id);
@@ -562,6 +573,7 @@ document.addEventListener("click", async event => {
 document.addEventListener("change", async event => {
   if (event.target.dataset.select) select(event.target.dataset.select);
   if (event.target.id === "notes-only") { state.onlyNotes = event.target.checked; state.jobOffset = 0; await loadDetails(); }
+  if (event.target.id === "export-sort") { state.exportSort = event.target.value; renderExports(); }
   if (event.target.id === "source-filter") { state.source = event.target.value; state.page = 0; renderCompanies(); }
   if (event.target.id === "workbook-file" && event.target.files[0]) await uploadFile(event.target.files[0]);
   if (event.target.id === "import-sheet") await selectImportSheet(Number(event.target.value));
@@ -574,6 +586,9 @@ document.addEventListener("change", async event => {
 });
 $("#company-search").addEventListener("input", event => {
   state.query = event.target.value.trim().toLowerCase(); state.page = 0; renderCompanies();
+});
+$("#export-search").addEventListener("input", event => {
+  state.exportQuery = event.target.value; renderExports();
 });
 document.addEventListener("input", event => {
   if (event.target.id === "job-search") {

@@ -80,8 +80,16 @@ export function extractHeuristicFromDom($: CheerioAPI, pageUrl: string): RawJob 
   const employment = pick($, [
     '[class*="employment"]', '[class*="job-type"]', '[data-testid*="employment"]', '[class*="contract"]',
   ]);
-  const main = $("main, article, #content, .job, .job-description, body").first();
-  $("nav, header, footer, script, style, form").remove();
+  // Eploy/ATS detail pages expose the advert in a dedicated container; using
+  // it avoids the "Skip to content / Save Job / Apply" chrome that pollutes
+  // the judgment input.
+  const main = $(
+    ".vac-details__description, .vacancy-description, .job-description, [class*='vacancy'][class*='description'], " +
+    "main, article, #content, .job, body",
+  ).first();
+  // Note: <form> is intentionally kept — ASP.NET/Eploy sites wrap the entire
+  // page (including the job content) in one form element.
+  $("nav, header, footer, script, style").remove();
   return {
     title,
     description: plainText(main.text()).slice(0, 20_000),

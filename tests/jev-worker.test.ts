@@ -19,7 +19,8 @@ test("toParentRows maps jev rows onto the 15-column parent contract", () => {
   ];
   const mapped = toParentRows(rows, "Compass Schools") as Record<string, string>[];
   assert.equal(Object.keys(mapped[0]!).length, 15);
-  assert.equal(mapped[0]!.ats, "Jev");
+  // Contract: the exported CSV always uses the parent's Custom tag.
+  assert.equal(mapped[0]!.ats, "Custom");
   assert.equal(mapped[1]!.ats, "Custom");
   assert.equal(mapped[0]!.company, "Compass Schools");
   // Extra jev columns (jevConfidence, judged) must not leak into the export.
