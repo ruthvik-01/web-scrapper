@@ -1,9 +1,0 @@
-{
-  "name": "Mencap",
-  "slug": "mencap",
-  "careersUrl": "https://jobs.mencap.org.uk/vacancies/vacancy-search-results.aspx",
-  "options": {
-    "mode": "auto",
-    "maxPages": 1000
-  }
-}

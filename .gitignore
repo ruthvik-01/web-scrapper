@@ -10,3 +10,8 @@ Sessions/
 jev-scraper/node_modules/
 COMPANIE LIST.xlsx
 
+# Non-website artifacts: per-company packaged code dumps, batch data files, local helpers
+companies code/
+companies-*.json
+push.ps1
+
