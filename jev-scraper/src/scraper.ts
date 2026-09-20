@@ -161,6 +161,7 @@ export async function scrape(config: ScrapeConfig): Promise<{ rows: Row[]; skipp
   // --- Stage 1: collect candidate vacancy URLs ------------------------------
   const listingPages = new Set<string>([config.url]);
   const vacancyUrls = new Set<string>();
+  let sitemapUsed = false; // candidates came from a sitemap (Eploy live-jobs.xml or explicit)
   const dateFallbacks: DateFallback[] = [];
   const addVacancyUrl = (value: string): void => {
     const canonical = canonicalUrl(value);
@@ -198,6 +199,20 @@ export async function scrape(config: ScrapeConfig): Promise<{ rows: Row[]; skipp
       issues.push(`site probe failed: ${message}`);
       if (isHardJevFailure(message)) jevUsable = false;
     }
+    // Eploy boards paginate via form POST (no ?page= links), but publish a
+    // live-jobs.xml sitemap with every vacancy. Try it before crawling.
+    if (!config.sitemapUrl && !sitemapUsed && vacancyUrls.size < 5) {
+      try {
+        const eployUrl = new URL("/live-jobs.xml", config.url).href;
+        const { body: xml } = await http.html(eployUrl);
+        const $xml = load(xml, { xmlMode: true });
+        if ($xml("urlset").length && $xml("url > loc").length >= 10) {
+          for (const node of $xml("url > loc").toArray()) addVacancyUrl($xml(node).text().trim());
+          sitemapUsed = true;
+          log(`[${config.company}] Sitemap: ${vacancyUrls.size} vacancy URLs from ${eployUrl}.`);
+        }
+      } catch { /* not an Eploy board; crawl instead */ }
+    }
   }
   if (probe?.siteType === "js rendered" && probe.confidence >= config.confidence) {
     // Fast-fail: every stage below is deterministic-only and cannot see the
@@ -232,6 +247,7 @@ export async function scrape(config: ScrapeConfig): Promise<{ rows: Row[]; skipp
   }
 
   if (config.sitemapUrl || config.mode === "sitemap") {
+    sitemapUsed = true;
     // Fastest path: the sitemap already enumerates the vacancy URLs, so no link
     // triage calls are needed. Sitemap indexes are followed one level deep.
     const maps = [config.sitemapUrl || `${new URL(config.url).origin}/sitemap.xml`];
@@ -319,7 +335,11 @@ export async function scrape(config: ScrapeConfig): Promise<{ rows: Row[]; skipp
   }
 
   // --- Stage 2: fetch each vacancy page and judge it with Jev ----------------
-  const targets = [...vacancyUrls].slice(0, config.maxPages);
+  // Sitemap-sourced candidates are the board's actual vacancy list, so they
+  // are not truncated by maxPages (which only limits crawl discovery). A
+  // generous hard cap guards against runaway duplicates.
+  const cap = sitemapUsed ? Math.max(config.maxPages, Math.min(vacancyUrls.size, 5000)) : config.maxPages;
+  const targets = [...vacancyUrls].slice(0, cap);
   const rows: Row[] = [];
 
   const processPage = async (url: string): Promise<void> => {
@@ -345,7 +365,8 @@ export async function scrape(config: ScrapeConfig): Promise<{ rows: Row[]; skipp
     if (job) {
       pageBody = job.description;
     } else {
-      $("nav, header, footer, script, style, form, noscript").remove();
+      // <form> kept: ASP.NET/Eploy pages wrap all content in one form.
+      $("nav, header, footer, script, style, noscript").remove();
       const heuristic = extractHeuristicFromDom($, finalUrl);
       pageBody = plainText($("main, article, #content, .job, .job-description, body").first().text());
       job = { ...heuristic, title: heuristic.title || "Untitled" };
@@ -374,7 +395,10 @@ export async function scrape(config: ScrapeConfig): Promise<{ rows: Row[]; skipp
     // mismatch or an explicit non-UK source country excludes the page without
     // spending a judgment. Jev is never asked to overturn exact facts.
     if (employers.length && sourceCompany) {
-      const sourceMatch = employers.some(e => sourceCompany.toLowerCase().includes(e.toLowerCase()));
+      // "Salutem Careers" / "X Jobs" are careers-site labels for employer X,
+      // not different brands: strip generic suffixes before matching.
+      const normalized = sourceCompany.replace(/\s+(careers|jobs|recruitment|opportunities|hiring)\s*$/i, "").trim();
+      const sourceMatch = employers.some(e => normalized.toLowerCase().includes(e.toLowerCase()) || e.toLowerCase().includes(normalized.toLowerCase()));
       track("employer_match", "boolean", `source: ${sourceCompany} -> ${sourceMatch ? "in scope" : "out of scope"}`, "", "");
       if (!sourceMatch) {
         rejectedBeforeJev++;
@@ -416,13 +440,16 @@ export async function scrape(config: ScrapeConfig): Promise<{ rows: Row[]; skipp
     const answers: Record<string, Answer> = judgment?.answers ?? {};
     const judged = judgment ? "jev" : "deterministic";
 
-    // Vacancy gate: a confident Jev "no" rejects the page; without a verdict the
-    // page is accepted only when it looks like a vacancy from its own text.
+    // Vacancy gate: reject only on a CONFIDENT Jev "no" (probability of "yes"
+    // clearly below half). Mere sub-threshold uncertainty is not evidence —
+    // pages with real vacancy signals pass and are labelled by the rest of
+    // the pipeline. Without a Jev verdict, the page needs heuristic signals.
     const isVacancy = boolValue(answers, "is_vacancy");
     const heuristicVacancy = /\b(?:apply|vacanc|job|role|salary|contract|hours)\b/i
       .test(`${job.title} ${pageBody}`.slice(0, 4000));
     track("is_vacancy", "boolean", isVacancy && isVacancy.probability >= 0.5 ? "yes" : "no", isVacancy?.probability ?? "", "");
-    if (isVacancy ? isVacancy.probability < config.confidence : !heuristicVacancy) {
+    const confidentNo = isVacancy && isVacancy.probability <= 0.5 - (1 - config.confidence);
+    if (judged === "jev" ? confidentNo : !heuristicVacancy) {
       skipped.push({ jobUrl: finalUrl, title: job.title, reason: "not_a_vacancy_page" });
       return;
     }

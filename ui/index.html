@@ -97,7 +97,18 @@
         </div>
       </section>
       <section id="runs-view" class="view" hidden><div id="run-list"></div></section>
-      <section id="exports-view" class="view" hidden><div id="export-list" class="export-grid"></div></section>
+      <section id="exports-view" class="view" hidden>
+        <div class="export-tools">
+          <label class="search-field"><span data-icon="search"></span><input id="export-search" type="search" aria-label="Search exports" placeholder="Search exports…"></label>
+          <label class="sort-field"><span>Sort</span>
+            <select id="export-sort" aria-label="Sort exports">
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+            </select>
+          </label>
+        </div>
+        <div id="export-list" class="export-grid"></div>
+      </section>
       <section id="live-run" class="live-run panel" aria-label="Current batch" hidden></section>
       <footer class="page-footer"><span>FIELDWORK <span class="footer-divider">/</span> Less repetition. More useful data.</span><span>17 columns · Empty fields stay empty</span></footer>
     </main>
