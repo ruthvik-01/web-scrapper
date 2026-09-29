@@ -1,0 +1,14 @@
+{
+  "name": "Get Recruited (UK) Ltd",
+  "slug": "get-recruited",
+  "careersUrl": "https://www.get-recruited.co.uk/jobs",
+  "sitemapUrl": "https://www.get-recruited.co.uk/job/sitemap.xml",
+  "sourceNote": "ruhvik-new.xlsx selection for the 22-9-26 batch. Engine: deterministic static extraction via the robots-declared public job sitemap (board renders client-side and robots.txt Disallow: /*?* blocks ?page= pagination).",
+  "options": {
+    "mode": "static",
+    "sitemapUrl": "https://www.get-recruited.co.uk/job/sitemap.xml",
+    "maxPages": 400,
+    "delayMs": 600,
+    "timeoutMs": 30000
+  }
+}

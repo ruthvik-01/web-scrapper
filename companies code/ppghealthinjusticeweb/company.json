@@ -1,0 +1,10 @@
+{
+  "slug": "ppghealthinjusticeweb",
+  "company": "PPG Health In Justice",
+  "sourceUrl": "https://ppghealthinjusticeweb.eploy.net/vacancies/vacancy-search-results.aspx",
+  "status": "source_code_snapshot",
+  "codeFile": "export-ppg.py",
+  "entrypoint": "main",
+  "deliveryFolder": "output/2026-09-24-main-uk-scrape/jobs company wise/ppghealthinjusticeweb",
+  "note": "Source snapshot may use historical repository paths; use a dated-folder output path for new runs."
+}

@@ -1,0 +1,10 @@
+{
+  "slug": "pgs-ltd",
+  "company": "PGS LTD",
+  "sourceUrl": "https://www.reed.co.uk/jobs/pgs-ltd-63908/p63908",
+  "status": "source_code_snapshot",
+  "codeFile": "scrape-reed-company.py",
+  "entrypoint": "pgs",
+  "deliveryFolder": "output/2026-09-24-main-uk-scrape/jobs company wise/pgs-ltd",
+  "note": "Source snapshot may use historical repository paths; use a dated-folder output path for new runs."
+}

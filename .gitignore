@@ -1,17 +1,12 @@
-node_modules/
-output/
-.env
-.env.*
-!.env.example
-*.log
-.freebuff/
+# Installed dependencies
+**/node_modules/
+
+# Local credentials
+**/.env
+**/.env.*
+!**/.env.example
+
+# Local browser and tool state
 .playwright-mcp/
-Sessions/
-jev-scraper/node_modules/
-COMPANIE LIST.xlsx
-
-# Non-website artifacts: per-company packaged code dumps, batch data files, local helpers
-companies code/
-companies-*.json
-push.ps1
-
+.pi/
+**/.paperclip-comment.json

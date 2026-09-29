@@ -1,0 +1,12 @@
+{
+  "name": "Curve",
+  "slug": "curve",
+  "careersUrl": "https://www.comeet.com/jobs/curve/E4.001/",
+  "originalUrl": "https://www.comeet.com/jobs/curve/E4.001/infosec-analyst/FD.461",
+  "exportCompanyName": "Curve",
+  "sourceNote": "User-requested policy: postedDate uses time_updated, not publication; two-month filtering uses update dates. Check workplace_type against location.is_remote. Employment type only from explicit source fields. User-supplied website: https://www.curve.com/. Scope follows supplied Comeet board.  The supplied Comeet board returned an explicit empty position array on September 18, 2026. This does not establish absence of vacancies on other careers platforms.",
+  "options": {
+    "mode": "static",
+    "maxPages": 1000
+  }
+}

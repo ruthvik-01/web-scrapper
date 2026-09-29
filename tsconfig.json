@@ -1,14 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "types": ["node"],
+    "outDir": "./dist",
+    "rootDir": ".",
     "strict": true,
-    "noUncheckedIndexedAccess": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "noEmit": true,
-    "types": ["node"]
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler"
   },
-  "include": ["scraper.ts", "batch.ts", "src/**/*.ts", "scripts/**/*.ts", "server/**/*.ts", "tests/**/*.ts"]
+  "include": ["./*.ts"],
+  "exclude": ["node_modules"]
 }

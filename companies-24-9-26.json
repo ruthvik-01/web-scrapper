@@ -1,0 +1,14 @@
+[
+  {
+    "name": "PRDC Dental",
+    "slug": "prdc-dental",
+    "careersUrl": "https://careers.rodericksdentalpartners.co.uk/jobs/search",
+    "options": { "mode": "auto", "maxPages": 200 }
+  },
+  {
+    "name": "Prince of Wales Medical Centre",
+    "slug": "prince-of-wales-medical-centre",
+    "careersUrl": "https://careers.pwh.org.uk/",
+    "options": { "mode": "auto", "maxPages": 200 }
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "name": "Kaltura",
+  "slug": "kaltura",
+  "careersUrl": "https://www.comeet.com/jobs/kaltura/E2.00D/",
+  "originalUrl": "https://www.comeet.com/jobs/kaltura/E2.00D/grc-specialist/B3.B6E",
+  "exportCompanyName": "Kaltura",
+  "sourceNote": "User-requested policy: postedDate uses time_updated, not publication; two-month filtering uses update dates. Check workplace_type against location.is_remote. Employment type only from explicit source fields. User-supplied website: http://kaltural.com. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence. Board identifies the official website as https://corp.kaltura.com/, not the supplied kaltural.com.",
+  "options": {
+    "mode": "static",
+    "maxPages": 1000
+  }
+}

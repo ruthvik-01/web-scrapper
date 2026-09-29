@@ -1,0 +1,30 @@
+{
+  "slug": "mayra-property-services",
+  "company": "Mayra Property Services",
+  "sourceUrl": "https://wearemayra.com/en/karriere",
+  "status": "blocked_employer_mismatch",
+  "codeFile": "scripts/export-four-2026-09-28.ts",
+  "entrypoint": "main",
+  "deliveryFolder": "output/2026-09-28-verified/jobs company wise/mayra-property-services",
+  "note": "BLOCKED: Source belongs to Mayra Group GmbH (German holding company), not 'Mayra Property Services'. All 8 jobs are in Stuttgart, Germany with no UK operations. Employer identity mismatch confirmed.",
+  "industry": "Unknown (requested: Property Services)",
+  "state": "Unknown",
+  "city": "Unknown",
+  "country": "Unknown (likely UK if valid company)",
+  "companyUrl": "Unknown",
+  "actualEmployer": {
+    "name": "Mayra Group GmbH",
+    "location": "Holzgerlingen, Germany",
+    "businessType": "Holding company (Hospitality & IT Services)",
+    "subsidiaries": [
+      "Mayra Gastro GmbH (Crusty Slices franchise)",
+      "EOS MSP GmbH (IT managed services)"
+    ],
+    "jobsFound": 8,
+    "ukJobsFound": 0,
+    "allJobsLocation": "Stuttgart, Germany"
+  },
+  "blockerReason": "Employer identity mismatch - supplied careers URL belongs to a German employer with no UK operations",
+  "lastChecked": "2026-09-28",
+  "checkedBy": "Luffy (agent 7b5af7d4-e73a-443f-986b-a23217b53620)"
+}

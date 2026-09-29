@@ -1,34 +1,31 @@
 {
-  "name": "uk-company-job-scraper",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "description": "Scrape one company careers URL at a time into recent UK job rows.",
-  "engines": {
-    "node": ">=22"
-  },
-  "scripts": {
-    "ui": "tsx server/main.ts",
-    "scrape": "tsx scraper.ts",
-    "batch": "tsx batch.ts",
-    "package:batch": "tsx scripts/package-batch.ts",
-    "scrape:five": "tsx scripts/run-five-companies.ts",
-    "typecheck": "tsc --noEmit",
-    "test": "tsx --test tests/*.test.ts",
-    "test:browser": "tsx --test tests/*.integration.ts",
-    "check": "npm run typecheck && npm test && npm run test:browser"
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
-    "cheerio": "1.2.0",
-    "fflate": "0.8.3",
-    "playwright": "1.63.0",
-    "read-excel-file": "9.3.10",
-    "robots-parser": "3.0.1",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+    "cheerio": "^1.2.0",
+    "playwright": "^1.63.0"
   },
-  "devDependencies": {
-    "@types/node": "26.5.1",
-    "tsx": "4.23.13",
-    "typescript": "7.0.2"
-  }
+  "name": "uk-scrapper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruthvik-01/web-scrapper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ruthvik-01/web-scrapper/issues"
+  },
+  "homepage": "https://github.com/ruthvik-01/web-scrapper#readme",
+  "description": ""
 }

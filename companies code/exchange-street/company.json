@@ -1,0 +1,12 @@
+{
+  "name": "Exchange Street Claims & Financial Services",
+  "slug": "exchange-street",
+  "careersUrl": "https://www.exchange-street.co.uk/candidate/search/results",
+  "sourceNote": "ruhvik-new.xlsx selection for the 22-9-26 batch. Engine: jev auto.",
+  "options": {
+    "mode": "auto",
+    "maxPages": 1000,
+    "delayMs": 800,
+    "timeoutMs": 30000
+  }
+}

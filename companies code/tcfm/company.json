@@ -1,0 +1,12 @@
+{
+  "name": "TCFM",
+  "slug": "tcfm",
+  "careersUrl": "https://careers.tcfm.co.uk/vacancies/vacancy-search-results.aspx",
+  "sourceNote": "ruhvik-new.xlsx selection for the 22-9-26 batch. Engine: jev auto.",
+  "options": {
+    "mode": "auto",
+    "maxPages": 1000,
+    "delayMs": 800,
+    "timeoutMs": 30000
+  }
+}

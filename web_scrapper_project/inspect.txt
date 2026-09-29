@@ -1,0 +1,34 @@
+=== LTF detail ===
+title: SEN Teaching Assistant – Year 6 Behaviour Support - Long Term Futures
+ld+json count: 1
+  ld @type:  keys: @context,@graph
+  has 'Location': ... e xl-max:bg-navy"> <h2 id="modalHeading" class="copy-xl font-medium mb-10 xl:mt-25"></h2> <p id="modalBody" class="copy-lg text-grey-300 mb-
+  has 'Posted': ... v class="container"> <div class="row"> <div class="column w-full lg:w-9/12 xl:w-6/12 mx-auto"> <section class="job-hero mb-55"> <p class="mb
+  has 'Date': ... dow.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("set","linker",{"domains":["www.longtermfutures.co.uk
+  has 'date': ... ","CH","CY","CZ","DE","DK","EE","ES","FI","FR","GB","GR","HR","HU","IE","IS","IT","LI","LT","LU","LV","MT","NL","NO","PL","PT","RO","SE","SI
+  has 'ref': ... ,chrome=1"> <meta name="viewport" content="width=device-width,initial-scale=1.0"> <meta name="format-detection" content="telephone=no"> <lin
+  has 'Contract': ... >Weekly Pay:</strong> £460 to £500<br><strong>Hours:</strong> Monday to Friday, Term Time Only<br><strong>Start Date:</strong> <strong>ASAP<
+  has 'Hours': ... N Teaching Assistant – Year 6 Behaviour Support</strong></p><p><strong>Location:</strong> Coventry, CV6<br><strong>Weekly Pay:</strong> £460
+  marker found: class="job
+
+=== Morgan Law /jobs/ ===
+title: Find Jobs | Morgan Law
+forms: ["<form data-sf-form-id='950' data-is-rtl='0' data-maintain-state='' data-results-url='https://morgan-law.com/jobs/' data-ajax-form-url='https://www.morgan-law.co"]
+ajaxurl: https://www.morgan-law.com/wp-admin/admin-ajax.php
+data-job-id: []
+job_slug: []
+scripts (>30 chars): 16
+  script candidate: {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://embadotest.co.uk/mlbb/jobs/","url":"https://embadotest.co.uk/mlbb/jobs/","name":"Jobs | Morgan Law","isPartOf":{"@id":"http
+  script candidate: document.addEventListener( 'wpcf7mailsent', function( event ) {
+	if ( '1435' == event.detail.contactFormId ) {
+		location = 'https://www.morgan-law.com/jobs/application-step-2/thank-you/';
+	} else 
+  script candidate: /*! This file is auto-generated */
+var e="script#wp-emoji-settings",t=document.querySelector(e);if(!(t instanceof HTMLScriptElement))throw new Error("Element missing: "+e);const r=JSON.parse(t.text),s
+
+=== Michael Page detail ===
+status: 200 len: 88068
+ld+json count: 1
+  parse err: {"@context" : "http://schema.org/","@type" : "JobPosting","title" : "Digital Marketing Executive","a
+meta desc: As a Digital Marketing Executive near Witney, you&#039;ll play an essential role in supporting the marketing team within the manufacturing i
+job-related classes: ["search-empty-result page-new-menu page-job-detail-digital-marketing-executive-ref-jn-092026-7105505 section-job-detail site-name-MP_GB i18n-en single-language desktop-with-header-scroll addthis-js-on-job-detail-page role--anonymous sidebar-second one-sidebar page-node-type-job-advert mp-new-job-detail-variant-1","job-search ","job-search-icon","saved-jobs ","saved-job-aria-label","saved-jobs-count ","th-anon-job-alert block-mp-personalisation block block-thanonymousjobalertblock","use-ajax create-job-alert","job-detail-page","views-exposed-form views-exposed-form-job-search-page job-search-form job_search-page_1 block-views block block-exposedformjob-searchpage-1"]

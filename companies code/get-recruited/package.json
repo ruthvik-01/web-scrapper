@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "scrape": "node universal_scraper/node_modules/tsx/dist/cli.mjs scrape.ts"
+  }
+}

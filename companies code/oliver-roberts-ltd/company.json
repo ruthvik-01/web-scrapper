@@ -1,0 +1,33 @@
+{
+  "slug": "oliver-roberts-ltd",
+  "company": "oliver roberts ltd",
+  "companiesHouseNumber": "10596416",
+  "sicCode": "47770",
+  "sicDescription": "Retail sale of watches and jewellery in specialised stores",
+  "sourceUrl": "https://find-and-update.company-information.service.gov.uk/company/10596416/filing-history",
+  "sourceUrlType": "Companies House Filing History (NOT a careers board)",
+  "status": "blocked",
+  "blockedReason": "Employer Identity Mismatch",
+  "codeFile": "scrape-oliver.ts",
+  "entrypoint": "main",
+  "deliveryFolder": "output/2026-09-25-main-uk-scrape/oliver-roberts-ltd",
+  "industry": "Retail (Watches & Jewellery)",
+  "state": "Greater London",
+  "city": "London",
+  "country": "United Kingdom",
+  "investigation": {
+    "checkDate": "2026-09-25",
+    "alternativeSource": "https://oliverinside.ai/careers",
+    "alternativeEmployer": "OLIVER Agency",
+    "employerMismatch": true,
+    "employerNotes": [
+      "OLIVER ROBERTS LTD (10596416) is a retail watch/jewellery business",
+      "OLIVER Agency (oliverinside.ai) is a marketing/creative agency - separate entity",
+      "Per MAIN_UK_Scrape.md Rule 1: Never relabel another employer's jobs",
+      "22 UK jobs available from OLIVER Agency but CANNOT be attributed to OLIVER ROBERTS LTD"
+    ]
+  },
+  "unblockOwner": "Task Lead",
+  "unblockAction": "Clarify intended employer or provide valid careers source for OLIVER ROBERTS LTD",
+  "note": "CRITICAL: Supplied Companies House URL is NOT a careers board. The oliver.agency domain redirects to OLIVER Agency (marketing), which is a different company from OLIVER ROBERTS LTD (retail)."
+}

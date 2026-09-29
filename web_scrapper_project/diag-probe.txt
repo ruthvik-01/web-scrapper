@@ -1,0 +1,18 @@
+LTF external_job sitemap: https://www.longtermfutures.co.uk/external_job-sitemap.xml
+LTF external_job URLs: 965
+  samples: ["https://www.longtermfutures.co.uk/external_job/sen-teaching-assistant-year-6-behaviour-support-337/","https://www.longtermfutures.co.uk/external_job/ks2-teaching-assistant-336/","https://www.longtermfutures.co.uk/external_job/reception-teaching-assistant-335/","https://www.longtermfutures.co.uk/external_job/sports-and-behaviour-mentor-338/","https://www.longtermfutures.co.uk/external_job/11-teaching-assistant-245/"]
+LTF detail: https://www.longtermfutures.co.uk/external_job/sen-teaching-assistant-year-6-behaviour-support-337/ status 200 len 168929
+  ld+json blocks: 1
+    @type:  title: 
+  dd samples: []
+  meta desc: Support Year 6 pupils with challenging behaviour as an SEN Teaching Assistant in Coventry (CV6). Long-term role, ASAP st
+WROTE ltf-joburls.txt (965 urls)
+MORGAN LAW /jobs/ status 200 len 85476
+  ajaxurl attr: https://www.morgan-law.com/wp-admin/admin-ajax.php ajaxurl var: none
+  wp-json paths: ["wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.morgan-law.com%2Fjobs%2F","wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.morgan-law.com%2Fjobs%2F&#038;format=xml","wp-json/wp/v2/pages/7"]
+  nonce: none
+  post_type: none
+MICHAEL PAGE: total hrefs 486 job-detail links 30
+  samples: ["https://www.michaelpage.co.uk/job-detail/head-governance/ref/jn-092026-7098692","https://www.michaelpage.co.uk/job-detail/territory-manager/ref/jn-092026-7096376","https://www.michaelpage.co.uk/job-detail/territory-manager/ref/jn-092026-7096380","https://www.michaelpage.co.uk/job-detail/business-development-manager/ref/jn-092026-7095385","https://www.michaelpage.co.uk/job-detail/chief-digital-officer/ref/jn-082026-7083034","https://www.michaelpage.co.uk/job-detail/procurement-transformation-lead/ref/jn-072026-7063435"]
+  next-page: https://www.michaelpage.co.uk/jobs?page=1
+  loadMore btn: none

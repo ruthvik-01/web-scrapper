@@ -1,0 +1,18 @@
+{
+  "slug": "mega-food-centre",
+  "company": "Mega food centre",
+  "sourceUrl": "https://www.megacentrerayleigh.co.uk/recruitment",
+  "status": "delivered",
+  "codeFile": "scripts/export-four-2026-09-28.ts",
+  "entrypoint": "scrapeMegaCentre",
+  "deliveryFolder": "output/2026-09-28-verified/jobs company wise/mega-food-centre",
+  "note": "WordPress site with single Café Lead vacancy. Employer: The MegaCentre Rayleigh Ltd (charity-owned).",
+  "industry": "Hospitality & Food Service",
+  "state": "Essex",
+  "city": "Rayleigh",
+  "country": "United Kingdom",
+  "companyUrl": "https://www.megacentrerayleigh.co.uk/",
+  "lastScraped": "2026-09-28",
+  "jobsExported": 1,
+  "delivered": "2026-09-25T01:48:00Z"
+}

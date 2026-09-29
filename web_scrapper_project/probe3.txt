@@ -1,0 +1,44 @@
+=== LTF detail structure ===
+h1: none
+strong fields:
+  SEN Teaching Assistant – Year 6 Behaviour Support = 
+  Location: = Coventry, CV6
+  Weekly Pay: = £460 to £500
+  Hours: = Monday to Friday, Term Time Only
+  Start Date: = 
+  ASAP = 
+  Contract: = Long-Term, Temp-to-Perm
+  Step into a crucial role supporting Year 6 boys with challenging behaviour, helping them grow, refocus and achieve in a school fully committed to nurturing every learner. = 
+  SEN Teaching Assistant = to support a small group of Year 6 boys with challenging behaviour. Th
+  What the School is Looking For = 
+  Qualifications: = Level 2 or Level 3 Supporting Teaching &amp; Learning (or equivalent)•
+  Experience: = At least 6 months working with primary-age children, ideally in Year 6
+  Skills: = Proven behaviour-management strategies, small-group or 1:1 interventio
+  Knowledge: = Understanding of inclusive practice, behaviour support frameworks, and
+  About the School = 
+  ‘Good’ = by Ofsted for Quality of Education and Behaviour &amp; Attitudes.• Str
+  How to Apply = 
+  India at Long Term Futures = today.
+  If this isn’t the right role for you, please get in touch with India @ Long Term Futures to discuss other vacancies. = 
+    = 
+
+=== Morgan Law WP REST API ===
+  https://www.morgan-law.com/wp-json/wp/v2/job?_per_page=5 -> status 404 len 114
+    body: {"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}
+  https://www.morgan-law.com/wp-json/wp/v2/jobs?_per_page=5 -> status 404 len 114
+    body: {"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}
+  https://www.morgan-law.com/wp-json/wp/v2/job?_embed&per_page=5 -> status 404 len 114
+    body: {"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}
+
+=== Louis Vuitton ===
+  sitemap status: 403 len: 1027
+  body: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML><HEAD><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>ERROR
+  job detail status: 200 len: 124718
+  ld+json blocks: 2
+    @type: "JobPosting" title: Client Advisor | Heathrow loc: {"@type":"Place","address":{"addressLocality":"London","addressCountry":"United Kingdom"}}
+    @type: "BreadcrumbList" title:  loc: 
+
+=== Michael Page detail JSON-LD ===
+  PARSE ERR: Bad control character in string literal in JSON at position 717 (line 1 column 718) raw: {"@context" : "http://schema.org/","@type" : "JobPosting","title" : "Digital Marketing Executive","additionalType" : "Fe

@@ -1,0 +1,12 @@
+{
+  "name": "Trullion",
+  "slug": "trullion",
+  "careersUrl": "https://www.comeet.com/jobs/trullion/07.000/",
+  "originalUrl": "https://www.comeet.com/jobs/trullion/07.000/product-data-analyst/51.B65",
+  "exportCompanyName": "Trullion",
+  "sourceNote": "User-requested policy: postedDate uses time_updated, not publication; two-month filtering uses update dates. Check workplace_type against location.is_remote. Employment type only from explicit source fields. User-supplied website: http://trullion.com/. Scope follows the supplied Comeet board; company metadata is not used as job-location evidence.",
+  "options": {
+    "mode": "static",
+    "maxPages": 1000
+  }
+}

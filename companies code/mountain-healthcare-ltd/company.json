@@ -1,0 +1,17 @@
+{
+  "slug": "mountain-healthcare-ltd",
+  "company": "Mountain Healthcare Ltd",
+  "sourceUrl": "https://mountainhealthcare.co.uk/careers",
+  "status": "delivered",
+  "codeFile": "scripts/export-four-2026-09-28.ts",
+  "entrypoint": "main",
+  "deliveryFolder": "output/2026-09-28-verified/jobs company wise/mountain-healthcare-ltd",
+  "note": "27 current UK vacancies from the official Occy board. The dated exporter uses a preserved board snapshot in source-cache.",
+  "lastScraped": "2026-09-28",
+  "jobsExported": 27,
+  "industry": "Healthcare & Social Care",
+  "state": "Buckinghamshire",
+  "city": "Milton Keynes",
+  "country": "United Kingdom",
+  "companyUrl": "https://mountainhealthcare.co.uk/"
+}

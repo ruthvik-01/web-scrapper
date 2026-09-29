@@ -1,0 +1,21 @@
+{
+  "slug": "no35-mackenzie-walk",
+  "company": "No 35 Mackenzie Walk",
+  "sourceUrl": "https://careers.portobellobrewery.com/venue/no35-mackenzie-walk",
+  "status": "scraped",
+  "codeFile": "scrape-no35.ts",
+  "entrypoint": "main",
+  "deliveryFolder": "output/2026-09-25-main-uk-scrape/no35-mackenzie-walk",
+  "note": "Portobello Pubs and Bars venue in Canary Wharf, London E14 4PH. Talent Funnel ATS. Valid careers source - venue page on Portobello Brewery careers board. No current vacancies as of 2026-09-25.",
+  "industry": "Other Services",
+  "state": "Greater London",
+  "city": "London",
+  "country": "United Kingdom",
+  "companyUrl": "https://no35mackenziewalk.co.uk/",
+  "boardEmployer": "Portobello Pubs and Bars",
+  "ats": "Talent Funnel",
+  "scrapedAt": "2026-09-25",
+  "exported": 0,
+  "excluded": 0,
+  "sourceVerified": true
+}
