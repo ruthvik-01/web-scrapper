@@ -1,0 +1,525 @@
+HCMDirect Quality Validation Report - Eddy County
+==================================================
+Total jobs processed: 24
+
+Job 1: Careers At Eddy County New Mexico (ID: https://eddy.hrmdirect.com/employment/job-openings.php?sort=da&&search=true)
+  URL: https://eddy.hrmdirect.com/employment/job-openings.php?sort=da&&search=true
+  Discrepancies found: 4
+    Field 'title': VALUE_MISMATCH
+      Original: Careers At Eddy County New Mexico
+      Validated: Careers At Eddy County, New Mexico
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: Career Opportunities with Eddy County, New Mexico Current job opportunities are posted here as they ...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 87,089.60 - 96,116.80 Carlsbad NM
+      Validated: $22.06 - $24.35 PER HOUR
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 2: Careers At Eddy County New Mexico (ID: https://eddy.hrmdirect.com/employment/job-openings.php?sort=pa&&search=true)
+  URL: https://eddy.hrmdirect.com/employment/job-openings.php?sort=pa&&search=true
+  Discrepancies found: 4
+    Field 'title': VALUE_MISMATCH
+      Original: Careers At Eddy County New Mexico
+      Validated: Careers At Eddy County, New Mexico
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: Career Opportunities with Eddy County, New Mexico Current job opportunities are posted here as they ...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 87,089.60 - 96,116.80 Carlsbad NM
+      Validated: $22.06 - $24.35 PER HOUR
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 3: Careers At Eddy County New Mexico (ID: https://eddy.hrmdirect.com/employment/job-openings.php?sort=ca&&search=true)
+  URL: https://eddy.hrmdirect.com/employment/job-openings.php?sort=ca&&search=true
+  Discrepancies found: 4
+    Field 'title': VALUE_MISMATCH
+      Original: Careers At Eddy County New Mexico
+      Validated: Careers At Eddy County, New Mexico
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: Career Opportunities with Eddy County, New Mexico Current job opportunities are posted here as they ...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 87,089.60 - 96,116.80 Carlsbad NM
+      Validated: $21.00 - $23.18 PER HOUR
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 4: Careers At Eddy County New Mexico (ID: https://eddy.hrmdirect.com/employment/job-openings.php?sort=sa&&search=true)
+  URL: https://eddy.hrmdirect.com/employment/job-openings.php?sort=sa&&search=true
+  Discrepancies found: 4
+    Field 'title': VALUE_MISMATCH
+      Original: Careers At Eddy County New Mexico
+      Validated: Careers At Eddy County, New Mexico
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: Career Opportunities with Eddy County, New Mexico Current job opportunities are posted here as they ...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 87,089.60 - 96,116.80 Carlsbad NM
+      Validated: $43.99 - $48.55 PER HOUR
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 5: APPRAISER I STARTING PAY 2206 2435 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783433)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783433&req_loc=1425673&&#job
+  Discrepancies found: 7
+    Field 'title': VALUE_MISMATCH
+      Original: APPRAISER I STARTING PAY 2206 2435 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: APPRAISER I
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: THIS POSITION DOES REQUIRE A TYPING TEST. THIS POSITION DOES REQUIRE A TYPING TEST. TO VIEW FULL JOB...
+    Field 'employmentType': VALUE_MISMATCH
+      Original: s of climates and terrain. Employee will assist co-workers in assessing every property within the county, determine prop
+      Validated: 
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 6: GIS COORDINATOR STARTING PAY 3354 3702 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783279)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783279&req_loc=1425303&&#job
+  Discrepancies found: 7
+    Field 'title': VALUE_MISMATCH
+      Original: GIS COORDINATOR STARTING PAY 3354 3702 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: GIS COORDINATOR
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION, Click link below: TO VIEW FULL JOB DESCRIPTION, Click link below: GIS ...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 33.54- 37.02
+      Validated: $33.54 - $37.02 PER HOUR
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 7: DETENTION NURSE FT STARTING PAY 4399 4855 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783444)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783444&req_loc=1425677&&#job
+  Discrepancies found: 7
+    Field 'title': VALUE_MISMATCH
+      Original: DETENTION NURSE FT STARTING PAY 4399 4855 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: DETENTION NURSE
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION,Click link below: TO VIEW FULL JOB DESCRIPTION, Click link below: DETEN...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 
+      Validated: $43.99 - $48.55 PER HOUR
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 8: DETENTION OFFICER STARTING PAY 2621 2893 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783449)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783449&req_loc=1425678&&#job
+  Discrepancies found: 7
+    Field 'title': VALUE_MISMATCH
+      Original: DETENTION OFFICER STARTING PAY 2621 2893 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: DETENTION OFFICER
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION -Click link below: TO VIEW FULL JOB DESCRIPTION -Click link below: Clic...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 
+      Validated: $26.21 - $28.93 PER HOUR
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 9: MAINTENANCE TECH II STARTING PAY 2261 2495 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783301)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783301&req_loc=1425308&&#job
+  Discrepancies found: 6
+    Field 'title': VALUE_MISMATCH
+      Original: MAINTENANCE TECH II STARTING PAY 2261 2495 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: MAINTENANCE TECH II
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: This position works directly under the Facility manager and performs a wide variety of skilled tasks...
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 10: GRANTS ADMINISTRATOR STARTING PAY 3193 3524 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783282)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783282&req_loc=1425304&&#job
+  Discrepancies found: 6
+    Field 'title': VALUE_MISMATCH
+      Original: GRANTS ADMINISTRATOR STARTING PAY 3193 3524 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: GRANTS ADMINISTRATOR
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION, Click link below: TO VIEW FULL JOB DESCRIPTION, Click link below: GRAN...
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 11: FIREFIGHTEREMTCERTIFIED STARTING PAY 2375 2621 PER HOUR, Careers At Eddy County New Mexico (ID: 3783460)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783460&req_loc=1425681&&#job
+  Discrepancies found: 7
+    Field 'title': VALUE_MISMATCH
+      Original: FIREFIGHTEREMTCERTIFIED STARTING PAY 2375 2621 PER HOUR, Careers At Eddy County New Mexico
+      Validated: FIREFIGHTER/EMT-CERTIFIED
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION, Click link below: FIREFIGHTER/EMT-CERT JOB SPEC 07.2026 FIREFIGHTER/EM...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 
+      Validated: $23.75 - $26.21 PER HOUR
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 12: FIRE LIEUTENANT STARTING PAY 2435 2687 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783456)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783456&req_loc=1425680&&#job
+  Discrepancies found: 7
+    Field 'title': VALUE_MISMATCH
+      Original: FIRE LIEUTENANT STARTING PAY 2435 2687 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: FIRE LIEUTENANT
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION,Click link below: TO VIEW FULL JOB DESCRIPTION, Click link below: FIRE ...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 
+      Validated: $24.35 - $26.87 PER HOUR
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 13: EMS SPECIALISTHIGHWAY SAFETY TEAM SEE ATTACHED FOR RATE OF PAY, Careers At Eddy County New Mexico (ID: 3783451)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783451&req_loc=1425679&&#job
+  Discrepancies found: 5
+    Field 'title': VALUE_MISMATCH
+      Original: EMS SPECIALISTHIGHWAY SAFETY TEAM SEE ATTACHED FOR RATE OF PAY, Careers At Eddy County New Mexico
+      Validated: EMS SPECIALIST-HIGHWAY SAFETY TEAM (SEE ATTACHED FOR RATE OF PAY)
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 14: INFORMATION TECHNOLOGY SPECIALIST I STARTING PAY 26872965 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783287)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783287&req_loc=1425305&&#job
+  Discrepancies found: 7
+    Field 'title': VALUE_MISMATCH
+      Original: INFORMATION TECHNOLOGY SPECIALIST I STARTING PAY 26872965 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: INFORMATION TECHNOLOGY SPECIALIST I
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION, Click link below: TO VIEW FULL JOB DESCRIPTION, Click link below: IT S...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 26.87 - 29.65
+      Validated: $26.87-$29.65 PER HOUR
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 15: INTERNAL ONLY ASSISTANT INFORMATION TECHNOLOGY DIRECTOR ANNUAL SALARY 8708960 9611680, Careers At Eddy County New Mexico (ID: 3785414)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3785414&req_loc=1428060&&#job
+  Discrepancies found: 7
+    Field 'title': VALUE_MISMATCH
+      Original: INTERNAL ONLY ASSISTANT INFORMATION TECHNOLOGY DIRECTOR ANNUAL SALARY 8708960 9611680, Careers At Eddy County New Mexico
+      Validated: INTERNAL ONLY: ASSISTANT INFORMATION TECHNOLOGY DIRECTOR
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: Key Responsibilities Key Responsibilities Leadership and Management Leadership and Management Lead, ...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 87,089.60 - 96,116.80
+      Validated: 
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 16: LIGHT EQUIPMENT OPERATORARTESIA STARTING PAY 2206 2435 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783290)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783290&req_loc=1425306&&#job
+  Discrepancies found: 6
+    Field 'title': VALUE_MISMATCH
+      Original: LIGHT EQUIPMENT OPERATORARTESIA STARTING PAY 2206 2435 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: LIGHT EQUIPMENT OPERATOR-ARTESIA
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION, PLEASE CLICK LINK BELOW:
+    Field 'location': VALUE_MISMATCH
+      Original: Artesia, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Artesia
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 17: LIGHT EQUIPMENT OPERATORCARLSBAD STARTING PAY 2206 2435 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783299)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783299&req_loc=1425307&&#job
+  Discrepancies found: 6
+    Field 'title': VALUE_MISMATCH
+      Original: LIGHT EQUIPMENT OPERATORCARLSBAD STARTING PAY 2206 2435 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: LIGHT EQUIPMENT OPERATOR-CARLSBAD
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION, PLEASE CLICK LINK BELOW:
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad , NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 18: MECHANIC ARTESIA STARTING PAY 2558 2823 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783317)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783317&req_loc=1425309&&#job
+  Discrepancies found: 5
+    Field 'title': VALUE_MISMATCH
+      Original: MECHANIC ARTESIA STARTING PAY 2558 2823 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: MECHANIC
+    Field 'location': VALUE_MISMATCH
+      Original: Artesia, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Artesia
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 19: ROAD FOREMAN STARTING PAY 3115 3438 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783323)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783323&req_loc=1425310&&#job
+  Discrepancies found: 5
+    Field 'title': VALUE_MISMATCH
+      Original: ROAD FOREMAN STARTING PAY 3115 3438 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: ROAD FOREMAN
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad , NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 20: TRUCK DRIVERLABORER STARTING PAY 2100 2318 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783326)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783326&req_loc=1425311&&#job
+  Discrepancies found: 5
+    Field 'title': VALUE_MISMATCH
+      Original: TRUCK DRIVERLABORER STARTING PAY 2100 2318 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: TRUCK DRIVER/LABORER
+    Field 'location': VALUE_MISMATCH
+      Original: Artesia, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Artesia
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 21: DEPUTY SHERIFF IICERTIFIED STARTING PAY 3115 3438 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783424)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783424&req_loc=1424538&&#job
+  Discrepancies found: 7
+    Field 'title': VALUE_MISMATCH
+      Original: DEPUTY SHERIFF IICERTIFIED STARTING PAY 3115 3438 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: DEPUTY SHERIFF II-CERTIFIED
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION -Click link below: TO VIEW FULL JOB DESCRIPTION - Click link below: DEP...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 
+      Validated: $31.15- $34.38 PER HOUR
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 22: DEPUTY SHERIFF II Domestic Violence Enhanced Response Team DVERT member 3115 3438 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3783441)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3783441&req_loc=1425676&&#job
+  Discrepancies found: 7
+    Field 'title': VALUE_MISMATCH
+      Original: DEPUTY SHERIFF II Domestic Violence Enhanced Response Team DVERT member 3115 3438 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: DEPUTY SHERIFF II
+    Field 'description': DESCRIPTION_TRUNCATED_OR_INCOMPLETE
+      Original: Career Opportunities with Eddy County, New Mexico Careers At Eddy County, New Mexico Current job opp...
+      Validated: TO VIEW FULL JOB DESCRIPTION -Click link below: TO VIEW FULL JOB DESCRIPTION - Click link below: DEP...
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 
+      Validated: $31.15 - $34.38 PER HOUR
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 23: INTERNAL ONLY SHERIFFS INVESTIGATOR 4085 PER HOUR DOE, Careers At Eddy County New Mexico (ID: 3786858)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3786858&req_loc=1430626&&#job
+  Discrepancies found: 6
+    Field 'title': VALUE_MISMATCH
+      Original: INTERNAL ONLY SHERIFFS INVESTIGATOR 4085 PER HOUR DOE, Careers At Eddy County New Mexico
+      Validated: INTERNAL ONLY: SHERIFFS
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 40.85 PER HOUR
+      Validated: 
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US
+
+Job 24: INTERNAL ONLY SHERIFFS CORPORAL 4085 PER HOUR , Careers At Eddy County New Mexico (ID: 3787273)
+  URL: https://eddy.hrmdirect.com/employment/job-opening.php?req=3787273&req_loc=1431040&&#job
+  Discrepancies found: 6
+    Field 'title': VALUE_MISMATCH
+      Original: INTERNAL ONLY SHERIFFS CORPORAL 4085 PER HOUR , Careers At Eddy County New Mexico
+      Validated: INTERNAL ONLY: SHERIFFS
+    Field 'salaryRange': VALUE_MISMATCH
+      Original: 40.85 PER HOUR
+      Validated: 
+    Field 'location': VALUE_MISMATCH
+      Original: Carlsbad, NM
+      Validated: 
+    Field 'city': VALUE_MISMATCH
+      Original: Carlsbad
+      Validated: 
+    Field 'state': VALUE_MISMATCH
+      Original: NM
+      Validated: 
+    Field 'country': VALUE_MISMATCH
+      Original: 
+      Validated: US

@@ -1,0 +1,9 @@
+Company: Eddy County
+Jobs in original file: 24
+Removed as listing/search-page contamination (Step 0): 4
+Jobs evaluated as real postings: 20
+Jobs kept: 20
+Jobs removed (Step 1, by rule violated):
+
+Step 0 breakdown:
+  jobId equals jobUrl: 4

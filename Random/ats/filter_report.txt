@@ -1,0 +1,9 @@
+Company: Now Optics
+Jobs in original file: 311
+Removed as listing/search-page contamination (Step 0): 3
+Jobs with title/description boilerplate stripped (Step 1): Titles - 299, Descriptions - 308
+Jobs with extraction-artifact fixes applied (Step 2): 5
+Fields nulled for content-sanity failure, by field (Step 3): {}
+Jobs removed at final check (Step 4, by rule violated): {'Duplicate jobId': 27, 'Description too short after cleaning': 2}
+Jobs kept: 279
+Jobs with salary mentioned in description but salaryRange empty (flagged, not removed): 0

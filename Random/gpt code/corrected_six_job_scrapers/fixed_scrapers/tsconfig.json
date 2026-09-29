@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+    "noEmit": true
+  },
+  "include": [
+    "arona/arona_scraper.ts",
+    "cityofalamogordo/alamogordo_scraper.ts",
+    "farrow/farrow_ball_scraper.ts",
+    "garver/garver_scraper.ts",
+    "socorro/socorro_scraper.ts",
+    "uscourts/uscourts_scraper.ts"
+  ]
+}

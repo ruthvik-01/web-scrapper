@@ -1,0 +1,35 @@
+{
+  "name": "job-scrapers",
+  "version": "1.0.0",
+  "description": "Job scraping tools for multiple companies",
+  "main": "index.js",
+  "scripts": {
+    "scrape-arona": "npx ts-node fixed_scrapers/arona/arona_scraper.ts",
+    "scrape-alamogordo": "npx ts-node fixed_scrapers/cityofalamogordo/alamogordo_scraper.ts",
+    "scrape-farrow": "npx ts-node fixed_scrapers/farrow/farrow_ball_scraper.ts",
+    "scrape-socorro": "npx ts-node fixed_scrapers/socorro/socorro_scraper.ts",
+    "scrape-garver": "npx ts-node fixed_scrapers/garver/garver_scraper.ts",
+    "scrape-uscourts": "npx ts-node fixed_scrapers/uscourts/uscourts_scraper.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "scraper",
+    "job",
+    "playwright",
+    "cheerio"
+  ],
+  "author": "Code Fixer",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "p-queue": "^7.4.1",
+    "playwright": "^1.40.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  }
+}

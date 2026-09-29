@@ -1,0 +1,13 @@
+{
+  "hooks": {
+    "startup": {
+      "pre": "Read d:\\Internship\\web\\UNIVERSAL_JOB_SCRAPER_REQUIREMENTS.md && Read d:\\Internship\\web\\.claude\\context.md"
+    },
+    "exit": {
+      "post": [
+        "If new site pattern discovered in this session, append it to d:\\Internship\\web\\UNIVERSAL_JOB_SCRAPER_REQUIREMENTS.md under section 18",
+        "Read d:\\Internship\\web\\.claude\\context.md, then append session summary with date, what happened, files touched, and any new learnings"
+      ]
+    }
+  }
+}
