@@ -63,11 +63,23 @@ function idFromUrl(value: string): string {
     const url = new URL(value);
     const match = /(?:^|[-/])(\d+)(?:\.[a-z0-9]+)?\/?$/i.exec(decodeURIComponent(url.pathname));
     if (match) return match[1]!;
+    const segments = decodeURIComponent(url.pathname).split("/").filter(Boolean);
+    const last = segments.at(-1) || "";
+    if (/(?:^|\/)positions?\/[^/]+\/?$/i.test(url.pathname) &&
+        /^[A-Za-z0-9_-]{12,}$/.test(last) && /\d/.test(last)) return last;
     for (const key of ["job", "job_id", "posting", "posting_id", "vacancy", "vacancy_id", "id"]) {
       const value = url.searchParams.get(key);
       if (value && /^\d+$/.test(value)) return value;
     }
     return "";
+  } catch { return ""; }
+}
+
+function vacancyIdFromUrl(value: string): string {
+  try {
+    const path = decodeURIComponent(new URL(value).pathname);
+    return /\/Jobs\/Advert\/(\d+)(?:\/|$)/i.exec(path)?.[1] ||
+      /\/vacanc(?:y|ies)\/[^/]*?-(\d+)\/?$/i.exec(path)?.[1] || "";
   } catch { return ""; }
 }
 
@@ -84,7 +96,8 @@ export function schemaJob(data: Record<string, unknown>, pageUrl: string, compan
       }
     }
   }
-  const url = canonicalUrl(text(data.url), pageUrl) || pageUrl;
+  const sourceUrl = text(data.url);
+  const url = canonicalUrl(sourceUrl, pageUrl) || pageUrl;
   let description = plainText(data.description);
   for (const [label, value] of [
     ["Responsibilities", data.responsibilities],
@@ -98,7 +111,7 @@ export function schemaJob(data: Record<string, unknown>, pageUrl: string, compan
     (typeof data.identifier === "string" ? text(data.identifier) : "");
   return {
     jobId: identifier && !/^(?:https?:)?\/\//i.test(identifier) && !identifier.startsWith("/")
-      ? identifier : idFromUrl(url) || idFromUrl(pageUrl),
+      ? identifier : sourceUrl ? idFromUrl(url) : "",
     title: plainText(data.title),
     description: description.trim(),
     roleDescription: plainText(data.description),
@@ -133,11 +146,7 @@ export function jobsFromJson(value: unknown, pageUrl: string, company = "", requ
     for (const child of Object.values(data)) visit(child, depth + 1);
   }
   visit(value, 0);
-  return jobs.map(job => ({
-    ...job,
-    jobId: job.jobId && !/^(?:https?:)?\/\//i.test(job.jobId) && !job.jobId.startsWith("/")
-      ? job.jobId : idFromUrl(job.jobId || "") || idFromUrl(job.jobUrl) || idFromUrl(pageUrl),
-  }));
+  return jobs;
 }
 
 export interface Selectors {
@@ -291,6 +300,26 @@ export function extractJobs(html: string, url: string, company = "", selectors?:
     }
   }
   if (!jobs.length && /\/(?:jobs?|careers?|vacanc(?:y|ies)|positions?|roles?)\//i.test(new URL(url).pathname)) {
+    const roleTitle = $('main h1.job-title').first();
+    const roleBody = roleTitle.parent().children('div').filter((_, node) => plainText($(node).html()).length >= 40).first();
+    const roleDescription = plainText(roleBody.html());
+    const roleMetadata = $('#position-info-box .panel-body, .job-metadata, .position-metadata').first()
+      .find('p').map((_, node) => $(node).text().trim()).get().join('\n');
+    const roleLocation = /^Location\s*:\s*(.+)$/im.exec(roleMetadata)?.[1]?.trim() || '';
+    if (roleTitle.length && roleDescription && roleLocation) {
+      const postcode = /\b[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}\b/i.exec(roleDescription)?.[0] || '';
+      const explicitUk = /(?:,\s*|\b)(?:UK|United Kingdom|GB)$/i.test(roleLocation);
+      const verifiedUk = Boolean(postcode || explicitUk);
+      const city = verifiedUk ? roleLocation.split(/\s*[-,]\s*/)[0]?.trim() || '' : '';
+      jobs.push({ title: roleTitle.text().trim(), description: roleDescription, roleDescription,
+        jobUrl: url, company, locations: [{ location: roleLocation, city, country: verifiedUk ? 'UK' : '', postcode }],
+        jdDeadline: /^Closing Date\s*:\s*(.+)$/im.exec(roleMetadata)?.[1]?.trim() || '',
+        salaryRange: /^Salary\s*:\s*(.+)$/im.exec(roleMetadata)?.[1]?.trim() || '',
+        employmentType: /^Contract Type\s*:\s*(.+)$/im.exec(roleMetadata)?.[1]?.trim() || '',
+        ats: detectAts(url) });
+    }
+  }
+  if (!jobs.length && /\/(?:jobs?|careers?|vacanc(?:y|ies)|positions?|roles?)\//i.test(new URL(url).pathname)) {
     const title = $('h1').first().text().trim();
     const article = $('main article, main .job-description, article').first();
     const description = plainText(article.html());
@@ -306,24 +335,45 @@ export function extractJobs(html: string, url: string, company = "", selectors?:
   }
   return jobs.map(job => ({
     ...job,
-    jobId: job.jobId && !/^(?:https?:)?\/\//i.test(job.jobId) && !job.jobId.startsWith("/")
-      ? job.jobId : idFromUrl(job.jobId || "") || idFromUrl(job.jobUrl) || idFromUrl(url),
+    jobId: vacancyIdFromUrl(job.jobUrl) || (job.jobId && !/^(?:https?:)?\/\//i.test(job.jobId) && !job.jobId.startsWith("/")
+      ? job.jobId : idFromUrl(job.jobId || "") || idFromUrl(job.jobUrl) || (jobs.length === 1 ? idFromUrl(url) : "")),
   }));
 }
 
 const careers = /(?:career|jobs?|vacanc|opportunit|openings?|join[-_ ]?us|positions?|recruit)/i;
-export function discoverLinks(html: string, pageUrl: string, selectors?: Selectors): string[] {
+export function discoverLinks(html: string, pageUrl: string, selectors?: Selectors, scopeUrl = pageUrl): string[] {
   const $ = load(html);
   const links = new Set<string>();
+  const scope = new URL(scopeUrl);
+  const scopedFields = ["locationsearch", "location", "country", "region", "category", "department", "keyword", "q"]
+    .filter(key => scope.searchParams.get(key));
+  const resolveLink = (href: string): string => {
+    // Quoted/escaped fragments in widgets are not actual anchor destinations.
+    if (/^[\s"'\\]|^%22|^mailto:/i.test(href)) return "";
+    const host = /^(?:www\.)?[^/?#]+\.[a-z]{2,}(?:[/?#]|$)/i.exec(href)?.[0]?.replace(/[/?#]$/, "");
+    if (host && host.replace(/^www\./i, "").toLowerCase() === scope.hostname.replace(/^www\./i, "").toLowerCase()) {
+      return canonicalUrl(`${scope.origin}/${href.slice(host.length).replace(/^\//, "")}`);
+    }
+    return canonicalUrl(href, pageUrl);
+  };
+  const inScope = (url: string): boolean => {
+    const target = new URL(url);
+    if (/^\/(?:industry|white-paper)(?:\/|$)/i.test(target.pathname) ||
+        /\/(?:download[a-z]*|privacypolicy|privacy[-_]policy|cookie[-_]policy|terms[-_]and[-_]conditions)(?:\/|$)/i.test(target.pathname) ||
+        target.searchParams.get("post_type") === "industry") return false;
+    if (!scopedFields.length || new URL(url).origin !== scope.origin) return true;
+    if (target.pathname === scope.pathname) return scopedFields.every(key => target.searchParams.get(key) === scope.searchParams.get(key));
+    return /\/(?:jobs?|vacanc(?:y|ies)|positions?|roles?)\/[^/]+/i.test(target.pathname);
+  };
   const add = (href: string | undefined): void => {
-    const url = href && canonicalUrl(href, pageUrl);
-    if (url && !/\.(?:pdf|zip|png|jpg|svg|mp4|docx?)(?:\?|$)/i.test(url) &&
+    const url = href && resolveLink(href);
+    if (url && inScope(url) && !/\.(?:pdf|zip|png|jpg|svg|mp4|docx?)(?:\?|$)/i.test(url) &&
         !/(?:^|\/)(?:vacancy-apply\.aspx|registration\.aspx|apply|application|login|signin)(?:\/|[?#]|$)/i.test(url)) links.add(url);
   };
   $("a[href], iframe[src]").each((_, node) => {
     const element = $(node);
     const href = element.attr("href") || element.attr("src") || "";
-    const absolute = canonicalUrl(href, pageUrl);
+    const absolute = resolveLink(href);
     if (!absolute) return;
     const label = element.text().trim();
     const isSameOrigin = new URL(absolute).origin === new URL(pageUrl).origin;
@@ -337,7 +387,7 @@ export function discoverLinks(html: string, pageUrl: string, selectors?: Selecto
     const card = element.parents().slice(0, 3).filter((_, parent) =>
       /(?:^|[\s_-])(?:job|vacanc(?:y|ies)|position|role)(?:[\s_-]|$)/i.test(`${$(parent).attr("class") || ""} ${$(parent).attr("id") || ""}`)).length > 0;
     const cardHeading = element.parent().is("h2, h3, h4") || element.is("h2, h3, h4");
-    if (detectAts(absolute) !== "Unknown" || careers.test(target.pathname + target.search) || careers.test(label) ||
+    if (detectAts(absolute) !== "Unknown" || careers.test(target.pathname + target.search) || (card && careers.test(label)) ||
       (isSameOrigin && card && cardHeading) ||
       (isSameOrigin && (element.attr("rel") === "next" || /^(?:next(?: page)?|[2-9]\d*)$/i.test(label)))) {
       // Application forms are never needed for job extraction.

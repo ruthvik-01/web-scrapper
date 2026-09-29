@@ -96,7 +96,12 @@ export async function extractComeetBoard(html: string, url: string, options: Scr
   const decoded = decodeComeet(html, url);
   const geo = new Geography();
   const resolved: RawJob[] = [];
-  for (const job of decoded.jobs) resolved.push(await geo.resolve(job));
+  for (const job of decoded.jobs) {
+    const location = await geo.resolve(job);
+    resolved.push(job.notes?.some(note => note.includes("repeats the country"))
+      ? { ...location, locations: location.locations.map(place => ({ ...place, state: "" })) }
+      : location);
+  }
   const normalized = normalizeJobs(resolved, now);
   return { rows: normalized.rows, rawJobs: decoded.jobs, report: {
     sourceUrl: url, process: "STATIC Comeet", scrapedAt: now.toISOString(), window: dateWindow(now),

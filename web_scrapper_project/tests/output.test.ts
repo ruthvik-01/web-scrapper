@@ -25,7 +25,7 @@ test("exports exactly 15 columns with empty missing fields in CSV and JSON", () 
   assert.equal(exported[0]!.salaryRange, "");
   assert.equal(exported[0]!.jdDeadline, "");
   assert.equal(exported[0]!.ats, "Custom");
-  assert.equal(outputRows({ rows: [{ ...rows[0]!, ats: "Eploy" }], report })[0]!.ats, "Custom");
+  assert.equal(outputRows({ rows: [{ ...rows[0]!, ats: "Eploy" }], report })[0]!.ats, "Eploy");
   const csv = outputCsv(exported);
   assert.ok(csv.startsWith("\uFEFF" + OUTPUT_COLUMNS.join(",")));
   assert.ok(csv.endsWith('"Custom"\r\n'));
@@ -66,6 +66,6 @@ test("Eploy exposes the real VacancyID, and description includes separate qualif
     <script type="application/ld+json">${JSON.stringify(data)}</script>`;
   const extracted = extractJobs(html, url);
   assert.equal(extracted[0]!.jobId, "3509");
-  assert.equal(extracted[0]!.ats, "Eploy"); // Raw detection is retained; exported rows report Custom.
+  assert.equal(extracted[0]!.ats, "Eploy");
   assert.match(extracted[0]!.description, /Build software[\s\S]*Degree required[\s\S]*Pension/);
 });

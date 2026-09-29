@@ -14,6 +14,7 @@
     "package:batch": "tsx scripts/package-batch.ts",
     "scrape:five": "tsx scripts/run-five-companies.ts",
     "typecheck": "tsc --noEmit",
+    "typecheck:app": "tsc --noEmit -p tsconfig.app.json",
     "test": "tsx --test tests/*.test.ts",
     "test:browser": "tsx --test tests/*.integration.ts",
     "check": "npm run typecheck && npm test && npm run test:browser"

@@ -30,7 +30,28 @@ export function decodeJobApi(payload: unknown, endpoint: string, company = "") {
   }
   const rawNext = root.next ?? object(root.links).next ?? object(root.pagination).next;
   const nextValue = typeof rawNext === "string" ? rawNext : text(object(rawNext).href);
-  const nextUrl = nextValue ? canonicalUrl(nextValue, endpoint) : "";
+  let nextUrl = nextValue ? canonicalUrl(nextValue, endpoint) : "";
+  // Some public feeds advertise a total but omit links.next. Advance only a
+  // pagination parameter already present in the supplied endpoint.
+  if (!nextUrl && records.length) {
+    const pagination = object(root.pagination);
+    const totalPages = Number(root.totalPages ?? pagination.totalPages ?? pagination.pageCount);
+    const currentPage = Number(root.page ?? pagination.page ?? new URL(endpoint).searchParams.get("page"));
+    if (Number.isSafeInteger(totalPages) && totalPages > 0 && Number.isSafeInteger(currentPage) &&
+        currentPage >= 1 && currentPage < totalPages && new URL(endpoint).searchParams.has("page")) {
+      const next = new URL(endpoint);
+      next.searchParams.set("page", String(currentPage + 1));
+      nextUrl = next.href;
+    }
+    const total = Number(root.totalCount ?? root.totalJobs ?? root.total ?? pagination.totalCount);
+    const offset = Number(root.offset ?? pagination.offset ?? new URL(endpoint).searchParams.get("offset"));
+    if (!nextUrl && Number.isSafeInteger(total) && total > 0 && Number.isSafeInteger(offset) && offset >= 0 &&
+        offset + records.length < total && new URL(endpoint).searchParams.has("offset")) {
+      const next = new URL(endpoint);
+      next.searchParams.set("offset", String(offset + records.length));
+      nextUrl = next.href;
+    }
+  }
   return {
     jobs,
     nextUrl,

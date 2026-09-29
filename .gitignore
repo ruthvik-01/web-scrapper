@@ -1,6 +1,9 @@
 # Installed dependencies
 **/node_modules/
 
+# Local scrape results, imports, and per-user run history
+output/
+
 # Local credentials
 **/.env
 **/.env.*

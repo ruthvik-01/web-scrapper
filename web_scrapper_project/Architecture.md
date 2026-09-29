@@ -33,7 +33,7 @@ scraper.ts CLI
        -> src/extract.ts
        -> src/geography.ts: visible labels + verified postcode/place context
   -> src/normalize.ts: identity, UK/date filters, per-location rows
-  -> src/output.ts: 17 columns, empty missing values, process/reason, CSV
+  -> src/output.ts: 15 job columns, empty missing values, CSV
 
 scripts/run-five-companies.ts
   -> portable company code copies under output/<slug>/code/
@@ -45,9 +45,9 @@ No database, paid scraping API, LLM, or credentials are required. Files are writ
 
 Reports retain filtering exclusions and extraction issues separately from job rows. CSV descriptions can contain quoted newlines; consumers must use a proper CSV parser.
 
-A present source date is kept as published. If the posted date is missing but a deadline is given, the posted-date column stays empty — the run date is never substituted. Only when both the posted date and the deadline are missing is the run's UK calendar day assigned and retained in `report.dateFallbacks`; `reason` discloses this on each affected output row. A source salary shown as d.o.e or per hour is moved into the description with `salaryRange` left empty. The salary field contains only the pay range with the pound sign — £ prefixed to each amount and a hyphen between bounds (e.g. £42500-£45000 or £24785); thousands separators and all other wording are stripped, and a source value with no numeric pay range (d.o.e and hourly rates are moved to the description instead) stays empty.
+A present source date is kept as published. Missing posted dates stay empty in the job export and are disclosed in `report.dateFallbacks`. A source salary shown as d.o.e or per hour is moved into the description with `salaryRange` left empty. The salary field contains only the pay range with the pound sign — £ prefixed to each amount and a hyphen between bounds (e.g. £42500-£45000 or £24785); thousands separators and all other wording are stripped, and a source value with no numeric pay range stays empty.
 
-`report.locationEvidence` stores source/resolved addresses and visible labels. `report.dataNotes` preserves unresolved source-location notes. Public Postcodes.io lookups are cached within each company run, paced, and reflected in the `STATIC + API` process label.
+`report.locationEvidence` stores source/resolved addresses and visible labels. `report.dataNotes` preserves unresolved source-location notes. Public Postcodes.io lookups are cached within each company run and paced. The process label describes job extraction, while geographic lookup counts remain in the report.
 
 Tests use local HTTP fixtures and mocked ATS feeds, not live third-party availability. The first production sample separately validated MWH Treatment's static Eploy pages.
 

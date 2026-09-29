@@ -64,6 +64,12 @@ export class Geography {
     const sourceCountry = source.map(location => text(location.country)).find(Boolean) || "";
     // Explicit foreign country must not be overridden by a same-named UK place.
     if (source.some(location => location.country && !isUkCountry(location.country))) return job;
+    if (source.length === 1 && !label && job.ats !== "Eploy" && job.ats !== "WP Job Manager" &&
+        (isUkCountry(sourceCountry) || /,\s*(?:UK|United Kingdom|GB)$/i.test(text(source[0]?.location)))) {
+      // A role's own complete UK location is already usable without an
+      // external place lookup; keep its explicit city when that service fails.
+      return job;
+    }
     const hasDetailedSourceLocation = source.some(location => {
       const parts = text(location.location).split(/\s*[,;|]\s*/).filter(Boolean);
       return (text(location.city) && text(location.state)) || parts.length > 1;
@@ -141,7 +147,7 @@ export class Geography {
       // ambiguous name such as "London".
       if (!uk) {
         for (const [settlement, matches] of exact) {
-          const regionTokens = unique([...tokens, ...sourceStates]).filter(token => key(token) !== key(settlement));
+          const regionTokens = unique([...tokens, ...sourceEvidenceStates]).filter(token => key(token) !== key(settlement));
           if (matches.some(place => /^(City|Town|Village)$/i.test(text(place.local_type)) &&
             regionTokens.some(token => [place.county_unitary, place.district_borough, place.region]
               .some(region => text(region) && key(text(region)) === key(token))))) {
@@ -238,7 +244,10 @@ export class Geography {
       // A failed resolver must not silently restore an address already known to
       // conflict with the visible job location.
       const warning = `Location verification failed: ${error instanceof Error ? error.message : String(error)}`;
-      const locations = label ? [{ location: label, city: "", state: "", country: uk ? "UK" : "", resolved: true }] : source;
+      const sameSourceLabel = source.length === 1 && key(text(source[0]?.location)) === key(label);
+      const locations = label ? [sameSourceLabel && uk
+        ? { ...source[0]!, country: "UK", resolved: false }
+        : { location: label, city: "", state: "", country: uk ? "UK" : "", resolved: true }] : source;
       this.evidence.push({ jobId: job.jobId || "", jobUrl: job.jobUrl, visibleLocation: visibleLabel, sourceLocations: source, resolvedLocations: locations, notes: [warning] });
       return { ...job, locations, notes: [...notes, warning] };
     }

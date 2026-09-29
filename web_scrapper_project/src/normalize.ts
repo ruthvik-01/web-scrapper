@@ -281,9 +281,7 @@ export function normalizeJobs(jobs: RawJob[], now = new Date()): { rows: JobRow[
       salaryRange,
       employmentType: text(job.employmentType),
       worktype: text(job.worktype),
-      // Spreadsheet contract: the exported ATS value is Custom for every company.
-      // Detected platforms remain available on the raw record for reports.
-      ats: "Custom",
+      ats: job.ats && job.ats !== "Unknown" ? job.ats : "Custom",
     };
     if (missingDate) {
       // UI-only disclosure: the exported CSV keeps postedDate empty. The

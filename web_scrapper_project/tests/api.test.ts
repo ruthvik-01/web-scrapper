@@ -17,6 +17,15 @@ test("REST decoder requires real detail fields and preserves explicit country/da
   assert.equal(decodeJobApi({ jobs: [], next: 2 }, "https://example.com/api").unsupportedPagination, true);
 });
 
+test("REST decoder follows advertised totals only with an existing page or offset parameter", () => {
+  const record = { id: "1", title: "Engineer", description: "Build systems", url: "/jobs/1",
+    postedDate: "2026-09-01", locations: [{ city: "London", country: "GB" }] };
+  assert.equal(decodeJobApi({ totalCount: 3, offset: 1, jobs: [record] },
+    "https://example.com/api?offset=1").nextUrl, "https://example.com/api?offset=2");
+  assert.equal(decodeJobApi({ totalJobs: 3, page: 1, jobs: [record] },
+    "https://example.com/api").nextUrl, "");
+});
+
 test("Eploy without JSON-LD extracts primary details, not suggested jobs or listing cards", () => {
   const html = `<a href="https://eploy.co.uk">Eploy</a>
     <h1 id="top_h1JobTitle">Support Worker</h1>

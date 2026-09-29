@@ -16,7 +16,7 @@ export async function runCompany(config: CompanyConfig, directory: string) {
   const now = new Date(); // Dynamic on every invocation; never hardcode a posting date.
   console.log(`Starting ${config.name} (${now.toISOString()})`);
   const result = await scrapeJobSitemap(config.careersUrl, config.sitemapUrl, {
-    company: config.name, now, maxPages: 1000, delayMs: 1000, timeoutMs: 30_000,
+    company: config.name, now, delayMs: 1000, timeoutMs: 30_000,
   });
   const rows = outputRows(result, config.name);
   await mkdir(directory, { recursive: true });
@@ -29,7 +29,7 @@ export async function runCompany(config: CompanyConfig, directory: string) {
     sourceUrl: config.careersUrl, scrapedAt: result.report.scrapedAt,
     status: result.report.status, process: result.report.process,
     pagesRead: result.report.pagesVisited, advertisedJobs: result.report.advertisedUrls,
-    jobs: new Set(result.rows.map(row => row.jobId)).size, locationRows: result.rows.length,
+    jobs: new Set(result.rows.map(row => `${row.jobId || row.jobUrl}|${row.jobUrl}`)).size, locationRows: result.rows.length,
     postingDateFallbacks: result.report.dateFallbacks.length,
     reviewNotes: result.report.dataNotes.length,
     excluded: result.report.skipped.length, issues: result.report.issues.length,

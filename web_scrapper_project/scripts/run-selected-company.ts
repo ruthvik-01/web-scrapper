@@ -9,7 +9,7 @@ const company = "MWH Treatment";
 const result = await scrapeJobSitemap(
   "https://careers.mwhtreatment.com/vacancies/vacancy-search-results.aspx",
   "https://careers.mwhtreatment.com/sitemap.xml",
-  { company, maxPages: 250, delayMs: 1000 },
+  { company, delayMs: 1000 },
 );
 const directory = resolve("output/mwh-treatment");
 await mkdir(directory, { recursive: true });

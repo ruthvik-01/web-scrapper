@@ -1,6 +1,7 @@
 import { setTimeout as sleep } from "node:timers/promises";
 import { createRequire } from "node:module";
 import { chromium, type Browser, type Page } from "playwright";
+import { load } from "cheerio";
 import { atsBoard, enrichJob, mapAtsJobs } from "./ats.js";
 import { detectAts, discoverLinks, extractJobs, type Selectors } from "./extract.js";
 import { Geography } from "./geography.js";
@@ -82,12 +83,31 @@ export class AccessPolicy {
     this.lastRequest.set(origin, Date.now());
   }
 
+  private async request(url: string, accept?: string): Promise<Response> {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      await this.pace(url);
+      try {
+        const response = await fetch(url, {
+          headers: { "User-Agent": USER_AGENT, ...(accept ? { Accept: accept } : {}) },
+          signal: AbortSignal.timeout(this.timeoutMs), redirect: "manual",
+        });
+        if ([429, 502, 503, 504].includes(response.status) && attempt < 2) {
+          const seconds = Number(response.headers.get("retry-after"));
+          await response.body?.cancel();
+          await sleep(Number.isFinite(seconds) && seconds > 0 ? Math.min(seconds * 1000, 30_000) : (attempt + 1) * 1000);
+          continue;
+        }
+        return response;
+      } catch (error) {
+        if (attempt === 2 || !/timeout|abort|fetch failed|ECONNRESET|ETIMEDOUT/i.test(String(error))) throw error;
+        await sleep((attempt + 1) * 1000);
+      }
+    }
+    throw new Error("Request retries were exhausted.");
+  }
+
   async json(url: string, redirects = 0): Promise<unknown> {
-    await this.pace(url);
-    const response = await fetch(url, {
-      headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
-      signal: AbortSignal.timeout(this.timeoutMs), redirect: "manual",
-    });
+    const response = await this.request(url, "application/json");
     if (response.status >= 300 && response.status < 400) {
       const next = canonicalUrl(response.headers.get("location") || "", url);
       if (!next || redirects >= 5) throw new Error("Invalid or excessive API redirects.");
@@ -100,11 +120,7 @@ export class AccessPolicy {
   }
 
   async html(url: string, redirects = 0): Promise<{ url: string; body: string }> {
-    await this.pace(url);
-    const response = await fetch(url, {
-      headers: { "User-Agent": USER_AGENT },
-      signal: AbortSignal.timeout(this.timeoutMs), redirect: "manual",
-    });
+    const response = await this.request(url);
     if (response.status >= 300 && response.status < 400) {
       const location = response.headers.get("location");
       const next = location && canonicalUrl(location, url);
@@ -123,13 +139,31 @@ function usefulDetail(job: RawJob, now: Date): boolean {
   return !posted || !job.company || !job.description || !job.locations.some(ukLocation);
 }
 
+function advertisedListingPages(html: string, pageUrl: string): number {
+  const $ = load(html);
+  const declared = Number($("[data-total-pages], [data-page-count]").first().attr("data-total-pages") ||
+    $("[data-page-count]").first().attr("data-page-count") ||
+    $('meta[name="totalPages"], meta[name="total-pages"]').first().attr("content"));
+  if (Number.isSafeInteger(declared) && declared > 0) return declared;
+  const last = $('a[rel~="last"], link[rel~="last"]').first().attr("href");
+  if (last) {
+    try {
+      const page = Number(new URL(last, pageUrl).searchParams.get("page"));
+      if (Number.isSafeInteger(page) && page > 0) return page;
+    } catch { /* Invalid last links are ignored. */ }
+  }
+  return 0;
+}
+
 export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {}) {
   const start = canonicalUrl(inputUrl);
   if (!start) throw new Error("Provide an HTTP(S) company/careers URL without embedded credentials.");
   const now = options.now ?? new Date();
   const mode = options.mode || "auto";
   if (!["auto", "api", "static", "dom"].includes(mode)) throw new Error("Unsupported extraction mode.");
-  const maxPages = options.maxPages ?? 100;
+  // The frontier ends at the site's last link/cursor, not at a default page count.
+  // This ceiling only guards against a broken site emitting an endless URL stream.
+  const maxPages = options.maxPages ?? 10_000;
   const timeoutMs = options.timeoutMs ?? 30_000;
   const renderWaitMs = options.renderWaitMs ?? 1500;
   const delayMs = options.delayMs ?? 1000;
@@ -146,6 +180,7 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
   const scheduled = new Set([start]);
   const completed = new Set<string>();
   const handledBoards = new Set<string>();
+  const seenApiJobs = new Set<string>();
   const methods = new Set<string>();
   const geography = new Geography();
   const redirects = new Map<string, string>();
@@ -153,13 +188,52 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
   let page: Page | undefined;
   let requests = 0;
   let pagesVisited = 0;
+  const visitedPages = new Set<string>();
+  const markVisited = (url: string): void => {
+    if (!visitedPages.has(url)) { visitedPages.add(url); pagesVisited++; }
+  };
   let recognized = false;
   let limited = false;
+  let listingPagesAdvertised = 0;
+  let previousListingSignature = "";
+  let previousListingUrl = "";
+  let staleListingPages = 0;
+  const isListingPage = (url: string): boolean => new URL(url).pathname === new URL(start).pathname;
+  const isJobDetailPage = (url: string): boolean => /\/(?:jobs?|vacanc(?:y|ies)|positions?|roles?)\/[^/?]+\/?$/i.test(new URL(url).pathname);
+  const isPaginationLink = (url: string, from: string): boolean => {
+    const target = new URL(url), source = new URL(from);
+    return target.origin === source.origin && target.pathname === source.pathname &&
+      ["page", "offset", "startrow", "skip", "p"].some(key => target.searchParams.get(key) !== source.searchParams.get(key));
+  };
+  const keepPagination = (url: string, links: string[], extracted: RawJob[]): string[] => {
+    if (!isListingPage(url)) return links;
+    if (url === previousListingUrl) return links;
+    previousListingUrl = url;
+    const pagination = links.filter(link => isPaginationLink(link, url));
+    if (!pagination.length) return links;
+    const candidates = [
+      ...extracted.map(job => job.jobUrl || job.jobId || "").filter(Boolean),
+      ...links.filter(link => !isPaginationLink(link, url) && /\/(?:jobs?|vacanc(?:y|ies)|positions?)\//i.test(new URL(link).pathname)),
+    ];
+    const signature = JSON.stringify([...new Set(candidates)].sort());
+    staleListingPages = signature === previousListingSignature ? staleListingPages + 1 : 0;
+    previousListingSignature = signature;
+    if (staleListingPages < 2) return links;
+    limited = true;
+    reportIssue(url, "Pagination repeated the same job listings on consecutive pages; stopped the next-page chain.");
+    return links.filter(link => !isPaginationLink(link, url));
+  };
   const networkTasks = new Set<Promise<void>>();
   const reportIssue = (url: string, error: unknown): void => {
     const issue = { url, message: error instanceof Error ? error.message : String(error) };
     if (!issues.some(existing => existing.url === url && existing.message === issue.message)) issues.push(issue);
   };
+  const progress = (operation: string, currentUrl: string, currentJobs = 0): void => options.onProgress?.({
+    operation, currentUrl, pagesDiscovered: scheduled.size, pagesProcessed: pagesVisited,
+    pagesTotal: 0, // The total number of pages is unknown until discovery finishes.
+    jobsDiscovered: jobs.length + currentJobs, jobsProcessed: jobs.length,
+    jobsFound: jobs.length + currentJobs, jobsSkipped: 0,
+  });
   const enqueue = (url: string, seed?: RawJob, from = start): void => {
     const target = canonicalUrl(url);
     if (!target) { if (seed) jobs.push(seed); return; }
@@ -231,7 +305,9 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
           }
           return;
         } catch (error) {
-          reportIssue(request.url(), error);
+          const relevant = request.frame() === page?.mainFrame() ||
+            new URL(request.url()).origin === new URL(start).origin || Boolean(atsBoard(request.url()));
+          if (relevant && !/timeout|ERR_|net::/i.test(String(error))) reportIssue(request.url(), error);
           return route.abort();
         }
       }
@@ -261,7 +337,20 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
     let target = initial;
     for (let count = 0; count <= 5; count++) {
       redirects.delete(target);
-      const response = await current.goto(target, { waitUntil: "domcontentloaded", timeout: timeoutMs });
+      let response: Awaited<ReturnType<Page["goto"]>> = null;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          response = await current.goto(target, { waitUntil: isListingPage(target) ? "domcontentloaded" : "commit", timeout: timeoutMs });
+          if (response && [429, 502, 503, 504].includes(response.status()) && attempt < 1) {
+            await sleep((attempt + 1) * 1000);
+            continue;
+          }
+          break;
+        } catch (error) {
+          if (attempt === 1 || !/timeout|ERR_|net::/i.test(String(error))) throw error;
+          await sleep((attempt + 1) * 1000);
+        }
+      }
       if (!response || !response.ok()) throw new Error(`Page returned HTTP ${response?.status() ?? "unknown"}.`);
       const next = redirects.get(current.url());
       if (!next) return;
@@ -298,6 +387,13 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
               }
               recognized = true;
               const batch = mapAtsJobs(board, payload, options.company);
+              const fresh = batch.filter(job => !seenApiJobs.has(`${job.jobId}|${job.jobUrl}`));
+              for (const job of fresh) seenApiJobs.add(`${job.jobId}|${job.jobUrl}`);
+              if (batch.length && !fresh.length) {
+                limited = true;
+                reportIssue(endpoint.href, "ATS pagination repeated jobs without any new vacancies.");
+                break;
+              }
               for (const job of batch) {
                 if (mode !== "api" && usefulDetail(job, now) && job.jobUrl) {
                   if (job.jobUrl === url) {
@@ -336,7 +432,7 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
         if (mode === "static") {
           methods.add("STATIC");
           const document = await policy.html(url);
-          pagesVisited++;
+          markVisited(document.url);
           // Public JSON endpoints linked from careers pages need no browser.
           if (/^\s*[\[{]/.test(document.body)) {
             try {
@@ -355,9 +451,12 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
             } catch { /* Continue to HTML/DOM fallback for unknown content. */ }
           }
           const extracted = extractJobs(document.body, document.url, options.company, options.selectors);
+          listingPagesAdvertised ||= advertisedListingPages(document.body, document.url);
           if (extracted.length) recognized = true;
           for (const job of extracted) jobs.push(await geography.resolve(job));
-          for (const link of discoverLinks(document.body, document.url, options.selectors)) enqueue(link, undefined, document.url);
+          const links = keepPagination(document.url,
+            discoverLinks(document.body, document.url, options.selectors, start), extracted);
+          for (const link of links) enqueue(link, undefined, document.url);
           if (/__doPostBack\([^)]*(?:Pager|Pagination)/i.test(document.body) ||
               /<(?:button)[^>]*>[^<]*(?:load more|show more jobs)/i.test(document.body)) {
             reportIssue(url, "JavaScript pagination was found; use DOM mode to reach additional pages.");
@@ -366,13 +465,13 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
         }
         methods.add("DOM");
         const current = await getPage();
+        if (pagesVisited) progress("Visiting another page…", url);
         await navigate(current, url);
-        pagesVisited++;
-        const started = Date.now();
+        markVisited(current.url());
         const pageJobs: RawJob[] = [];
         const fingerprints = new Set<string>();
         let lastFingerprint = "";
-        const maxInteractions = 20;
+        const maxInteractions = options.maxPages ?? 10_000;
         for (let step = 0; step <= maxInteractions; step++) {
           await sleep(renderWaitMs);
           await Promise.all([...networkTasks]);
@@ -380,6 +479,7 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
           if (redirected) await navigate(current, redirected);
           const pageUrl = current.url();
           const html = await current.content();
+          listingPagesAdvertised ||= advertisedListingPages(html, pageUrl);
           const title = await current.title();
           if (/just a moment|access denied|verify you are human|captcha/i.test(title)) {
             throw new Error("Access challenge detected; no bypass attempted.");
@@ -394,20 +494,18 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
             if (!fingerprints.has(fingerprint)) pageJobs.push(job);
             fingerprints.add(fingerprint);
           }
-          const links = discoverLinks(html, pageUrl, options.selectors);
+          const links = keepPagination(pageUrl, discoverLinks(html, pageUrl, options.selectors, start), extracted);
           if (!item.seed) for (const link of links) enqueue(link, undefined, pageUrl);
           const fingerprint = JSON.stringify([links, [...fingerprints]]);
           const unchanged = step > 0 && fingerprint === lastFingerprint;
-          if (step > 0 && !unchanged) pagesVisited++;
+          markVisited(pageUrl);
           lastFingerprint = fingerprint;
-          const update = (operation: string): void => options.onProgress?.({
-            operation, currentUrl: pageUrl,
-            pagesDiscovered: scheduled.size, pagesProcessed: pagesVisited,
-            pagesTotal: Math.max(scheduled.size, pagesVisited),
-            jobsDiscovered: jobs.length + pageJobs.length,
-            jobsProcessed: jobs.length, jobsFound: jobs.length + pageJobs.length, jobsSkipped: 0,
-          });
+          const update = (operation: string): void => progress(operation, pageUrl, pageJobs.length);
           update(`Reading job listings (${pageJobs.length} found on this page)…`);
+          if (item.seed || isJobDetailPage(pageUrl)) {
+            if (!pageJobs.length) reportIssue(url, "Job detail page did not expose a vacancy.");
+            break;
+          }
           const selector = options.selectors?.loadMore || options.selectors?.next;
           const loadMore = current.getByRole("button", { name: /^(?:(?:load|show|view|see)\s+(?:\d+\s+)?(?:more|additional)(?:\s+(?:jobs?|vacancies|positions?|roles?))?(?:\s+of\s+\d+\s+remaining)?|more\s+(?:jobs?|vacancies|positions?|roles?))$/i }).first();
           const pager = current.locator('[class*="pagination" i], [class*="pager" i], [id*="pager" i], [aria-label*="pagination" i]');
@@ -416,7 +514,7 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
             .or(current.locator('a[rel~="next"]')).first();
           const control = selector ? current.locator(selector).first() :
             await loadMore.isVisible().catch(() => false) ? loadMore : nextControl;
-          if (step === maxInteractions || Date.now() - started > timeoutMs) {
+          if (step === maxInteractions) {
             if (await control.isVisible().catch(() => false) || !unchanged) {
               limited = true;
               reportIssue(url, "Pagination interaction limit reached.");
@@ -470,7 +568,6 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
     jobs.push(...queue.flatMap(item => item.seed ? [item.seed] : []));
   }
   const normalized = normalizeJobs(jobs, now);
-  if (geography.requests) methods.add("API");
   return {
     rows: normalized.rows,
     rawJobs: jobs,
@@ -481,6 +578,7 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
       window: dateWindow(now),
       status: limited || issues.length ? "partial" : recognized ? (normalized.rows.length ? "ok" : "no_matches") : "unsupported",
       pagesVisited, requests, candidates: jobs.length, rows: normalized.rows.length,
+      listingPagesAdvertised, boundary: limited ? "incomplete" : "discovered_end",
       limited, pendingUrls: queue.map(item => item.url), skipped: normalized.skipped, issues,
       dateFallbacks: normalized.dateFallbacks,
       dataNotes: normalized.dataNotes, locationEvidence: geography.evidence,

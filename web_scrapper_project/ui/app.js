@@ -35,7 +35,7 @@ const initials = name => name.split(/\s+/).filter(Boolean).slice(0, 2).map(word 
 const tone = company => parseInt(company.id.slice(0, 2), 16) % 6;
 const avatar = company => `<span class="avatar tone-${tone(company)}">${esc(initials(company.name))}</span>`;
 const labels = { ready: "Ready", completed: "Collected", running: "Running", queued: "Queued", empty: "No jobs", "no-jobs": "No jobs", "needs-review": "Review", failed: "Failed", cancelled: "Skipped", stopped: "Stopped", stopping: "Stopping", interrupted: "Interrupted" };
-const terminalLabels = { DISCOVERY: "Discovering job listings", "PAGE FETCH": "Fetching job pages", "JOB EXTRACTION": "Extracting job data", "JOB NORMALIZATION": "Normalising job data", "JEV DECISION": "Jev decision", "RESULT STORAGE": "Storing results", COMPLETED: "Finished", FAILED: "Failed" };
+const terminalLabels = { DISCOVERY: "Discovering job listings", "PAGE FETCH": "Fetching job pages", "JOB EXTRACTION": "Extracting job data", "JOB NORMALIZATION": "Normalising job data", "RESULT STORAGE": "Storing results", COMPLETED: "Finished", FAILED: "Failed" };
 const statusTag = status => `<span class="status ${esc(status)}">${esc(labels[status] || status)}</span>`;
 const stageLabel = stage => terminalLabels[stage] || stage || "Working";
 const duration = ms => {
@@ -47,8 +47,8 @@ const elapsedOf = item => item?.metrics?.startedAt && ["running", "queued"].incl
   ? duration(Date.now() - Date.parse(item.metrics.startedAt))
   : duration(item?.metrics?.elapsedMs);
 const metricLine = metrics => !metrics ? "" :
-  `${esc(stageLabel(metrics.stage))}${metrics.ats ? ` · ${esc(metrics.ats)}` : ""} · pages ${number(metrics.pagesProcessed)}/${number(metrics.pagesTotal)} · jobs ${number(metrics.jobsFound)} · Jev ${number(metrics.jevCalls)} (${number(metrics.jevCacheHits)} cached) · ${elapsedOf({ metrics, status: "running" })}`;
-const engineLabel = company => `${({ auto: "Auto detect", api: "API", static: "Static HTML", dom: "DOM / browser" })[company.mode || "auto"]}${company.engine === "jev" ? " · Jev" : ""}`;
+  `${esc(stageLabel(metrics.stage))}${metrics.ats ? ` · ${esc(metrics.ats)}` : ""} · ${number(metrics.pagesProcessed)} pages visited · jobs ${number(metrics.jobsFound)} · ${elapsedOf({ metrics, status: "running" })}`;
+const engineLabel = company => ({ auto: "Auto detect", api: "API", static: "Static HTML", dom: "DOM / browser" })[company.mode || "auto"];
 const downloadUrl = (id, kind) => `/api/companies/${id}/download?kind=${kind}`;
 const state = {
   data: null, selected: new Set(), view: "companies", filter: "all", query: "", page: 0, size: 8,
@@ -140,11 +140,9 @@ function terminalMarkup(item, company) {
     <div class="terminal-grid">
       <div class="terminal-cell"><small>STAGE</small><strong>${esc(stageLabel(metrics?.stage))}</strong></div>
       <div class="terminal-cell"><small>CAREER PLATFORM</small><strong>${esc(metrics?.ats || "Generic / custom")}</strong></div>
-      <div class="terminal-cell"><small>PAGES</small><strong>${number(metrics?.pagesProcessed)} / ${number(metrics?.pagesTotal)}</strong></div>
+      <div class="terminal-cell"><small>PAGES VISITED</small><strong>${number(metrics?.pagesProcessed)}</strong></div>
       <div class="terminal-cell"><small>JOBS FOUND</small><strong>${number(metrics?.jobsFound)}</strong></div>
       <div class="terminal-cell"><small>JOBS SKIPPED</small><strong>${number(metrics?.jobsSkipped)}</strong></div>
-      <div class="terminal-cell"><small>JEV CALLS</small><strong>${number(metrics?.jevCalls)}</strong></div>
-      <div class="terminal-cell"><small>JEV CACHE HITS</small><strong>${number(metrics?.jevCacheHits)}</strong></div>
       <div class="terminal-cell"><small>ELAPSED</small><strong>${esc(elapsedOf(item))}</strong></div>
     </div>
     <div class="terminal-now ${warned ? "failed" : ""}">
@@ -167,7 +165,7 @@ function renderTerminal() {
   $("#terminal-log").innerHTML = lines.length
     ? lines.map(line => {
       const message = esc(line.message);
-      const highlighted = /Processing job|Evaluating job|Jev decision|Processing job pages|Still working|FAILED|Discovered|Found \d+ candidate|Detected /i.test(line.message);
+      const highlighted = /Processing job|Evaluating job|Processing job pages|Still working|FAILED|Discovered|Found \d+ candidate|Detected /i.test(line.message);
       return `<div class="terminal-line${highlighted ? " emphasis" : ""}"><span class="terminal-time">${esc(line.time.slice(11, 19))}</span><span class="terminal-text">${message}</span></div>`;
     }).join("")
     : '<div class="terminal-line muted">No log lines yet — this company is queued.</div>';
@@ -345,7 +343,7 @@ function renderExports() {
   const current = companies.map(company => ({ date: Date.parse(company.summary?.scrapedAt || "") || 0, key: company.name, html: `<article class="panel export-card">
     <div class="export-top">${avatar(company)}${statusTag(company.status)}</div>
     <h2>${esc(company.name)}</h2><p>Collected ${day(company.summary.scrapedAt)} · ${esc(company.summary.process || "Auto")}</p>
-    <div class="export-meta"><div><strong>${number(company.summary.locationRows)}</strong><small>CSV ROWS</small></div><div><strong>${number(company.summary.jobs)}</strong><small>JOBS</small></div>${company.summary.jevCalls !== undefined ? `<div><strong>${number(company.summary.jevCalls)}</strong><small>JEV CALLS</small></div>` : `<div><strong>${number(company.summary.reviewNotes)}</strong><small>LOCATION NOTES</small></div>`}</div>
+    <div class="export-meta"><div><strong>${number(company.summary.locationRows)}</strong><small>CSV ROWS</small></div><div><strong>${number(company.summary.jobs)}</strong><small>JOBS</small></div><div><strong>${number(company.summary.reviewNotes)}</strong><small>LOCATION NOTES</small></div></div>
     <div class="export-actions"><a class="primary-button" href="${downloadUrl(company.id, "csv")}">${icon("download")}CSV</a><a class="secondary-button" href="${downloadUrl(company.id, "code")}">${icon("code")}Code ZIP</a></div>
     <button class="export-review" data-open="${company.id}">Preview data & review report →</button>
   </article>` }));
@@ -362,7 +360,7 @@ async function openCompany(id, tab = "jobs") {
   const summary = company.summary || {};
   $("#detail-metrics").innerHTML = [
     ["CSV rows", summary.locationRows], ["Jobs", summary.jobs],
-    ...(summary.jevCalls !== undefined ? [["Jev calls", summary.jevCalls], ["Jev cost", `$${Number(summary.jevCostUsd || 0).toFixed(4)}`]] : [["Date fallbacks", summary.postingDateFallbacks], ["Location notes", summary.reviewNotes]]),
+    ["Date fallbacks", summary.postingDateFallbacks], ["Location notes", summary.reviewNotes],
   ].map(([label, value]) => `<div class="detail-metric"><small>${label}</small><strong>${company.hasOutput ? esc(String(value ?? "—")) : "—"}</strong></div>`).join("");
   $("#detail-download").href = downloadUrl(id, "csv");
   $("#detail-download").hidden = !company.hasOutput;
@@ -462,18 +460,15 @@ function renderSourceDelete() {
 function renderSettings() {
   const company = state.detail;
   $("#detail-body").innerHTML = `<div class="form-grid">
-    <label class="field-label">Engine<select id="site-engine" aria-label="Extraction engine">
-      ${[["deterministic", "Deterministic — rules and selectors"], ["jev", "Jev — AI judgment layer (fast, needs API key)"]].map(([value, label]) => `<option value="${value}" ${(company.engine || "deterministic") === value ? "selected" : ""}>${label}</option>`).join("")}
-    </select></label>
     <label class="field-label">Extraction mode<select id="site-mode" aria-label="Extraction mode">
       ${[["auto", "Auto — try the available methods"], ["api", "API — supported ATS / JobPosting JSON"], ["static", "Static — HTML and public sitemaps"], ["dom", "DOM — browser-rendered pages"]].map(([value, label]) => `<option value="${value}" ${(company.mode || "auto") === value ? "selected" : ""}>${label}</option>`).join("")}
     </select></label>
-    <label class="field-label">Page budget<input id="site-pages" type="number" min="1" max="1000" value="${company.maxPages || 250}" aria-label="Page budget"></label>
+    <label class="field-label">Page budget <span>(optional; Auto follows the site's end)</span><input id="site-pages" type="number" min="1" max="10000" value="${company.maxPages ?? ""}" aria-label="Page budget" placeholder="Auto"></label>
     <label class="field-label wide">Public API endpoint <span>(optional)</span><input id="site-api" type="url" placeholder="https://example.com/public-jobs.json" value="${esc(company.apiUrl || "")}" aria-label="Public API endpoint"><small>Public GET JSON only. Do not enter passwords, access tokens, or private API keys.</small></label>
     <label class="field-label wide">Job sitemap URL <span>(optional)</span><input id="site-sitemap" type="url" placeholder="Detected from robots.txt when available" value="${esc(company.sitemapUrl || "")}" aria-label="Job sitemap URL"></label>
     <label class="field-label">DOM render wait (milliseconds)<input id="site-wait" type="number" min="0" max="10000" value="${company.renderWaitMs ?? 1500}" aria-label="DOM render wait"></label>
     <label class="field-label wide">Custom CSS selectors <span>(optional JSON)</span><textarea id="site-selectors" aria-label="Custom CSS selectors" spellcheck="false" placeholder='{"jobLinks": ".job-link", "title": "h1", "description": ".job-description", "location": ".job-location"}'>${esc(Object.keys(company.selectors || {}).length ? JSON.stringify(company.selectors, null, 2) : "")}</textarea><small>Supported keys include jobLinks, jobLinksOnly, next, loadMore, title, description, jobId, jobUrl, postedDate, jdDeadline, company, salaryRange, employmentType, worktype, location, city, state, and country. Use jobLinksOnly to follow only matching vacancy links plus pagination; use repeated location containers for multi-location jobs.</small></label>
-    </div><p class="mode-explanation">The engine decides how pages are judged: the deterministic engine uses rules and selectors; the Jev engine adds an AI judgment layer (vacancy detection, worktype, employment type, employer scope) and needs a TypeSafe Jev key in jev-scraper/.env. Either way, the extraction mode controls how job content is reached, and logins, CAPTCHAs, and access restrictions are reported—not bypassed.</p>
+    </div><p class="mode-explanation">Auto follows discovered job pages and pagination until the source ends. Set a page budget only when you want an explicit limit. Logins, CAPTCHAs, and access restrictions are reported.</p>
     <div class="settings-footer"><p>These settings apply to this company’s next run.<br>Your existing export files are not changed.</p><button id="save-settings" class="primary-button" ${["running", "queued"].includes(company.status) ? "disabled" : ""}>Save settings</button></div>`;
 }
 async function saveSettings() {
@@ -481,8 +476,8 @@ async function saveSettings() {
   try {
     const selectors = $("#site-selectors").value.trim() ? JSON.parse($("#site-selectors").value) : {};
     await api(`/api/companies/${id}/settings`, { method: "POST", body: JSON.stringify({
-      engine: $("#site-engine").value, mode: $("#site-mode").value, apiUrl: $("#site-api").value.trim(), sitemapUrl: $("#site-sitemap").value.trim(),
-      maxPages: Number($("#site-pages").value), renderWaitMs: Number($("#site-wait").value), selectors,
+      mode: $("#site-mode").value, apiUrl: $("#site-api").value.trim(), sitemapUrl: $("#site-sitemap").value.trim(),
+      maxPages: $("#site-pages").value, renderWaitMs: Number($("#site-wait").value), selectors,
     }) });
     await refresh(true);
     state.detail = state.data.companies.find(company => company.id === id);

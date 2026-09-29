@@ -29,6 +29,52 @@ test("nested JSON-LD graphs, type arrays, and ItemList wrappers", () => {
   assert.equal(jobsFromJson({ ...job, "@type": ["Thing", "https://schema.org/JobPosting"] }, url).length, 1);
 });
 
+test("multiple postings without source IDs do not inherit one listing-page ID", () => {
+  const listing = "https://company.example/search/897";
+  const postings = [
+    { ...job, identifier: undefined, url: undefined, title: "First role" },
+    { ...job, identifier: undefined, url: undefined, title: "Second role" },
+  ];
+  assert.deepEqual(jobsFromJson(postings, listing).map(item => item.jobId), ["", ""]);
+  assert.deepEqual(jobsFromJson(postings.map((item, i) => ({ ...item, url: `https://company.example/job/role/${1001 + i}/` })), listing)
+    .map(item => item.jobId), ["1001", "1002"]);
+});
+
+test("vacancy detail URLs override a shared company ID and supply missing IDs", () => {
+  const advert = "https://example.current-vacancies.com/Jobs/Advert/4323701?cid=2041";
+  const first = extractJobs(`<script type="application/ld+json">${JSON.stringify({
+    "@type": "JobPosting", identifier: "2041", title: "Analyst", description: "Build systems",
+    url: advert, jobLocation: { address: { addressCountry: "GB" } },
+  })}</script>`, advert);
+  assert.equal(first[0]!.jobId, "4323701");
+  const vacancy = "https://example.co.uk/vacancy/ea-fluent-french-56045/";
+  const second = extractJobs(`<script type="application/ld+json">${JSON.stringify({
+    "@type": "JobPosting", title: "Assistant", description: "Support teams", url: vacancy,
+    jobLocation: { address: { addressCountry: "GB" } },
+  })}</script>`, vacancy);
+  assert.equal(second[0]!.jobId, "56045");
+});
+
+test("an unstructured position detail keeps its URL reference and isolates its role text", () => {
+  const detailUrl = "https://company.example/careers/positions/dYZUhyQ0Pc7yrmUzmtUeK8";
+  const html = `<aside id="position-info-box"><h3>Assistant Buyer</h3><div class="panel-body">
+    <p><strong>Location</strong>: Altrincham - Neptune House</p>
+    <p><strong>Closing Date</strong>: 30 September 2026</p></div>
+    <a href="/careers/positions/related">Related Position</a></aside>
+    <main><div class="panel-body"><h1 class="job-title">Assistant Buyer</h1><div><div class="WordSection1">
+    <h2>Altrincham, WA14 5GZ</h2><p>We are looking for an experienced buyer to manage stock and suppliers.</p>
+    </div></div><a href="/apply">Apply now</a></div></main>`;
+  const extracted = extractJobs(html, detailUrl, "Cotton Traders");
+  assert.equal(extracted.length, 1);
+  assert.equal(extracted[0]!.jobId, "dYZUhyQ0Pc7yrmUzmtUeK8");
+  assert.equal(extracted[0]!.title, "Assistant Buyer");
+  assert.match(extracted[0]!.description || "", /manage stock and suppliers/);
+  assert.doesNotMatch(extracted[0]!.description || "", /Related Position|Apply now/);
+  assert.equal(extracted[0]!.locations[0]?.location, "Altrincham - Neptune House");
+  assert.equal(extracted[0]!.locations[0]?.city, "Altrincham");
+  assert.equal(extracted[0]!.locations[0]?.postcode, "WA14 5GZ");
+});
+
 test("malformed JSON script does not suppress valid scripts or hydration data", () => {
   const html = `<script type="application/ld+json">{broken</script>
     <script type="application/json">${JSON.stringify({ props: { job } })}</script>`;
@@ -81,6 +127,31 @@ test("career links, ATS iframes, pagination, and explicit opaque job links are d
   assert.ok(links.includes("https://jobs.ashbyhq.com/company"));
   assert.ok(links.includes("https://company.example/r/abcd"));
   assert.ok(!links.some(link => /\/about$|\/apply$/.test(link)));
+});
+
+test("navigation and quoted widget fragments are not scheduled as job pages", () => {
+  const html = `<nav><a href="/?post_type=industry&amp;p=4848">Marketing Recruitment</a>
+    <a href="/industry/business-support/">Recruitment</a></nav>
+    <a href='"https://example.co.uk/search-jobs/?page=2"'>Broken widget link</a>
+    <a href="/search-jobs/?page=2" rel="next">Next</a>
+    <a href="/vacancy/legal-secretary-55973/">Legal Secretary</a>`;
+  assert.deepEqual(discoverLinks(html, "https://example.co.uk/search-jobs/").sort(), [
+    "https://example.co.uk/search-jobs/?page=2",
+    "https://example.co.uk/vacancy/legal-secretary-55973/",
+  ]);
+});
+
+test("filtered listing discovery stays inside the selected search", () => {
+  const listing = "https://careers.dachser.com/search/?locationsearch=uk&searchby=location";
+  const html = `<a href="/search/">All jobs</a>
+    <a href="/search/?startrow=39">2</a>
+    <a rel="next" href="?locationsearch=uk&searchby=location&startrow=39">Next</a>
+    <a href="www.careers.dachser.com/search/?startrow=78">3</a>
+    <a href="/job/Northampton/1362706355/">Customer Service Apprentice</a>`;
+  assert.deepEqual(discoverLinks(html, listing).sort(), [
+    "https://careers.dachser.com/job/Northampton/1362706355/",
+    "https://careers.dachser.com/search/?locationsearch=uk&searchby=location&startrow=39",
+  ].sort());
 });
 
 test("targeted job links do not escape through a page-wide JSON feed", () => {

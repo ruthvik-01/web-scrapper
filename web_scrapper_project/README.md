@@ -53,9 +53,11 @@ Dashboard runs are saved under `output/<company>/runs/<run-id>/`; previous files
 
 Every completed batch ships a `final.zip` with exactly three top-level entries: `code/` (scraper code organized by company plus the shared `universal_scraper/` framework), `jobs company wise/<company>/` (each company's generated job/output files), and the combined master CSV at the ZIP root. No temporary files, logs, caches, `node_modules`, build artifacts, or test output are packaged. Full rules live in `PROJECT_CONTEXT.md` under **Permanent packaging and organization conventions**; follow them for all future batches.
 
-The app binds to loopback only. It is a local, single-user tool—not a public hosted service. Taken assignments do not sync with your friend's computer. Public careers-site availability and the scraper's documented limitations still apply.
+The app binds to loopback only. Each Windows user keeps a private local workspace. Public careers-site availability and the scraper's documented limitations still apply.
 
-TypeScript scraper for company careers URLs. It retains explicit UK locations and known posting dates within the last two calendar months. If a source posting date is missing, the current run date is used and disclosed in `report.dateFallbacks`.
+The separate `jev-scraper/` command-line project is available for explicit code use. The dashboard does not select or run it.
+
+TypeScript scraper for company careers URLs. It retains explicit UK locations and known posting dates within the last two calendar months. A missing source posting date stays empty and is disclosed in `report.dateFallbacks`.
 
 ## Setup
 
@@ -77,7 +79,7 @@ Repeat with the next company's URL. Each run writes uniquely named CSV, JSON, an
 For a verified public **job sitemap**, static extraction avoids browser pagination:
 
 ```powershell
-npm run scrape -- "https://careers.mwhtreatment.com/vacancies/vacancy-search-results.aspx" --company "MWH Treatment" --sitemap "https://careers.mwhtreatment.com/sitemap.xml" --max-pages 250
+npm run scrape -- "https://careers.mwhtreatment.com/vacancies/vacancy-search-results.aspx" --company "MWH Treatment" --sitemap "https://careers.mwhtreatment.com/sitemap.xml"
 ```
 
 Use `npm run scrape -- --help` for all options.
@@ -90,7 +92,7 @@ The CLI also supports `--mode auto|api|static|dom` and `--api-url` for public Jo
 npm run scrape:five
 ```
 
-The selected batch is MWH Treatment, Thinking Schools Academy Trust, Walker's Shortbread, Guide Dogs, and Alzheimer's Society. Malmaison is excluded because the user reported it was already taken.
+The selected batch is MWH Treatment, Thinking Schools Academy Trust, Walker's Shortbread, Guide Dogs, and Alzheimer's Society.
 
 Each `output/<company>/` folder contains its CSV, reports, README, and a **self-contained `code/` folder**. To rerun just one company, open that company's `code/` folder and run `npm ci` followed by `npm run scrape`. Each copy contains its own entry point, shared implementation, dependency manifest, and lockfile.
 
@@ -102,7 +104,7 @@ jobId,title,description,jobUrl,postedDate,jdDeadline,company,salaryRange,employm
 
 - Missing values are empty fields in CSV and empty strings in exported JSON.
 - Job exports omit `process` and `reason`; extraction methods and diagnostics remain in the separate report.
-- `ats` is always `Custom` for job rows. Missing-date assumptions are retained in `report.dateFallbacks`.
+- `ats` contains a detected supported platform, or `Custom` when none is verified. Missing source dates are disclosed in `report.dateFallbacks`.
 - When no qualifying jobs are returned, the CSV contains only its 15-column header and the JSON export is empty. Company outcomes and diagnostics remain in reports.
 - The report distinguishes exclusions, unsupported pages, access failures, and crawl limits. A failed or limited crawl is not evidence that a company has no vacancies.
 - CSV is UTF-8 with BOM, quotes embedded commas/newlines correctly, and protects spreadsheet formula-like text.
@@ -110,7 +112,7 @@ jobId,title,description,jobUrl,postedDate,jdDeadline,company,salaryRange,employm
 ## Filtering and identity
 
 - The inclusive date window uses the Europe/London calendar. September 15, 2026 means July 15 through September 15, 2026. Month-end subtraction is clamped.
-- Posting-date rule: a present posted date is kept as published. If the posted date is missing but a deadline (`jdDeadline`) is given, the `postedDate` column stays empty — the run date is never substituted. Only when both the posted date and the deadline are missing is the run's Europe/London date used as the posted date; this user-requested assumption is recorded in `report.dateFallbacks`.
+- Posting-date rule: a present posted date is kept as published. Missing posted dates stay empty in the export and are disclosed in `report.dateFallbacks`.
 - Present but invalid/ambiguous posting dates and future dates are excluded. Last-modified, Greenhouse `updated_at`, and sitemap `lastmod` are never substituted for publication dates.
 - UK country codes/names and explicit constituent nations are recognized. City names alone are not sufficient; London in Canada must not be mistaken for London in the UK. Employer headquarters are not used as job locations.
 - Missing city/state, deadline, or work arrangement is not invented. Salary rule: a source salary shown as d.o.e (depending on experience) or an hourly rate (per hour) is moved into the job description and `salaryRange` is left empty. A salary is never invented. The salary field contains only the pay range with the pound sign — £ prefixed to each amount and a hyphen between bounds (e.g. £42500-£45000 or £24785); thousands separators and all other wording are stripped, and a source value with no numeric pay range (d.o.e and hourly rates are moved to the description instead) stays empty.
@@ -118,7 +120,7 @@ jobId,title,description,jobUrl,postedDate,jdDeadline,company,salaryRange,employm
 - Named sites are preserved as location rows even when their city is unavailable. County facets and travel coverage are not blindly expanded into job locations.
 - Every qualifying location gets a separate row. All non-location fields remain identical for that source vacancy.
 - Exact duplicate rows are removed. Different job IDs or different non-location details are not collapsed by title.
-- A deterministic `generated-...` ID is used only when no source ID can be extracted. Eploy's numeric VacancyID is extracted from its verified vacancy URL format.
+- Job IDs come from source fields or verified vacancy URL formats. If neither supplies an ID, the field stays empty; no ID is invented.
 
 ## Supported extraction paths
 
@@ -131,7 +133,7 @@ Workday, SmartRecruiters, Workable, Recruitee, iCIMS, and Taleo hostnames can be
 
 No scraper supports every website automatically. Logins, CAPTCHAs, unsupported pagination, and proprietary data formats may prevent extraction. The scraper respects robots.txt, paces requests, does not submit applications, and does not bypass access controls.
 
-Generic browser mode defaults to 100 queued pages/API list batches and 20 pagination interactions per page. Redirects and browser subresources are not included in that batch count. Increase `--max-pages` for larger boards and review `limited`/`pendingUrls` in the report.
+The default crawl follows discovered next links, API totals/cursors, and sitemap URLs to the source's end. Repeated listings and URL cycles stop the crawl; a 10,000-request emergency ceiling prevents unbounded sources. `--max-pages` is an optional explicit budget. Review `limited`, `pendingUrls`, and `issues` in the report before using an export.
 
 ### Custom selectors
 

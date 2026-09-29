@@ -5,9 +5,8 @@
 Start with `npm run ui`. Binds to `127.0.0.1:4317` by default; `PORT` can change the port.
 
 - `GET /api/dashboard`: catalog, current statistics, current queue, run history, and local request token.
-- `POST /api/runs`: `{ companyIds: [...] }`, one to five distinct non-taken catalog IDs.
+- `POST /api/runs`: `{ companyIds: [...] }`, one to five distinct catalog IDs.
 - `POST /api/runs/stop`: finish the current company and skip remaining queued entries.
-- `POST /api/companies/:id/taken`: `{ taken: true|false }`.
 - `GET /api/companies/:id/results`: paginated/filterable rows and report (`q`, `notes`, `offset`, `limit`).
 - `GET /api/companies/:id/download?kind=csv|code|report`: downloads allowlisted output files or a portable code ZIP.
 - `POST /api/imports/preview`: raw file bytes, `X-Upload-Name` (URI-encoded filename), normal same-origin/token headers; returns worksheets, samples and suggested mapping.

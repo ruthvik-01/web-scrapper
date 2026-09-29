@@ -138,16 +138,13 @@ employer rather than the display label.
 
 `jobId,title,description,jobUrl,postedDate,jdDeadline,company,salaryRange,employmentType,worktype,location,city,state,country,ats`
 
-ATS is `Custom` in exported job rows, regardless of actual extraction provider.
+ATS is the detected supported platform, or `Custom` when none is verified.
 Missing values remain empty. No process/reason job columns; reports retain the
 method, issues, scope exclusions, uncertain locations and date fallbacks.
 One row per UK location; identical full rows are deduplicated.
 The date window is the run's UK day minus two calendar months, inclusive; it
 applies to present posted dates. Posting-date rule: a present posted date is
-kept as published; if the posted date is missing but a deadline is given, the
-posted-date column stays empty (the run date is never substituted); only when
-both the posted date and the deadline are missing is the run's UK calendar day
-used as the posted date, with a report disclosure. Salary rule: a source salary shown as d.o.e or an hourly rate (per hour) is moved into the job description and salaryRange is left empty; a salary is never invented. The salary field contains only the pay range with the pound sign — £ prefixed to each amount and a hyphen between bounds (e.g. £42500-£45000 or £24785); thousands separators and all other wording are stripped, and a source value with no numeric pay range (d.o.e and hourly rates are moved to the description instead) stays empty.
+kept as published; a missing posted date stays empty and is disclosed in the report. Salary rule: a source salary shown as d.o.e or an hourly rate (per hour) is moved into the job description and salaryRange is left empty; a salary is never invented. The salary field contains only the pay range with the pound sign — £ prefixed to each amount and a hyphen between bounds (e.g. £42500-£45000 or £24785); thousands separators and all other wording are stripped, and a source value with no numeric pay range (d.o.e and hourly rates are moved to the description instead) stays empty.
 Invalid dates or unconfirmed UK locations are excluded, not guessed.
 Unambiguous source SQL timestamps (`YYYY-MM-DD HH:mm:ss`) retain their calendar
 date without inventing a timezone. Invalid dates/times remain excluded.

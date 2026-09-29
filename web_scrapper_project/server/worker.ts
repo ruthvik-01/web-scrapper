@@ -52,7 +52,7 @@ async function work(root: string, directory: string, company: Company) {
         currentUrl: company.careersUrl, ats: "",
         pagesDiscovered: 0, pagesProcessed: 0, pagesTotal: 0,
         jobsDiscovered: 0, jobsProcessed: 0, jobsFound: 0, jobsSkipped: 0,
-        jevCalls: 0, jevCacheHits: 0, startedAt,
+        startedAt,
         ...currentMetrics, stage, operation,
         elapsedMs: Date.now() - Date.parse(startedAt), ...extra,
     };
@@ -63,7 +63,7 @@ async function work(root: string, directory: string, company: Company) {
     name: company.name, slug: company.slug, workbookRow: company.workbookRow,
     careersUrl: company.careersUrl, sitemapUrl: company.sitemapUrl,
     mode: company.mode || "auto", apiUrl: company.apiUrl || "", selectors: company.selectors || {},
-    maxPages: company.maxPages || 250, renderWaitMs: company.renderWaitMs ?? 1500,
+    maxPages: company.maxPages, renderWaitMs: company.renderWaitMs ?? 1500,
   };
   await mkdir(directory, { recursive: true });
   await prepareCode(root, directory, config);
@@ -87,7 +87,7 @@ async function work(root: string, directory: string, company: Company) {
     company: company.name, slug: company.slug, status: result.report.status,
     sourceUrl: company.careersUrl, scrapedAt: result.report.scrapedAt,
     process: result.report.process, pagesRead: result.report.pagesVisited,
-    jobs: new Set(result.rows.map(row => row.jobId)).size, locationRows: result.rows.length,
+    jobs: new Set(result.rows.map(row => `${row.jobId || row.jobUrl}|${row.jobUrl}`)).size, locationRows: result.rows.length,
     reviewNotes: result.report.dataNotes.length, postingDateFallbacks: result.report.dateFallbacks.length,
     excluded: result.report.skipped.length, issues: result.report.issues.length,
   };

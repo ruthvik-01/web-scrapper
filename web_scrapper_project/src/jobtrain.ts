@@ -7,7 +7,7 @@ import { canonicalUrl, dateWindow, normalizeJobs, plainText, type RawJob } from 
 export async function scrapeJobtrain(url: string, options: ScrapeOptions = {}) {
   const now = options.now || new Date();
   const policy = new AccessPolicy(options.delayMs ?? 1000, options.timeoutMs ?? 15000);
-  const max = options.maxPages ?? 100;
+  const max = options.maxPages ?? 10_000;
   const issues: Issue[] = [];
   const jobs: RawJob[] = [];
   const links = new Set<string>();

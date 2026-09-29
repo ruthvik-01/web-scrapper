@@ -16,7 +16,7 @@ export async function scrapeJobSitemap(
     throw new Error("Company and job sitemap must be valid HTTP(S) URLs.");
   }
   const now = options.now ?? new Date();
-  const maxPages = options.maxPages ?? 250;
+  const maxPages = options.maxPages ?? 10_000;
   if (!Number.isSafeInteger(maxPages) || maxPages < 1) throw new Error("Invalid maxPages.");
   const policy = new AccessPolicy(options.delayMs ?? 1000, options.timeoutMs ?? 30_000);
   const maps = [sitemap];
@@ -30,7 +30,7 @@ export async function scrapeJobSitemap(
   const addIssue = (url: string, error: unknown): void => {
     issues.push({ url, message: error instanceof Error ? error.message : String(error) });
   };
-  while (maps.length && seenMaps.size < 20) {
+  while (maps.length && seenMaps.size < 10_000) {
     const url = maps.shift()!;
     if (seenMaps.has(url)) continue;
     seenMaps.add(url);

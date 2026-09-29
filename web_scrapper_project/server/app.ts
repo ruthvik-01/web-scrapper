@@ -17,7 +17,6 @@ export interface CompanyMetrics {
   stage: string; operation: string; currentUrl: string; ats: string;
   pagesDiscovered: number; pagesProcessed: number; pagesTotal: number;
   jobsDiscovered: number; jobsProcessed: number; jobsFound: number; jobsSkipped: number;
-  jevCalls: number; jevCacheHits: number;
   startedAt: string; elapsedMs: number; error?: string;
 }
 export interface LogLine { time: string; message: string }
@@ -65,7 +64,7 @@ export function inside(root: string, path: string): boolean {
 }
 /** Counters the UI needs at a glance; kept in sync with the structured metrics. */
 export function metricsCounters(metrics: CompanyMetrics): { progress: number; total: number } {
-  return { progress: metrics.pagesProcessed || metrics.jobsProcessed, total: metrics.pagesTotal || metrics.jobsDiscovered };
+  return { progress: metrics.pagesProcessed || metrics.jobsProcessed, total: metrics.pagesTotal };
 }
 async function safeFile(directory: string, name: string): Promise<string> {
   const file = resolve(directory, name);
@@ -108,7 +107,10 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
   state.importedCompanies ||= [];
   state.imports ||= [];
   state.settings ||= {};
+  // Drop retired website engine choices while retaining each user's history.
+  for (const setting of Object.values(state.settings)) delete (setting as Record<string, unknown>).engine;
   for (const imported of state.importedCompanies) {
+    delete (imported as Company & { engine?: string }).engine;
     const existing = catalog.companies.find(company => company.id === imported.id);
     if (existing) {
       existing.aliases = [...new Set([...existing.aliases, imported.name, ...imported.aliases])].filter(name => name !== existing.name);
@@ -197,7 +199,7 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
     })),
   });
   const runner: Runner = options.runner || ((company, directory, log) => new Promise((resolveRun, reject) => {
-    const workerFile = company.engine === "jev" ? "jev-worker.ts" : "worker.ts";
+    const workerFile = "worker.ts";
     const child = fork(resolve(dirname(fileURLToPath(import.meta.url)), workerFile), [      JSON.stringify({ root, dataRoot, directory, company }),
       ], { cwd: root, execArgv: ["--import", import.meta.resolve("tsx")], silent: true });
     children.add(child);
@@ -241,7 +243,7 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
         item.metrics = {
           stage: "DISCOVERY", operation: "Starting", currentUrl: company.careersUrl, ats: "",
           pagesDiscovered: 0, pagesProcessed: 0, pagesTotal: 0, jobsDiscovered: 0, jobsProcessed: 0,
-          jobsFound: 0, jobsSkipped: 0, jevCalls: 0, jevCacheHits: 0,
+          jobsFound: 0, jobsSkipped: 0,
           startedAt: new Date().toISOString(), elapsedMs: 0,
         };
         await save();
@@ -535,8 +537,6 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
         if (route[2] === "settings" && request.method === "POST") {
           if (active?.items.some(item => item.companyId === company.id && ["queued", "running"].includes(item.status))) return json(409, { error: "Wait until this company's run finishes before changing its settings." });
           const payload = await body();
-          const engine = payload.engine === undefined ? (company.engine || "deterministic") : String(payload.engine);
-          if (!["deterministic", "jev"].includes(engine)) return json(400, { error: "Choose the deterministic or Jev engine." });
           if (!["auto", "api", "static", "dom"].includes(String(payload.mode))) return json(400, { error: "Choose Auto, API, Static, or DOM." });
           const config: Partial<Company> = { mode: payload.mode as Company["mode"] };
           for (const key of ["apiUrl", "sitemapUrl"] as const) {
@@ -552,11 +552,10 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
             try { load("<div></div>")(selector); } catch { return json(400, { error: `Invalid CSS selector for ${name}.` }); }
           }
           config.selectors = selectors;
-          const pages = Number(payload.maxPages ?? 250);
+          const pages = payload.maxPages === "" || payload.maxPages == null ? undefined : Number(payload.maxPages);
           const wait = Number(payload.renderWaitMs ?? 1500);
-          if (!Number.isSafeInteger(pages) || pages < 1 || pages > 1000 || !Number.isSafeInteger(wait) || wait < 0 || wait > 10000) return json(400, { error: "Use 1–1000 pages and a render wait of 0–10000 ms." });
+          if (pages !== undefined && (!Number.isSafeInteger(pages) || pages < 1 || pages > 10000) || !Number.isSafeInteger(wait) || wait < 0 || wait > 10000) return json(400, { error: "Use Auto or 1–10000 pages and a render wait of 0–10000 ms." });
           config.maxPages = pages; config.renderWaitMs = wait;
-          config.engine = engine as Company["engine"];
           state.settings![company.id] = config;
           Object.assign(company, config);
           await save();
@@ -594,8 +593,7 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
           }
           const file = kind === "csv" ? "jobs.csv" : kind === "report" ? "scrape-report.json" : undefined;
           if (!file) return json(400, { error: "Choose csv, code, or report." });
-          // Jev-engine runs keep the parent-contract CSV at the run root and the
-          // engine's own outputs under output/; prefer the root files.
+          // Older runs may have outputs under output/; prefer root files.
           const contents = await readFile(await safeFile(directory, file).catch(async () => {
             const outputDir = await safeFile(directory, "output");
             return safeFile(outputDir, file);

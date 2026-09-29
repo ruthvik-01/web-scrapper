@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "scraper.ts",
+    "batch.ts",
+    "src/**/*.ts",
+    "server/**/*.ts",
+    "tests/**/*.ts",
+    "scripts/package-batch.ts",
+    "scripts/run-five-companies.ts"
+  ]
+}

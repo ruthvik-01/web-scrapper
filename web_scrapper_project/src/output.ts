@@ -24,7 +24,7 @@ function emptyIfMissing(value: string): string {
 export function outputRows(result: OutputInput, company = ""): OutputRow[] {
   if (result.rows.length) {
     return result.rows.map(row =>
-      Object.fromEntries(COLUMNS.map(column => [column, column === "ats" ? "Custom" : emptyIfMissing(row[column])])) as OutputRow);
+      Object.fromEntries(COLUMNS.map(column => [column, emptyIfMissing(row[column])])) as OutputRow);
   }
   // No qualifying jobs: keep exports empty. Company outcomes belong in reports.
   return [];

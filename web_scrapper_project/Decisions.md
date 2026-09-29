@@ -109,3 +109,7 @@ Use a Windows launcher folder picker for each user's complete private data root.
 
 When structured `identifier` is itself a URL, don't export that URL as a job ID. Prefer a real identifier; otherwise extract only an explicit trailing numeric posting ID or known ID query parameter from the job URL. Expand location verification beyond known ATS types only when a job has a multi-part place label or explicit city/region fields; require the UK gazetteer settlement to match the paired region, preserving rejection of ambiguous lone names and foreign countries.
 
+# 2026-09-29 — Crawl boundary and push gate
+
+Use source-provided next links, totals and sitemap entries to end normal crawls, with an optional user request budget and a 10,000-request emergency ceiling for broken sources. Keep JEV only as a separately invoked CLI; never dispatch it from Fieldwork. Preserve empty or unverified source fields rather than filling company metadata by guess. Do not commit/push this audit branch until real data completeness and the repository-wide validation gate pass; Côte's HTTP 429/empty-detail partial run and 67 historical TypeScript errors currently prevent that.
+

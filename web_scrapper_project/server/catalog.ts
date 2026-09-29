@@ -18,8 +18,6 @@ export interface Company {
   resultDir?: string;
   summary?: Record<string, unknown>;
   mode?: "auto" | "api" | "static" | "dom";
-  /** Extraction engine for the next run: classic pipeline or Jev judgment layer. */
-  engine?: "deterministic" | "jev";
   apiUrl?: string;
   selectors?: Selectors;
   maxPages?: number;

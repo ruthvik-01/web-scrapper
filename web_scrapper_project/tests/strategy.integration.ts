@@ -21,6 +21,10 @@ before(async () => {
     else if (request.url === "/paged-api") response.end(JSON.stringify({ jobs: [job()], next: "/paged-api-2" }));
     else if (request.url === "/paged-api-2") response.end(JSON.stringify({ jobs: [{ ...job(), identifier: "second", url: `${base}/jobs/second` }] }));
     else if (request.url === "/cycle-api") response.end(JSON.stringify({ jobs: [job()], next: "/cycle-api" }));
+    else if (request.url?.startsWith("/repeated-api")) {
+      const page = Number(new URL(request.url, base).searchParams.get("page") || 1);
+      response.end(JSON.stringify({ jobs: [job()], next: `/repeated-api?page=${page + 1}` }));
+    }
     else if (request.url === "/network-only") response.end('<html><title>Jobs</title><script>fetch("/api").then(r=>r.json()).then(()=>document.body.dataset.loaded="yes")</script><body>Careers</body></html>');
     else if (request.url === "/linked-api") response.end('<html><title>Jobs</title><link rel="alternate" type="application/json" href="/paged-api"></html>');
     else if (request.url === "/infinite") response.end(`<html><title>Infinite jobs</title><body style="min-height:2000px"><script>
@@ -55,6 +59,14 @@ test("public API follows explicit next links and reports cycles and exhausted bu
   const limited = await scrapeWebsite(`${base}/careers`, { ...options, maxPages: 1, mode: "api", apiUrl: `${base}/paged-api` });
   assert.equal(limited.report.limited, true);
   assert.equal(limited.rows.length, 1);
+});
+
+test("API pagination stops when a new cursor repeats the same jobs", async () => {
+  const start = requests.length;
+  const result = await scrapeWebsite(`${base}/careers`, { ...options, mode: "api", apiUrl: `${base}/repeated-api?page=1` });
+  assert.equal(result.report.status, "partial");
+  assert.ok(result.report.issues.some(issue => /repeated jobs/.test(issue.message)));
+  assert.equal(requests.slice(start).filter(url => url.startsWith("/repeated-api")).length, 2);
 });
 test("Auto discovers a linked JSON feed and follows its pagination without a browser", async () => {
   const result = await scrapeWebsite(`${base}/linked-api`, options);

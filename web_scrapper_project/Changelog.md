@@ -293,3 +293,11 @@ Reduced collection from 90 to the requested 48 company folders plus shared frame
 - Diagnosed active-run empty exports for Curtis Fox and CV Technical as location-evidence exclusions. Cwm Taf's saved source points to a general NHS homepage instead of its dedicated jobs site. Left the active batch and current user state untouched.
 - Changed files have no TypeScript diagnostics; full project retains existing diagnostics. Tests were not run.
 
+# 2026-09-29 — Dynamic crawl boundary and app/JEV separation (uncommitted)
+
+- Removed Fieldwork's 250-request default; generic pagination, public API totals and sitemap enumeration now end on discovered source boundaries with a 10,000-request emergency ceiling and explicit partial reports for loops or limits.
+- Removed JEV from dashboard settings, worker dispatch, metrics and UI. The standalone CLI remains separate.
+- Corrected job-specific IDs, known ATS preservation, location evidence handling, detail-page pagination, and filtering of unrelated downloads and third-party embeds.
+- Verified local 1,200-page HTML and 260-URL sitemap fixtures; fresh Crone 14/14 and Cross Keys 7/7 job IDs are clean. Côte found 94 distinct jobs but remains partial due site rate limits and empty details. Audit and before/after comparison are in `docs/superpowers/plans/2026-09-29-dynamic-crawl-audit.md`.
+- Unit 105/105, browser 44/44, active TypeScript and UI syntax passed; full TypeScript retains 67 historical one-off-script errors. No commit or push because the user-required data/check gate did not pass.
+

@@ -45,6 +45,20 @@ before(async () => {
     } else if (url.pathname === "/live-jobs.xml") {
       response.end(`<urlset><url><loc>${base}/jobs/101</loc><lastmod>2020-01-01</lastmod></url>
         <url><loc>${base}/jobs/old</loc><lastmod>2026-09-15</lastmod></url></urlset>`);
+    } else if (url.pathname === "/search/") {
+      response.end(url.searchParams.get("locationsearch") !== "uk" ? `<a href="/jobs/global">Global role</a>` :
+        url.searchParams.has("startrow") ? `<a href="/jobs/second">Second UK role</a>` :
+        `<a href="/search/">All jobs</a><a href="/search/?startrow=2">Unfiltered page</a>
+         <a rel="next" href="?locationsearch=uk&startrow=2">Next</a>
+         <a href="www.example.com/search/?startrow=3">Broken relative link</a>
+         <a href="/jobs/first">First UK role</a>`);
+    } else if (url.pathname === "/position-list") {
+      response.end(`<h1>Current roles</h1><a href="/careers/positions/dYZUhyQ0Pc7yrmUzmtUeK8">Assistant Buyer</a>`);
+    } else if (url.pathname === "/careers/positions/dYZUhyQ0Pc7yrmUzmtUeK8") {
+      response.end(`<aside id="position-info-box"><div class="panel-body"><p><strong>Location</strong>: London, UK</p>
+        <p><strong>Closing Date</strong>: 30 September 2026</p></div></aside>
+        <main><div class="panel-body"><h1 class="job-title">Assistant Buyer</h1>
+        <div><p>Manage stock, suppliers, and a busy clothing range in our London team.</p></div></div></main>`);
     } else if (url.pathname === "/careers" && url.searchParams.get("page") === "2") {
       response.end('<a href="/jobs/page-two">Engineer</a>');
     } else if (url.pathname === "/careers") {
@@ -85,8 +99,12 @@ before(async () => {
       response.end();
     } else if (url.pathname === "/jobs/challenge") {
       response.end("<html><title>Verify you are human</title><body>Access check</body></html>");
-    } else if (url.pathname === "/jobs/stuck") {
+    } else if (url.pathname === "/stuck-list") {
       response.end('<button onclick="">Load more jobs</button>');
+    } else if (url.pathname === "/jobs/detail-with-more") {
+      response.end(`${htmlJob("detail-with-more")}<button onclick="location.href='/jobs/never'">Show more</button>`);
+    } else if (url.pathname === "/jobs/detail-without-data") {
+      response.end('<h1>Role details</h1><button onclick="location.href=\'/jobs/never\'">Show more</button>');
     } else if (url.pathname === "/custom") {
       response.end('<h1>Engineer</h1><article>Build things</article><time datetime="2026-08-20"></time><div class="place">London, England, UK</div>');
     } else if (url.pathname === "/rendered-cards") {
@@ -96,7 +114,7 @@ before(async () => {
     } else if (url.pathname === "/news/careers/test-engineer/") {
       response.end('<main><h1>Test Engineer</h1><div class="careers-metadata"><span>Closing Date: 14 October 2026</span><span>Location: London, UK</span></div><article><p>Build secure public systems and support our engineering team.</p><p>Contract type - Full Time</p></article></main>');
     } else if (url.pathname === "/counted-more") {
-      response.end(`<main id="list"><div class="vacancy-card"><h2><a href="/detail/first">First role</a></h2></div></main><button onclick="document.querySelector('#list').insertAdjacentHTML('beforeend', '<div class=vacancy-card><h2><a href=/detail/second>Second role</a></h2></div>');this.remove()">Load 1 more of 1 remaining</button>`);
+      response.end(`<main id="list"><div class="vacancy-card"><h2><a href="/detail/first">First role</a></h2></div></main><a href="/Jobs/DownloadPrivacyPolicy?id=2041">Privacy policy</a><a href="/Jobs/DownloadDocument/42?cid=2">Role attachment</a><button onclick="document.querySelector('#list').insertAdjacentHTML('beforeend', '<div class=vacancy-card><h2><a href=/detail/second>Second role</a></h2></div>');this.remove()">Load 1 more of 1 remaining</button>`);
     } else if (url.pathname.startsWith("/detail/")) {
       response.end(htmlJob(url.pathname.split("/").at(-1)!));
     } else if (url.pathname.startsWith("/jobs/")) {
@@ -170,14 +188,34 @@ test("DOM follows rendered job cards with opaque detail URLs and a show-addition
 });
 
 test("DOM follows counted load-more controls and reports each extraction step", async () => {
-  const updates: { operation: string; pagesProcessed: number; jobsFound: number }[] = [];
+  const since = requested.length;
+  const updates: { operation: string; currentUrl: string; pagesProcessed: number; jobsFound: number }[] = [];
   const result = await scrapeCompany(`${base}/counted-more`, {
     ...options, mode: "dom", onProgress: update => updates.push(update),
   });
   assert.deepEqual(result.rows.map(row => row.jobId).sort(), ["first", "second"]);
   assert.ok(updates.some(update => /Loading more/i.test(update.operation)), JSON.stringify(updates));
   assert.ok(updates.some(update => update.jobsFound >= 2), JSON.stringify(updates));
-  assert.ok(updates.some(update => update.pagesProcessed >= 2), JSON.stringify(updates));
+  assert.ok(updates.filter(update => update.currentUrl === `${base}/counted-more`)
+    .every(update => update.pagesProcessed === 1), JSON.stringify(updates));
+  assert.equal(Math.max(...updates.map(update => update.pagesProcessed)), 3);
+  assert.ok(!requested.slice(since).some(path => path.startsWith("/Jobs/DownloadPrivacyPolicy")));
+  assert.ok(!requested.slice(since).some(path => path.startsWith("/Jobs/DownloadDocument")));
+});
+
+test("filtered DOM pagination visits only selected result pages and keeps distinct job IDs", async () => {
+  const since = requested.length;
+  const result = await scrapeCompany(`${base}/search/?locationsearch=uk`, { ...options, mode: "dom" });
+  assert.deepEqual(result.rows.map(row => row.jobId).sort(), ["first", "second"]);
+  assert.equal(result.report.pagesVisited, 4);
+  assert.ok(!requested.slice(since).some(path => path === "/search/" || /^\/search\/\?startrow=/.test(path)));
+});
+
+test("static crawl reads an unstructured position detail with an opaque URL reference", async () => {
+  const result = await scrapeCompany(`${base}/position-list`, { ...options, mode: "static" });
+  assert.equal(result.rows.length, 1, JSON.stringify(result.report));
+  assert.equal(result.rows[0]!.jobId, "dYZUhyQ0Pc7yrmUzmtUeK8");
+  assert.equal(result.rows[0]!.city, "London");
 });
 
 test("static extraction reads a visibly labelled unstructured vacancy detail", async () => {
@@ -198,7 +236,7 @@ test("a disallowed third-party widget does not mark a readable job page partial"
   assert.ok(address && typeof address === "object");
   const trackerUrl = `http://127.0.0.1:${address.port}/tracker`;
   try {
-    const html = `${htmlJob("101")}<script>fetch(${JSON.stringify(trackerUrl)}).catch(() => {})</script>`;
+    const html = `${htmlJob("101")}<script>fetch(${JSON.stringify(trackerUrl)}).catch(() => {})</script><iframe src="${trackerUrl}"></iframe>`;
     const page = createServer((_request, response) => response.end(html));
     page.listen(0, "127.0.0.1"); await once(page, "listening");
     const pageAddress = page.address();
@@ -215,9 +253,25 @@ test("page budget and stuck pagination are explicitly partial", async () => {
   const limited = await scrapeCompany(`${base}/careers`, { ...options, maxPages: 1 });
   assert.equal(limited.report.limited, true);
   assert.ok(limited.report.pendingUrls.length);
-  const stuck = await scrapeCompany(`${base}/jobs/stuck`, options);
+  const stuck = await scrapeCompany(`${base}/stuck-list`, options);
   assert.equal(stuck.report.status, "partial");
   assert.ok(stuck.report.issues.some(issue => /Pagination/.test(issue.message)));
+});
+
+test("job detail pages do not click related-job show-more controls", async () => {
+  const since = requested.length;
+  const result = await scrapeCompany(`${base}/jobs/detail-with-more`, { ...options, mode: "dom" });
+  assert.equal(result.report.status, "ok", JSON.stringify(result.report.issues));
+  assert.deepEqual(result.rows.map(row => row.jobId), ["detail-with-more"]);
+  assert.ok(!requested.slice(since).includes("/jobs/never"));
+});
+
+test("empty job detail pages are reported without following related-job controls", async () => {
+  const since = requested.length;
+  const result = await scrapeCompany(`${base}/jobs/detail-without-data`, { ...options, mode: "dom" });
+  assert.equal(result.report.status, "partial");
+  assert.ok(result.report.issues.some(issue => /detail page did not expose/i.test(issue.message)));
+  assert.ok(!requested.slice(since).includes("/jobs/never"));
 });
 
 test("public ATS API jobs are enriched without duplicate location rows", async t => {
@@ -238,7 +292,7 @@ test("public ATS API jobs are enriched without duplicate location rows", async t
   assert.equal(result.rows.length, 3);
   assert.equal(result.rows[0]!.jobId, "101");
   assert.equal(result.rows[0]!.postedDate, "2026-08-20");
-  assert.equal(result.rows[0]!.ats, "Custom"); // Exported ATS is Custom; detection stays on the raw record.
+  assert.equal(result.rows[0]!.ats, "Greenhouse");
 });
 
 test("static sitemap collection follows indexes and never uses lastmod as datePosted", async () => {

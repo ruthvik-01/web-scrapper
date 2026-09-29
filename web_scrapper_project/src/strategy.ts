@@ -10,7 +10,12 @@ import { canonicalUrl, dateWindow, normalizeJobs } from "./normalize.js";
 import { Geography } from "./geography.js";
 import { decodeJobApi } from "./api.js";
 
-type Result = Awaited<ReturnType<typeof scrapeCompany>> | Awaited<ReturnType<typeof scrapeJobSitemap>>;
+type Result = Awaited<
+  ReturnType<typeof scrapeCompany> | ReturnType<typeof scrapeJobSitemap> |
+  ReturnType<typeof scrapeJobtrain> | ReturnType<typeof scrapeComeet> |
+  ReturnType<typeof scrapeLaatZoho> | ReturnType<typeof scrapeZohoRecruit> |
+  ReturnType<typeof scrapeEwJobManager>
+>;
 export interface Attempt { method: string; status: string; candidates: number; rows: number; reason?: string }
 
 function failed(url: string, method: string, error: unknown, now: Date): Awaited<ReturnType<typeof scrapeCompany>> {
@@ -20,7 +25,7 @@ function failed(url: string, method: string, error: unknown, now: Date): Awaited
     report: {
       sourceUrl: url, process: method, scrapedAt: now.toISOString(), window: dateWindow(now),
       status: "unsupported", pagesVisited: 0, requests: 0, candidates: 0, rows: 0,
-      limited: false, pendingUrls: [], skipped: [],
+      limited: false, pendingUrls: [], listingPagesAdvertised: 0, boundary: "discovered_end", skipped: [],
       issues: [{ url, message: error instanceof Error ? error.message : String(error) }],
       dateFallbacks: [], dataNotes: [], locationEvidence: [],
     },
@@ -31,10 +36,11 @@ async function publicApi(url: string, endpoint: string, options: ScrapeOptions):
   const policy = new AccessPolicy(options.delayMs ?? 1000, options.timeoutMs ?? 30_000);
   const jobs = [];
   const seen = new Set<string>();
+  const seenJobs = new Set<string>();
   const issues: { url: string; message: string }[] = [];
   let next = endpoint;
   let empty = false;
-  while (next && seen.size < (options.maxPages ?? 100)) {
+  while (next && seen.size < (options.maxPages ?? 10_000)) {
     if (seen.has(next)) { issues.push({ url: next, message: "API pagination cycle detected." }); break; }
     if (new URL(next).origin !== new URL(endpoint).origin) {
       issues.push({ url: next, message: "Cross-origin API pagination requires an explicit adapter." }); break;
@@ -42,6 +48,8 @@ async function publicApi(url: string, endpoint: string, options: ScrapeOptions):
     seen.add(next);
     try {
       const decoded = decodeJobApi(await policy.json(next), next, options.company);
+      const fresh = decoded.jobs.filter(job => !seenJobs.has(`${job.jobId}|${job.jobUrl}`));
+      for (const job of fresh) seenJobs.add(`${job.jobId}|${job.jobUrl}`);
       jobs.push(...decoded.jobs);
       empty = decoded.empty;
       if (!decoded.jobs.length && !decoded.empty || decoded.unsupportedPagination) {
@@ -49,6 +57,10 @@ async function publicApi(url: string, endpoint: string, options: ScrapeOptions):
         break;
       }
       next = decoded.nextUrl;
+      if (next && decoded.jobs.length && !fresh.length) {
+        issues.push({ url: next, message: "API pagination repeated jobs without any new vacancies." });
+        break;
+      }
     } catch (error) { issues.push({ url: next, message: String(error) }); break; }
   }
   const limited = Boolean(next);
@@ -72,7 +84,8 @@ async function publicApi(url: string, endpoint: string, options: ScrapeOptions):
       sourceUrl: url, process: "API", scrapedAt: options.now!.toISOString(), window: dateWindow(options.now),
       status: limited || issues.length ? "partial" : normalized.rows.length ? "ok" : "no_matches",
       pagesVisited: 0, requests: seen.size, candidates: jobs.length, rows: normalized.rows.length,
-      limited, pendingUrls: next ? [next] : [], skipped: normalized.skipped, issues,
+      limited, pendingUrls: next ? [next] : [], listingPagesAdvertised: 0,
+      boundary: next ? "safety_or_user_limit" : "discovered_end", skipped: normalized.skipped, issues,
       dateFallbacks: normalized.dateFallbacks, dataNotes: normalized.dataNotes, locationEvidence: geo.evidence,
     },
   };

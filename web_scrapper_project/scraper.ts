@@ -22,7 +22,7 @@ UK company job scraper — one company URL per run
 Options:
   --company NAME         Fallback company name when the website omits it
   --out DIR              Output directory (default: output)
-  --max-pages N          Browser/API request budget (default: 100)
+  --max-pages N          Optional request budget; default follows discovered end
   --browser NAME         chromium (default), chrome, or msedge
   --delay-ms N           Minimum navigation/API delay (default: 1000)
   --render-wait-ms N     Wait after render/pagination (default: 1500)
@@ -34,9 +34,9 @@ Options:
   --help                 Show this help
 
 Outputs: unique *.json, *.csv, and *.report.json files for each run.
-15 job columns; ats is Custom. Missing values are empty.
+15 job columns; ats identifies a supported platform or is Custom. Missing values are empty.
 UK locations and an inclusive rolling two-calendar-month posting window only.
-Missing posting dates use the current UK run date and are recorded in the report.
+Missing posting dates stay empty and are recorded in the report.
 Present but invalid/ambiguous dates and unconfirmed UK countries are excluded.
 Exit codes: 0 finished; 1 fatal error; 2 partial/unsupported extraction.
 `;

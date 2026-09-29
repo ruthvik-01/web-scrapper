@@ -34,7 +34,7 @@ export async function scrapeEwJobManager(url: string, options: ScrapeOptions = {
   const sourcePages: { page: number; maxPages: number; jobUrls: string[] }[] = [];
   const geo = new Geography();
   let maxPages = 1, listingPages = 0, detailPages = 0;
-  for (let page = 1; page <= maxPages && page <= (options.maxPages ?? 1000); page++) {
+  for (let page = 1; page <= maxPages && page <= (options.maxPages ?? 10_000); page++) {
     await policy.pace(endpoint);
     const body = new URLSearchParams({
       lang: "", search_keywords: "", search_location: "", per_page: "10", orderby: "featured",
