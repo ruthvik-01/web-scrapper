@@ -2,6 +2,8 @@
 
 ## 2026-10-06 - Project cleanup and dashboard export repair
 
+- Rewrote README for the repository-root layout and fresh-clone setup; corrected dashboard import/data paths, registered versus URL CLI usage, date/location/export rules and historical-check limitations. Removed references to absent packages, taken controls, local deliveries and obsolete live totals.
+
 - Removed unused JEV project and 134 scratch/generated JSON files from the app; preserved local history under ignored dated output/archive. Kept required catalogs/configuration and audit/verification inputs; updated the historical repair helper's archived-run path.
 
 - Removed 36 unused root diagnostic files, captured pages and stale logs; [deletion manifest](docs/project-cleanup-2026-10-06.json). Historical deliveries and scripts remain intact.
