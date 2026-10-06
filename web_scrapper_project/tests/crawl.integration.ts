@@ -109,6 +109,19 @@ before(async () => {
       response.end('<h1>Engineer</h1><article>Build things</article><time datetime="2026-08-20"></time><div class="place">London, England, UK</div>');
     } else if (url.pathname === "/rendered-cards") {
       response.end(`<main id="list"></main><button aria-label="Show additional vacancies" onclick="document.querySelector('#list').insertAdjacentHTML('beforeend', '<div class=vacancy-card><h2><a href=/detail/second>Second role</a></h2></div>');this.remove()">Show additional vacancies</button><script>document.querySelector('#list').innerHTML='<div class=vacancy-card><h2><a href=/detail/first>First role</a></h2></div>'</script>`);
+    } else if (url.pathname === "/xhr-cards") {
+      response.end(`<script>fetch('/xhr-jobs').then(response => response.json())</script>`);
+    } else if (url.pathname === "/xhr-jobs") {
+      response.setHeader("Content-Type", "application/json");
+      response.end(JSON.stringify({ jobs: [{ id: "xhr-detail", title: "Care Worker", description: "Care Worker",
+        url: `${base}/jobs/xhr-detail`, datePosted: "2026-08-20",
+        jobLocation: { address: { addressLocality: "London", addressCountry: "GB" } } }] }));
+    } else if (url.pathname === "/jobs/xhr-detail") {
+      response.end(htmlJob("xhr-detail", { title: "Care Worker", description: "Provide personal care and support residents with daily living tasks." }));
+    } else if (url.pathname === "/jobs/search") {
+      response.end(`<main id="list"><a href="/jobs/first">First role</a></main><button onclick="document.querySelector('#list').insertAdjacentHTML('beforeend', '<a href=/jobs/second>Second role</a>');this.remove()">Load more jobs</button>`);
+    } else if (url.pathname === "/Careers/Board%20VSP-2041") {
+      response.end(`<main id="list"><a href="/jobs/first">First role</a></main><button onclick="document.querySelector('#list').insertAdjacentHTML('beforeend', '<a href=/jobs/second>Second role</a>');this.remove()">Load more jobs</button>`);
     } else if (url.pathname === "/unstructured-careers") {
       response.end('<main><h1>Current vacancies</h1><a href="/news/careers/test-engineer/">Test Engineer</a></main>');
     } else if (url.pathname === "/news/careers/test-engineer/") {
@@ -185,6 +198,13 @@ test("DOM follows rendered job cards with opaque detail URLs and a show-addition
   const result = await scrapeCompany(`${base}/rendered-cards`, { ...options, mode: "dom" });
   assert.equal(result.rows.length, 2, JSON.stringify(result.report));
   assert.deepEqual(result.rows.map(row => row.jobId).sort(), ["first", "second"]);
+});
+
+test("DOM opens the detail page when an XHR job only supplies its title as description", async () => {
+  const since = requested.length;
+  const result = await scrapeCompany(`${base}/xhr-cards`, { ...options, mode: "dom" });
+  assert.ok(requested.slice(since).includes("/jobs/xhr-detail"));
+  assert.match(result.rows[0]?.description || "", /Provide personal care and support residents/);
 });
 
 test("DOM follows counted load-more controls and reports each extraction step", async () => {
@@ -266,6 +286,18 @@ test("job detail pages do not click related-job show-more controls", async () =>
   assert.ok(!requested.slice(since).includes("/jobs/never"));
 });
 
+test("a jobs/search listing still loads more results", async () => {
+  const result = await scrapeCompany(`${base}/jobs/search`, { ...options, mode: "dom" });
+  assert.deepEqual(result.rows.map(row => row.jobId).sort(), ["first", "second"]);
+  assert.equal(result.report.status, "ok", JSON.stringify(result.report.issues));
+});
+
+test("a named careers board remains a listing despite its detail-shaped URL", async () => {
+  const result = await scrapeCompany(`${base}/Careers/Board%20VSP-2041`, { ...options, mode: "dom" });
+  assert.deepEqual(result.rows.map(row => row.jobId).sort(), ["first", "second"]);
+  assert.equal(result.report.status, "ok", JSON.stringify(result.report.issues));
+});
+
 test("empty job detail pages are reported without following related-job controls", async () => {
   const since = requested.length;
   const result = await scrapeCompany(`${base}/jobs/detail-without-data`, { ...options, mode: "dom" });
@@ -303,6 +335,63 @@ test("static sitemap collection follows indexes and never uses lastmod as datePo
   assert.equal(result.rows.length, 3);
   assert.ok(result.rows.every(row => row.jobId === "101"));
   assert.equal(result.report.skipped[0]?.reason, "outside_date_window");
+});
+
+test("WordPress custom career API follows its advertised total pages and enriches detail pages", async () => {
+  const requests: string[] = [];
+  const source = createServer((request, response) => {
+    const url = new URL(request.url || "/", "http://127.0.0.1");
+    requests.push(`${url.pathname}${url.search}`);
+    const origin = `http://127.0.0.1:${(source.address() as { port: number }).port}`;
+    if (url.pathname === "/robots.txt") return response.end("User-agent: *\nAllow: /");
+    if (url.pathname === "/careers") {
+      response.setHeader("Content-Type", "text/html");
+      return response.end(`<link rel="alternate" type="application/json" href="${origin}/wp-json/wp/v2/pages/53">`);
+    }
+    response.setHeader("Content-Type", "application/json");
+    if (url.pathname === "/wp-json/wp/v2/types") return response.end(JSON.stringify({
+      post: { name: "Posts", slug: "post", rest_base: "posts", rest_namespace: "wp/v2" },
+      career: { name: "Careers", slug: "career", rest_base: "career", rest_namespace: "wp/v2" },
+    }));
+    if (url.pathname === "/wp-json/wp/v2/career") {
+      response.setHeader("X-WP-TotalPages", "2");
+      const page = Number(url.searchParams.get("page"));
+      const id = page === 1 ? 101 : 102;
+      const city = page === 1 ? "Leeds" : "Bristol";
+      return response.end(JSON.stringify([{
+        id, type: "career", date: "2026-09-04T15:00:00", slug: `role-${id}`,
+        title: { rendered: `Production Role ${id}` }, content: { rendered: "<p>Operate production machinery safely.</p>" },
+        yoast_head_json: { schema: { "@type": "JobPosting", identifier: "shared-company-id",
+          title: `Production Role ${id}`, description: "Operate production machinery safely." } },
+        link: `${origin}/career/role-${id}/`,
+      }]));
+    }
+    if (url.pathname.startsWith("/career/")) {
+      const id = url.pathname.includes("102") ? 102 : 101;
+      const city = id === 101 ? "Leeds" : "Bristol";
+      response.setHeader("Content-Type", "text/html");
+      return response.end(`<main><h1>Production Role ${id}</h1><ul><li>${city}, UK</li></ul>
+        <h2>Job Description</h2><p>Operate production machinery safely and keep a clear production record.</p>
+        <h2>Submit Application</h2><form><input name="email"></form></main>`);
+    }
+    response.writeHead(404).end();
+  });
+  source.listen(0, "127.0.0.1"); await once(source, "listening");
+  const origin = `http://127.0.0.1:${(source.address() as { port: number }).port}`;
+  try {
+    const result = await scrapeCompany(`${origin}/careers`, { ...options, mode: "static", maxPages: 20 });
+    assert.equal(result.report.status, "ok", JSON.stringify(result.report.issues));
+    assert.equal(result.rows.length, 2);
+    assert.deepEqual(result.rows.map(row => row.jobId).sort(), ["101", "102"]);
+    assert.deepEqual(result.rows.map(row => row.city).sort(), ["Bristol", "Leeds"]);
+    assert.ok(requests.includes("/wp-json/wp/v2/career?per_page=100&page=1"));
+    assert.ok(requests.includes("/wp-json/wp/v2/career?per_page=100&page=2"));
+    assert.ok(!requests.some(path => path.includes("page=3")));
+    assert.equal(result.report.limited, false);
+  } finally {
+    source.closeAllConnections();
+    await new Promise<void>(resolveClose => source.close(() => resolveClose()));
+  }
 });
 
 test("CLI writes correctly shaped CSV, JSON, and reports without overwriting earlier runs", async () => {

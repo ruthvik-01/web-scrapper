@@ -1,10 +1,29 @@
 # UK company job scraper
 
+## Universal UK-only Scraper (All 75 Companies)
+
+The [implementation report](docs/universal-implementation/README.md) covers all 75 companies across 13 platform engines (Comeet, Eploy, Jobtrain, WordPress, Custom ATS, Reed, Haystack, Tribepad, JobAdder, Portobello, Occy, Supabase, JobToday). UK eligibility comes from strict deterministic location checking; foreign/unknown roles and NHS Jobs are excluded.
+
+```powershell
+npm ci
+npm run build
+npm run scrape:universal
+npm.cmd run scrape:universal -- --list
+npm.cmd run scrape:universal -- --company "Aqua Security"
+npm.cmd run scrape:universal -- --platform comeet
+```
+
+- `src/filters.ts`: Dedicated UK location/nation validation, 2-calendar-month clamped date windows, salary range verification, and NHS Jobs exclusion.
+- `src/common-utils.ts`: Standardized HTML/text normalization, canonical URL resolution, RFC 4180 BOM UTF-8 CSV serialization, and directory management.
+- `universal_scraper_production/`: Standalone, self-contained package folder ready to share with team members.
+
+Complete universal datasets are written to `../output/universal-runs/<timestamp>-<runId>/` (or `FIELDWORK_DATA_DIR/output/universal-runs/`), with combined 15-column CSV/JSON, individual company folders and reports. The dashboard's Exports page lists/downloads complete runs. `--out` overrides the output root. Partial/error runs retain diagnostics and block combined exports.
+
 ## Local dashboard
 
 ```powershell
 npm install
-npm run ui
+npm start
 ```
 
 Open `http://127.0.0.1:4317`. Keep the terminal running.
@@ -55,7 +74,7 @@ Every completed batch ships a `final.zip` with exactly three top-level entries: 
 
 The app binds to loopback only. Each Windows user keeps a private local workspace. Public careers-site availability and the scraper's documented limitations still apply.
 
-The separate `jev-scraper/` command-line project is available for explicit code use. The dashboard does not select or run it.
+The unused JEV project and obsolete JSON scratch/comparison files have been removed from the app. Historical inputs and runs remain in the ignored local archive `../output/2026-10-06-project-cleanup/archive/`.
 
 TypeScript scraper for company careers URLs. It retains explicit UK locations and known posting dates within the last two calendar months. A missing source posting date stays empty and is disclosed in `report.dateFallbacks`.
 
@@ -176,7 +195,11 @@ The current corrected delivery has 134 location rows for 127 jobs. See `output/2
 npm run check
 ```
 
-The suite includes typechecking, 40 unit/regression tests, and 9 browser/integration tests. It includes the real Eploy location failures, verified country resolution, named sites, travel coverage, ambiguous UK place names, dynamic missing dates, and blank fields.
+The suite checks maintained app and audit entry points, unit/regression tests, and browser/integration tests against local fixtures. It includes country resolution, named sites, travel coverage, ambiguous UK place names, dynamic missing dates, and blank fields. It does not verify current vacancies on every live company site.
+
+`npm run typecheck:all` additionally checks historical delivery and diagnostic TypeScript scripts. Those preserved scripts have known type errors and are outside the default app gate. `npm run verify:deployment` checks a clean build, production-only install, and compiled CLI listing against the current company catalog.
+
+The dashboard lists dated exports under `output/` and complete single/multi-company runs under `output/universal-runs/`. Runs with incomplete manifests remain unavailable for combined downloads. The [cleanup manifest](docs/project-cleanup-2026-10-06.json) records removed scratch files; [session history](D:/Projects/Sessions/06-10-2026/uk-scrapper-project-cleanup.md) records the runtime repairs.
 
 ## API contract references
 

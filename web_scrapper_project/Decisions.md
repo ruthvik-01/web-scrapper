@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-09-30 — Final job export contract
+
+Keep the existing 15 CSV fields. Reject rows without a source job ID, valid HTTP(S) URL, confirmed UK job location, usable role description, or valid available posting date; deduplicate by company, job ID, URL, and location. Leave unconfirmed city/date/pay blank and log the reason. The annual salary field accepts only annual pay; hourly/daily amounts stay in the description and benefits are removed. When Cross Keys visibly advertises a five-figure salary but its structured data calls it hourly, treat the visible amount as annual with a report note. Preserve the source CSV and write fresh batch output rather than modifying historical rows.
+
 ## 2026-09-28 — Local Windows rollout
 Each user runs the existing loopback frontend/backend on their Windows computer. The Windows launcher stores private state and exports under that Windows account's `%LOCALAPPDATA%\Fieldwork`; direct developer starts retain the current parent workspace. One-time setup may install Node dependencies and Chromium. Keep JSON storage, one active batch, and default company concurrency one; do not add a central database, login, or automatic migration.
 
@@ -112,4 +116,13 @@ When structured `identifier` is itself a URL, don't export that URL as a job ID.
 # 2026-09-29 — Crawl boundary and push gate
 
 Use source-provided next links, totals and sitemap entries to end normal crawls, with an optional user request budget and a 10,000-request emergency ceiling for broken sources. Keep JEV only as a separately invoked CLI; never dispatch it from Fieldwork. Preserve empty or unverified source fields rather than filling company metadata by guess. Do not commit/push this audit branch until real data completeness and the repository-wide validation gate pass; Côte's HTTP 429/empty-detail partial run and 67 historical TypeScript errors currently prevent that.
+
+
+## 2026-09-30 — Unique vacancy rows in final dated deliveries
+
+Final delivery CSVs keep one row per vacancy ID/URL and join explicit multiple locations with semicolons in the existing 15-column schema. Raw scraper records retain location evidence. Consolidation refuses conflicting non-location fields. This satisfies the user's zero duplicate ID/URL requirement without losing valid locations. The original dated delivery is copied once before replacement, and subsequent generation retains that same baseline.
+
+## 2026-09-30 — Use one finishing pipeline in Fieldwork
+
+Dashboard and CLI runs must call the same finalizer as dated deliveries. Preserve reports for empty or flagged runs. Create a CSV only when exported rows pass the shared quality checks; otherwise expose the report and block download.
 

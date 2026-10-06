@@ -35,18 +35,11 @@ export async function scrapeEwJobManager(url: string, options: ScrapeOptions = {
   const geo = new Geography();
   let maxPages = 1, listingPages = 0, detailPages = 0;
   for (let page = 1; page <= maxPages && page <= (options.maxPages ?? 10_000); page++) {
-    await policy.pace(endpoint);
     const body = new URLSearchParams({
       lang: "", search_keywords: "", search_location: "", per_page: "10", orderby: "featured",
       featured_first: "false", order: "DESC", page: String(page), remote_position: "", show_pagination: "false",
     });
-    const response = await fetch(endpoint, {
-      method: "POST", body, redirect: "manual",
-      headers: { "User-Agent": "UKCompanyJobScraper/0.1" },
-      signal: AbortSignal.timeout(options.timeoutMs ?? 30000),
-    });
-    if (!response.ok) throw new Error(`Public WP listing returned HTTP ${response.status}.`);
-    const payload = await response.json() as { found_jobs?: boolean; html?: string; max_num_pages?: number };
+    const payload = await policy.postJson(endpoint, body) as { found_jobs?: boolean; html?: string; max_num_pages?: number };
     if (typeof payload.found_jobs !== "boolean" || typeof payload.html !== "string") {
       throw new Error("Unsupported public WP listing response.");
     }

@@ -1,8 +1,38 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import fsPromises from "node:fs/promises";
+import { syncBuiltinESMExports } from "node:module";
 import { join } from "node:path";
 import { dashboardFixture, waitForIdle } from "./dashboard-helpers.js";
+
+test("dashboard stays active until the final state snapshot is persisted", async t => {
+  const originalRename = fsPromises.rename;
+  let release!: () => void;
+  let reached!: () => void;
+  const blocked = new Promise<void>(resolve => { release = resolve; });
+  const writing = new Promise<void>(resolve => { reached = resolve; });
+  const patch = t.mock.method(fsPromises, "rename", async (from: string, to: string) => {
+    if (String(from).endsWith("ui-state.json.tmp")) {
+      const snapshot = JSON.parse(await readFile(from, "utf8"));
+      if (snapshot.runs?.[0]?.status === "completed") { reached(); await blocked; }
+    }
+    return originalRename(from, to);
+  });
+  syncBuiltinESMExports();
+  const fixture = await dashboardFixture();
+  try {
+    await fixture.post("/api/runs", { companyIds: [fixture.companies[1]!.id] });
+    await writing;
+    const data = await (await fetch(`${fixture.base}/api/dashboard`)).json();
+    assert.ok(data.activeRun, "The dashboard must not announce idle while its final disk write is pending");
+  } finally {
+    release();
+    await fixture.close();
+    patch.mock.restore();
+    syncBuiltinESMExports();
+  }
+});
 
 test("a completed run with no jobs is marked NO JOBS and is never exported", async () => {
   const fixture = await dashboardFixture(async (_company, _directory, log) => {
@@ -23,6 +53,60 @@ test("a completed run with no jobs is marked NO JOBS and is never exported", asy
     // Its run summary is not stored, so the download endpoints have no export.
     const csv = await fetch(`${fixture.base}/api/companies/${id}/download?kind=csv`);
     assert.equal(csv.status, 404);
+  } finally { await fixture.close(); }
+});
+
+test("dashboard keeps a zero-row source report visible and blocks its CSV", async () => {
+  const fixture = await dashboardFixture(async (company, directory) => {
+    await mkdir(directory, { recursive: true });
+    const report = {
+      company: company.name, status: "no_matches", process: "STATIC", scrapedAt: "2026-09-15T12:00:00Z",
+      rows: 0, exportReady: false, qualityPassed: true, quality: {},
+      window: { from: "2026-07-15", to: "2026-09-15" }, skipped: [{ jobUrl: "https://company.example/job/1", title: "", reason: "missing_details" }],
+      issues: [], dataNotes: [], dateFallbacks: [],
+    };
+    await writeFile(join(directory, "export-rows.json"), "[]");
+    await writeFile(join(directory, "scrape-report.json"), JSON.stringify(report));
+    return { company: company.name, status: "no_matches", process: "STATIC", scrapedAt: report.scrapedAt,
+      jobs: 0, locationRows: 0, reviewNotes: 0, postingDateFallbacks: 0, exportReady: false };
+  });
+  try {
+    const id = fixture.companies[1]!.id;
+    assert.equal((await fixture.post("/api/runs", { companyIds: [id] })).status, 202);
+    const done = await waitForIdle(fixture.base);
+    const company = done.companies.find((entry: { id: string }) => entry.id === id);
+    assert.equal(company.status, "no-jobs");
+    assert.equal(company.hasOutput, true);
+    const results = await (await fetch(`${fixture.base}/api/companies/${id}/results`)).json();
+    assert.equal(results.report.skipped[0].reason, "missing_details");
+    assert.equal(results.total, 0);
+    const csv = await fetch(`${fixture.base}/api/companies/${id}/download?kind=csv`);
+    assert.equal(csv.status, 409);
+  } finally { await fixture.close(); }
+});
+
+test("dashboard shows validation failures and withholds an unsafe CSV", async () => {
+  const fixture = await dashboardFixture(async (company, directory) => {
+    await mkdir(directory, { recursive: true });
+    const row = { jobId: "dup", title: "Engineer", description: "Build and maintain software.", jobUrl: "https://company.example/job/1", postedDate: "2026-09-01", jdDeadline: "", company: company.name, salaryRange: "", employmentType: "", worktype: "", location: "London, England, UK", city: "London", state: "England", country: "UK", ats: "Custom" };
+    const quality = { duplicateJobIds: 1, duplicateJobUrls: 0, missingJobIds: 0, nonUkJobs: 0, contaminatedDescriptions: 0, titleOnlyDescriptions: 0, salaryBenefits: 0, nonAnnualSalary: 0, invalidUrls: 0, invalidPostingDates: 0, locationFailures: 0 };
+    const report = { company: company.name, status: "partial", process: "STATIC", scrapedAt: "2026-09-15T12:00:00Z", rows: 1, exportReady: false, qualityPassed: false, quality, window: { from: "2026-07-15", to: "2026-09-15" }, skipped: [], issues: [], dataNotes: [], dateFallbacks: [] };
+    await writeFile(join(directory, "export-rows.json"), JSON.stringify([row]));
+    await writeFile(join(directory, "scrape-report.json"), JSON.stringify(report));
+    return { company: company.name, status: "partial", process: "STATIC", scrapedAt: report.scrapedAt, jobs: 1, locationRows: 1, reviewNotes: 0, postingDateFallbacks: 0, exportReady: false, quality };
+  });
+  try {
+    const id = fixture.companies[1]!.id;
+    assert.equal((await fixture.post("/api/runs", { companyIds: [id] })).status, 202);
+    const done = await waitForIdle(fixture.base);
+    const company = done.companies.find((entry: { id: string }) => entry.id === id);
+    assert.equal(company.status, "needs-review");
+    assert.equal(company.hasOutput, true);
+    const results = await (await fetch(`${fixture.base}/api/companies/${id}/results`)).json();
+    assert.equal(results.report.quality.duplicateJobIds, 1);
+    assert.equal(results.rows.length, 1);
+    const csv = await fetch(`${fixture.base}/api/companies/${id}/download?kind=csv`);
+    assert.equal(csv.status, 409);
   } finally { await fixture.close(); }
 });
 

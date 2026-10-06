@@ -1,5 +1,6 @@
 import { load } from "cheerio";
 import { AccessPolicy, type ScrapeOptions, type Issue } from "./crawl.js";
+import { collectorLog, checkCancelled } from "./universal-runtime.js";
 import { extractJobs } from "./extract.js";
 import { canonicalUrl, dateWindow, normalizeJobs, plainText, type RawJob } from "./normalize.js";
 
@@ -14,13 +15,21 @@ export async function scrapeJobtrain(url: string, options: ScrapeOptions = {}) {
   const pendingUrls: string[] = [];
   let pagesVisited = 0, total = 0, skip = 0, complete = false;
   try {
-    const board = await policy.html(url); pagesVisited++;
-    const $ = load(board.body);
+    let board = await policy.html(url); pagesVisited++;
+    let $ = load(board.body);
+    // A renamed Jobtrain tenant can redirect the old search URL to its new
+    // homepage. Follow only its explicit same-origin public search link.
+    if (!$('#requestUrl').attr('data-request-url') && pagesVisited < max) {
+      const search = $('a[href]').toArray().map(node => canonicalUrl($(node).attr('href') || '', board.url))
+        .find(target => target && new URL(target).origin === new URL(url).origin && /\/Home\/Job$/i.test(new URL(target).pathname) && target !== board.url);
+      if (search) { board = await policy.html(search); pagesVisited++; $ = load(board.body); }
+    }
     const endpoint = canonicalUrl($('#requestUrl').attr('data-request-url') || '', board.url);
     if (!endpoint || new URL(endpoint).origin !== new URL(url).origin || !/\/Home\/_JobCard$/i.test(new URL(endpoint).pathname)) {
       throw new Error('No supported public Jobtrain job-card endpoint on this board.');
     }
     while (pagesVisited < max) {
+      checkCancelled();
       const target = new URL(endpoint); target.searchParams.set('Skip', String(skip));
       const response = await policy.html(target.href); pagesVisited++;
       const card = load(response.body);
@@ -32,12 +41,13 @@ export async function scrapeJobtrain(url: string, options: ScrapeOptions = {}) {
         const href = canonicalUrl(card(e).attr('href') || '', response.url);
         if (href && new URL(href).origin === new URL(url).origin && /\/Job\/JobDetail$/i.test(new URL(href).pathname) && new URL(href).searchParams.has('JobId')) links.add(href);
       });
-      console.log(`[${options.company}] Jobtrain pagination: ${links.size}/${total} vacancies (Skip=${skip}).`);
+      collectorLog(`[${options.company}] Jobtrain pagination: ${links.size}/${total} vacancies (Skip=${skip}).`);
       if (links.size >= total) { complete = true; break; }
       if (links.size === before) throw new Error('Jobtrain pagination returned no new vacancies.');
       skip += links.size - before;
     }
     for (const target of links) {
+      checkCancelled();
       if (pagesVisited >= max) { pendingUrls.push(target); continue; }
       try {
         const response = await policy.html(target); pagesVisited++;
@@ -60,7 +70,7 @@ export async function scrapeJobtrain(url: string, options: ScrapeOptions = {}) {
           }
           jobs.push(job);
         }
-        console.log(`[${options.company}] Jobtrain details: ${jobs.length}/${links.size}.`);
+        collectorLog(`[${options.company}] Jobtrain details: ${jobs.length}/${links.size}.`);
       } catch (e) { issues.push({url:target,message:String(e)}); }
     }
   } catch (e) { issues.push({url,message:String(e)}); }

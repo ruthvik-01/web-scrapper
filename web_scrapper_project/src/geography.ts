@@ -1,4 +1,4 @@
-import { setTimeout as sleep } from "node:timers/promises";
+import { pause as sleep, fetchWithRetries, paceOrigin, checkCancelled } from "./universal-runtime.js";
 import { array, isUkCountry, object, text, type JobLocation, type RawJob } from "./normalize.js";
 
 type Json = Record<string, unknown>;
@@ -31,6 +31,7 @@ export class Geography {
   constructor(private lookup?: GeoLookup) {}
 
   private async get(path: string): Promise<unknown> {
+    checkCancelled();
     const url = `https://api.postcodes.io${path}`;
     if (!this.cache.has(url)) {
       this.cache.set(url, (async () => {
@@ -41,10 +42,9 @@ export class Geography {
         }
         this.requests++;
         if (this.lookup) return this.lookup(url);
-        const response = await fetch(url, {
+        const response = await fetchWithRetries(url, {
           headers: { "User-Agent": "UKCompanyJobScraper/0.1", Accept: "application/json" },
-          signal: AbortSignal.timeout(20_000),
-        });
+        }, 20_000, () => paceOrigin(url, 500));
         if (response.status === 404) return null;
         if (!response.ok) throw new Error(`Postcodes.io HTTP ${response.status}.`);
         return response.json();
@@ -54,6 +54,7 @@ export class Geography {
   }
 
   async resolve(job: RawJob): Promise<RawJob> {
+    checkCancelled();
     const source = job.locations.map(location => ({ ...location }));
     const notes = [...(job.notes || [])];
     const visibleLabel = text(job.visibleLocation);
@@ -83,12 +84,26 @@ export class Geography {
       notes.push(`Postcode supplied in the role's location clause: "${roleLocation!.trim()}".`);
     }
     let uk = isUkCountry(sourceCountry);
+    const explicitUkRegion = [label, ...source.map(location => text(location.location))]
+      .some(location => /\bGreater London\b/i.test(location));
+    if (!uk && explicitUkRegion) {
+      uk = true;
+      notes.push('UK country confirmed by the job location\'s explicit administrative region: "Greater London".');
+    }
     // Job-specific UK work eligibility is direct recruitment-location evidence,
     // unlike a company's footer/HQ or a UK-only gazetteer match.
     const eligibility = /(?:^|[.!?\n])([^.!?\n]*\b(?:must|need to|required to)[^.!?\n]{0,90}\bright to work in (?:the )?(?:UK|United Kingdom)\b)/i.exec(job.roleDescription || "")?.[1]?.trim();
     if (!uk && eligibility && !/\b(?:not|no)\b/i.test(eligibility)) {
       uk = true;
       notes.push(`UK country confirmed by the role's explicit work-eligibility requirement: "${eligibility}".`);
+    }
+    const roleOffice = source.length === 1 ? text(source[0]?.city || source[0]?.location).split(",")[0]!.trim() : "";
+    const role = job.roleDescription || "";
+    if (!uk && roleOffice && roleOffice.length >= 3 &&
+        new RegExp(`\\b${roleOffice.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s+(?:office|team)\\b`, "i").test(role) &&
+        /\b(?:UK locations|United Kingdom locations|UK projects|UK office|UK team|in Scotland|across Scotland)\b/i.test(role)) {
+      uk = true;
+      notes.push(`UK country confirmed by the role's named office and UK work context: "${roleOffice}".`);
     }
     const postcodeResults = new Map<string, Json>();
     try {

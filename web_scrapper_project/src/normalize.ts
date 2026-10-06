@@ -36,7 +36,9 @@ export interface RawJob {
 export interface SkippedJob {
   jobUrl: string;
   title: string;
-  reason: "missing_details" | "unknown_date" | "outside_date_window" | "no_confirmed_uk_location";
+  reason: "missing_details" | "unknown_date" | "outside_date_window" | "no_confirmed_uk_location" |
+    "missing_job_id" | "invalid_job_url" | "invalid_description" | "non_uk_location" |
+    "invalid_posting_date" | "duplicate_job";
 }
 export interface DateFallback {
   jobId: string;
@@ -111,6 +113,15 @@ export function cleanDescription(value: string): string {
   return out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
 }
 
+export function hasRoleContent(description: string, title: string): boolean {
+  const value = cleanDescription(description);
+  const role = value.replace(title, "")
+    .replace(/^\s*(?:salary|hours|contract)\s*:[^\n]*/gim, "")
+    .replace(/^\s*(?:[£$€]\s*\d[^\n]*|\d+\s*(?:hours?|hrs?)\s+per\s+week[^\n]*)$/gim, "").trim();
+  return /[a-z]{4}/i.test(role) &&
+    !/<\/?(?:script|style|div|nav)\b|\b(?:docsLoaded|idDisplay|addClass|document\.querySelector|window\.__|function\s*\(|var\s+\w+\s*=)\b|\$\s*\(/i.test(value);
+}
+
 export function canonicalUrl(value: string, base?: string): string {
   try {
     const url = new URL(value, base);
@@ -166,6 +177,21 @@ export function parsePostedDate(value: unknown, now = new Date()): string {
     const timestamp = new Date(input);
     return Number.isNaN(timestamp.valueOf()) ? "" : londonDay(timestamp);
   }
+  const utcString = /^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+([A-Za-z]{3})\s+(\d{1,2})\s+(\d{2}):(\d{2}):(\d{2}) UTC (\d{4})$/.exec(input);
+  if (utcString) {
+    const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+    const month = months.indexOf(utcString[2]!.toLowerCase()) + 1;
+    const year = Number(utcString[7]);
+    const day = Number(utcString[3]);
+    const hour = Number(utcString[4]);
+    const minute = Number(utcString[5]);
+    const second = Number(utcString[6]);
+    const calendarDay = validDay(year, month, day);
+    const timestamp = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+    if (!calendarDay || timestamp.getUTCHours() !== hour || timestamp.getUTCMinutes() !== minute ||
+      timestamp.getUTCSeconds() !== second || timestamp.toUTCString().slice(0, 3) !== utcString[1]) return "";
+    return londonDay(timestamp);
+  }
   const numeric = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(input);
   if (numeric) return validDay(Number(numeric[3]), Number(numeric[2]), Number(numeric[1]));
   const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
@@ -208,15 +234,22 @@ export function ukLocation(input: JobLocation): { location: string; city: string
   if (explicitCountry && !isUkCountry(explicitCountry)) return;
   const parts = label.split(/\s*,\s*|\s+[–—]\s+/).filter(Boolean);
   const countryPart = parts.find(isUkCountry);
-  const state = text(input.state);
+  const sourceState = text(input.state);
+  const state = ukCountries.has(key(sourceState)) ? "" : sourceState;
   if (!explicitCountry && !countryPart && !ukNations.has(key(state))) return;
   const places = parts.filter(part => !isUkCountry(part) && !/^(remote|hybrid|on-?site)$/i.test(part));
-  const city = text(input.city) || (input.resolved ? "" : places[0]) || "";
+  // A role's own "town, county" label remains usable after geography resolution,
+  // even when the resolver could not populate separate city/state properties.
+  const namedTownAndRegion = Boolean(explicitCountry && places.length >= 2);
+  const sourceCity = text(input.city);
+  const city = (state && sourceCity.toLowerCase().endsWith(`, ${state.toLowerCase()}`)
+    ? sourceCity.slice(0, -(state.length + 2)).trim() : sourceCity) ||
+    (namedTownAndRegion || !input.resolved ? places[0] : "") || "";
   const nation = parts.find(part => ukNations.has(key(part)));
   return {
     location: label || [city, state, "United Kingdom"].filter(Boolean).join(", "),
     city,
-    state: state || (input.resolved ? "" : nation || places[1]) || "",
+    state: state || (namedTownAndRegion ? places[1] : input.resolved ? "" : nation || places[1]) || "",
     country: "UK",
   };
 }
@@ -261,7 +294,7 @@ export function normalizeJobs(jobs: RawJob[], now = new Date()): { rows: JobRow[
       ? /(?:£\s*|\bGBP\s*)(\d+(?:\.\d+)?)\s*(k\b)?/i.exec(numericPay)
       : /^\s*(\d+(?:\.\d+)?)\s*(k\b)?/i.exec(numericPay);
     // Hours and separate bonuses are not the second bound of a salary range.
-    const next = first && /^\s*(?:[-–—]|to\b)\s*(?:£\s*|GBP\s*)?(\d+(?:\.\d+)?)\s*(k\b)?/i
+    const next = first && /^\s*(?:\([^)]*\)\s*)?(?:[-–—]|(?:rising\s+)?to\b)\s*(?:£\s*|GBP\s*)?(\d+(?:\.\d+)?)\s*(k\b)?/i
       .exec(numericPay.slice(first.index + first[0].length));
     const amounts = [first, next].filter((match): match is RegExpExecArray => Boolean(match));
     const salaryRange = !annual || movePay || !/(?:£|\bGBP\b)/i.test(pay) ? "" : amounts

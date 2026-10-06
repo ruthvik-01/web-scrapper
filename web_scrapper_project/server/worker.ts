@@ -2,7 +2,8 @@ import { copyFile, mkdir, readFile, readdir, writeFile } from "node:fs/promises"
 import { resolve } from "node:path";
 import { scrapeWebsite } from "../src/strategy.js";
 import type { CompanyConfig } from "../src/company-runner.js";
-import { outputCsv, outputRows } from "../src/output.js";
+import { outputCsv } from "../src/output.js";
+import { finalizeScrapeResult } from "../src/final-dataset.js";
 import type { Company } from "./catalog.js";
 
 let finished = false;
@@ -27,18 +28,21 @@ export async function prepareCode(root: string, directory: string, config: SiteC
     'import { fileURLToPath } from "node:url";',
     'import { writeFile } from "node:fs/promises";',
     'import { scrapeWebsite } from "./src/strategy.js";',
-    'import { outputRows, outputCsv } from "./src/output.js";',
+    'import { outputCsv } from "./src/output.js";',
+    'import { finalizeScrapeResult } from "./src/final-dataset.js";',
     `const company = ${JSON.stringify(config, null, 2)};`,
     'const directory = resolve(dirname(fileURLToPath(import.meta.url)), "..");',
     '  const result = await scrapeWebsite(company.careersUrl, { ...company, company: company.name });',
-    '  const rows = outputRows(result, company.name);',
-    '  await writeFile(resolve(directory, "jobs.csv"), outputCsv(rows));',
+    '  const finalized = finalizeScrapeResult(result, company.name);',
+    '  result.rows = finalized.rows; result.report = finalized.report;',
+    '  const rows = finalized.rows;',
+    '  if (finalized.report.exportReady) await writeFile(resolve(directory, "jobs.csv"), outputCsv(rows));',
     '  await writeFile(resolve(directory, "export-rows.json"), JSON.stringify(rows, null, 2));',
     '  await writeFile(resolve(directory, "scrape-report.json"), JSON.stringify(result.report, null, 2));',
-    '  if (["partial", "unsupported"].includes(result.report.status)) process.exitCode = 2;',
+    '  if (["partial", "unsupported"].includes(result.report.status) || !result.report.exportReady) process.exitCode = 2;',
   ].join("\n");
   await writeFile(resolve(code, "scrape.ts"), entry + "\n");
-  await writeFile(resolve(directory, "README.md"), `# ${config.name}\n\nRun \`npm ci\` and \`npm run scrape\` inside \`code/\`. For DOM/browser fallback, also run \`npx playwright install chromium\`.\n\nMode: ${config.mode || "auto"}. The CSV has 15 columns. Missing fields are empty. Absent posting dates use the current UK run day with disclosure in scrape-report.json. Review source-location notes before using uncertain city/state values. Public sources only: access restrictions and unsupported schemas are reported, not bypassed.\n\nSource: ${config.careersUrl}\n`);
+  await writeFile(resolve(directory, "README.md"), `# ${config.name}\n\nRun \`npm ci\` and \`npm run scrape\` inside \`code/\`. For DOM/browser fallback, also run \`npx playwright install chromium\`.\n\nMode: ${config.mode || "auto"}. The CSV has 15 columns. Missing fields, including posting dates, stay blank when the source does not provide them. The JSON report records validation checks, exclusions, and location merges. Public sources only: access restrictions and unsupported schemas are reported, not bypassed.\n\nSource: ${config.careersUrl}\n`);
 }
 
 async function work(root: string, directory: string, company: Company) {
@@ -78,16 +82,20 @@ async function work(root: string, directory: string, company: Company) {
     throw error;
   }
   progress("RESULT STORAGE", "Writing outputs");
-  const rows = outputRows(result, company.name);
-  await writeFile(resolve(directory, "jobs.csv"), outputCsv(rows));
+  const finalized = finalizeScrapeResult(result, company.name);
+  result.rows = finalized.rows;
+  result.report = finalized.report;
+  const rows = finalized.rows;
+  if (finalized.report.exportReady) await writeFile(resolve(directory, "jobs.csv"), outputCsv(rows));
+  else console.warn(`Quality review required: ${JSON.stringify(finalized.quality)}`);
   await writeFile(resolve(directory, "export-rows.json"), JSON.stringify(rows, null, 2));
-  await writeFile(resolve(directory, "scrape-report.json"), JSON.stringify(result.report, null, 2));
+  await writeFile(resolve(directory, "scrape-report.json"), JSON.stringify(finalized.report, null, 2));
   await writeFile(resolve(directory, "scrape-result.json"), JSON.stringify(result, null, 2));
   return {
-    company: company.name, slug: company.slug, status: result.report.status,
+    company: company.name, slug: company.slug, status: result.report.status, exportReady: finalized.report.exportReady, quality: finalized.quality,
     sourceUrl: company.careersUrl, scrapedAt: result.report.scrapedAt,
     process: result.report.process, pagesRead: result.report.pagesVisited,
-    jobs: new Set(result.rows.map(row => `${row.jobId || row.jobUrl}|${row.jobUrl}`)).size, locationRows: result.rows.length,
+    jobs: new Set(rows.map(row => `${row.jobId || row.jobUrl}|${row.jobUrl}`)).size, locationRows: rows.length,
     reviewNotes: result.report.dataNotes.length, postingDateFallbacks: result.report.dateFallbacks.length,
     excluded: result.report.skipped.length, issues: result.report.issues.length,
   };

@@ -2,6 +2,7 @@ import { scrapeJobtrain } from "./jobtrain.js";
 import { scrapeComeet } from "./comeet.js";
 import { scrapeLaatZoho, scrapeZohoRecruit } from "./zoho.js";
 import { scrapeEwJobManager } from "./wp-job-manager.js";
+import { collectorLog, checkCancelled } from "./universal-runtime.js";
 
 import { AccessPolicy, scrapeCompany, type ScrapeOptions } from "./crawl.js";
 import { scrapeJobSitemap } from "./sitemap.js";
@@ -100,7 +101,8 @@ export async function scrapeWebsite(input: string, inputOptions: ScrapeOptions =
   const attempts: Attempt[] = [];
   const results: Result[] = [];
   async function attempt(method: string, action: () => Promise<Result>) {
-    console.log(`Trying ${method} extraction…`);
+    checkCancelled();
+    collectorLog(`Trying ${method} extraction…`);
     let result: Result;
     try { result = await action(); }
     catch (error) { result = failed(url, method, error, options.now); }
@@ -109,7 +111,7 @@ export async function scrapeWebsite(input: string, inputOptions: ScrapeOptions =
       reason: result.report.issues[0]?.message,
     });
     results.push(result);
-    console.log(`${method}: ${result.report.status}, ${result.rows.length} rows${result.report.issues[0] ? `; ${result.report.issues[0].message}` : ""}`);
+    collectorLog(`${method}: ${result.report.status}, ${result.rows.length} rows${result.report.issues[0] ? `; ${result.report.issues[0].message}` : ""}`);
     return result;
   }
   const usable = (result: Result) => ["ok", "no_matches"].includes(result.report.status) &&
@@ -152,8 +154,8 @@ export async function scrapeWebsite(input: string, inputOptions: ScrapeOptions =
   // filter). Do not replace that scope with an automatically found global sitemap.
   if (!sitemap && !options.selectors?.jobLinksOnly) {
     try {
-      const response = await fetch(`${new URL(url).origin}/robots.txt`, { signal: AbortSignal.timeout(options.timeoutMs || 30_000) });
-      if (response.ok) sitemap = canonicalUrl(/^sitemap:\s*(\S+)/im.exec(await response.text())?.[1] || "");
+      const response = await new AccessPolicy(options.delayMs ?? 1000, options.timeoutMs ?? 30_000).html(`${new URL(url).origin}/robots.txt`);
+      sitemap = canonicalUrl(/^sitemap:\s*(\S+)/im.exec(response.body)?.[1] || "");
     } catch { /* The actual extraction records network/access failures below. */ }
   }
   if (sitemap) {

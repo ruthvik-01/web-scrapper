@@ -1,0 +1,1728 @@
+{
+  "scope": "Offline synthetic fixtures; no live company claim",
+  "companies": 53,
+  "passed": 53,
+  "failed": 0,
+  "reports": [
+    {
+      "company": "alice",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/alice/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Alice\u0000https://www.comeet.com/jobs/alice/D5.005/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "alzheimers-society",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/alzheimers-society/src/sitemap.ts",
+      "sourceSha256": "0ca4a558c9176206838e82955c3e58deac15f8ad0dc08c79fd59379a97c28d35",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Alzheimer's Society\u0000https://careers.alzheimers.org.uk/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "jobId",
+            "old": "Alzheimer's Society",
+            "new": "uk",
+            "classification": "OLD BUG",
+            "reason": "Old identifier.name used employer name; current identifier.value matches the recorded source vacancy ID."
+          },
+          {
+            "key": "Alzheimer's Society\u0000https://careers.alzheimers.org.uk/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "salaryRange",
+            "old": "GBP 45000 - 50000 YEAR",
+            "new": "£45000-£50000",
+            "classification": "EXPECTED",
+            "reason": "Explicit annual GBP bounds rendered in the approved salary format; currency and amounts preserved."
+          },
+          {
+            "key": "Alzheimer's Society\u0000https://careers.alzheimers.org.uk/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "location",
+            "old": "London, GB",
+            "new": "London, UK",
+            "classification": "EXPECTED",
+            "reason": "UK country spelling standardized; source city/state and recruitment country are unchanged."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "aquasec",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/aquasec/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Aqua Security\u0000https://www.comeet.com/jobs/aquasec/91.001/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "blockaid",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/blockaid/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Blockaid\u0000https://www.comeet.com/jobs/blockaid/69.00B/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "bmstores",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/bmstores/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "cc-nurseries",
+      "platform": "jobtrain",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/cc-nurseries/src/jobtrain.ts",
+      "sourceSha256": "ac8d02f7afc26d0a604555c5f40cc9d21a1b535ba8cc29ca560359fdd350667f",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "cellebrite",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/cellebrite/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Cellebrite\u0000https://www.comeet.com/jobs/Cellebrite/C3.00F/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "checkmarx",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/checkmarx/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Checkmarx\u0000https://www.comeet.com/jobs/checkmarx/C0.008/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "classiq",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/classiq/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Classiq\u0000https://www.comeet.com/jobs/classiq/F7.008/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "compass-schools",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/compass-schools/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "coralogix",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/coralogix/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Coralogix\u0000https://www.comeet.com/jobs/coralogix/06.004/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "curve",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/curve/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Curve\u0000https://www.comeet.com/jobs/curve/E4.001/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "cycode",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/cycode/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Cycode\u0000https://www.comeet.com/jobs/cycode/A8.00D/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "cyera",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/cyera/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Cyera\u0000https://www.comeet.com/jobs/cyera/17.008/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "earnix",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/earnix/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Earnix\u0000https://www.comeet.com/jobs/earnix/93.00B/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "empathy",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/empathy/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Empathy\u0000https://www.comeet.com/jobs/empathy/F8.007/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "exchange-street",
+      "platform": "custom",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/exchange-street/universal_scraper/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "framesecurity",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/framesecurity/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Frame Security\u0000https://www.comeet.com/jobs/framesecurity/FA.002/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "frasers-hospitality",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/frasers-hospitality/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "get-recruited",
+      "platform": "custom",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/get-recruited/universal_scraper/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "guide-dogs",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/guide-dogs/src/sitemap.ts",
+      "sourceSha256": "0ca4a558c9176206838e82955c3e58deac15f8ad0dc08c79fd59379a97c28d35",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Guide Dogs\u0000https://careers.guidedogs.org.uk/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "jobId",
+            "old": "Guide Dogs",
+            "new": "uk",
+            "classification": "OLD BUG",
+            "reason": "Old identifier.name used employer name; current identifier.value matches the recorded source vacancy ID."
+          },
+          {
+            "key": "Guide Dogs\u0000https://careers.guidedogs.org.uk/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "salaryRange",
+            "old": "GBP 45000 - 50000 YEAR",
+            "new": "£45000-£50000",
+            "classification": "EXPECTED",
+            "reason": "Explicit annual GBP bounds rendered in the approved salary format; currency and amounts preserved."
+          },
+          {
+            "key": "Guide Dogs\u0000https://careers.guidedogs.org.uk/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "location",
+            "old": "London, GB",
+            "new": "London, UK",
+            "classification": "EXPECTED",
+            "reason": "UK country spelling standardized; source city/state and recruitment country are unchanged."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "intercity-technology",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/intercity-technology/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "kaltura",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/kaltura/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Kaltura\u0000https://www.comeet.com/jobs/kaltura/E2.00D/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "london-borough-of-bexley",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/london-borough-of-bexley/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "london-borough-of-hillingdon",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/london-borough-of-hillingdon/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "long-term-futures",
+      "platform": "custom",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/long-term-futures/universal_scraper/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "mencap",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/mencap/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "mindspace",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/mindspace/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Mindspace\u0000https://www.comeet.com/jobs/mindspace/71.00B/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "monday",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/monday/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "monday.com\u0000https://www.comeet.com/jobs/monday/41.00B/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "mwh-treatment",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/mwh-treatment/src/sitemap.ts",
+      "sourceSha256": "0ca4a558c9176206838e82955c3e58deac15f8ad0dc08c79fd59379a97c28d35",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "MWH Treatment\u0000https://careers.mwhtreatment.com/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "jobId",
+            "old": "MWH Treatment",
+            "new": "uk",
+            "classification": "OLD BUG",
+            "reason": "Old identifier.name used employer name; current identifier.value matches the recorded source vacancy ID."
+          },
+          {
+            "key": "MWH Treatment\u0000https://careers.mwhtreatment.com/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "salaryRange",
+            "old": "GBP 45000 - 50000 YEAR",
+            "new": "£45000-£50000",
+            "classification": "EXPECTED",
+            "reason": "Explicit annual GBP bounds rendered in the approved salary format; currency and amounts preserved."
+          },
+          {
+            "key": "MWH Treatment\u0000https://careers.mwhtreatment.com/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "location",
+            "old": "London, GB",
+            "new": "London, UK",
+            "classification": "EXPECTED",
+            "reason": "UK country spelling standardized; source city/state and recruitment country are unchanged."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "nayax",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/nayax/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Nayax\u0000https://www.comeet.com/jobs/nayax/13.009/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "news-uk",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/news-uk/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "noma-security",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/noma-security/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Noma Security\u0000https://www.comeet.com/jobs/noma_security/3A.005/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "optibus",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/optibus/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Optibus\u0000https://www.comeet.com/jobs/optibus/D1.00C/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "osborne-clarke",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/osborne-clarke/universal_scraper/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "overwolf",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/overwolf/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Overwolf\u0000https://www.comeet.com/jobs/overwolf/B1.001/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "papayaglobal",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/papayaglobal/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Papaya Global\u0000https://www.comeet.com/jobs/papayaglobal/16.005/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "persivalenic",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/persivalenic/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Aviation Inc\u0000https://www.comeet.com/jobs/persivalenic/D8.006/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "personetics",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/personetics/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Personetics\u0000https://www.comeet.com/jobs/personetics/83.00A/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "port",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/port/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Port\u0000https://www.comeet.com/jobs/port/59.004/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "remedio",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/remedio/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Remedio\u0000https://www.comeet.com/jobs/remedio/CA.000/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "restore",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/restore/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "seeability",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/seeability/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "soliduslabs",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/soliduslabs/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Solidus Labs\u0000https://www.comeet.com/jobs/soliduslabs/E6.007/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "tcfm",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/tcfm/universal_scraper/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "thetaray",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/thetaray/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Thetaray\u0000https://www.comeet.com/jobs/thetaray/72.00F/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "thinking-schools-academy-trust",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/thinking-schools-academy-trust/src/sitemap.ts",
+      "sourceSha256": "0ca4a558c9176206838e82955c3e58deac15f8ad0dc08c79fd59379a97c28d35",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Thinking Schools Academy Trust\u0000https://careers.tsatrust.org.uk/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "jobId",
+            "old": "Thinking Schools Academy Trust",
+            "new": "uk",
+            "classification": "OLD BUG",
+            "reason": "Old identifier.name used employer name; current identifier.value matches the recorded source vacancy ID."
+          },
+          {
+            "key": "Thinking Schools Academy Trust\u0000https://careers.tsatrust.org.uk/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "salaryRange",
+            "old": "GBP 45000 - 50000 YEAR",
+            "new": "£45000-£50000",
+            "classification": "EXPECTED",
+            "reason": "Explicit annual GBP bounds rendered in the approved salary format; currency and amounts preserved."
+          },
+          {
+            "key": "Thinking Schools Academy Trust\u0000https://careers.tsatrust.org.uk/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "location",
+            "old": "London, GB",
+            "new": "London, UK",
+            "classification": "EXPECTED",
+            "reason": "UK country spelling standardized; source city/state and recruitment country are unchanged."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "tower-hamlets",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/tower-hamlets/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "trullion",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/trullion/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Trullion\u0000https://www.comeet.com/jobs/trullion/07.000/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "upwind",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/upwind/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Upwind Security\u0000https://www.comeet.com/jobs/upwind/49.004/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "viber",
+      "platform": "comeet",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/viber/src/comeet.ts",
+      "sourceSha256": "98092d971590bf0e4e6b8b32650f8d2169bd820f78444b49d0dd0b2c3de8ef4f",
+      "oldSourceJobs": 4,
+      "newSourceJobs": 4,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Viber\u0000https://www.comeet.com/jobs/viber/04.002/engineer/uk\u0000London\u0000",
+            "field": "description",
+            "old": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\n\nSalary\n£45000-£50000 per annum",
+            "new": "Description\nBuild and maintain software services. Collaborate with engineers to review code, test applications and investigate production defects.\nSalary\n£45000-£50000 per annum",
+            "classification": "EXPECTED",
+            "reason": "Description whitespace cleaned; all textual content is equivalent."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "walkers-shortbread",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/walkers-shortbread/src/sitemap.ts",
+      "sourceSha256": "0ca4a558c9176206838e82955c3e58deac15f8ad0dc08c79fd59379a97c28d35",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [
+          {
+            "key": "Walkers — Walker's Shortbread\u0000https://careers.walkersshortbread.com/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "jobId",
+            "old": "Walkers — Walker's Shortbread",
+            "new": "uk",
+            "classification": "OLD BUG",
+            "reason": "Old identifier.name used employer name; current identifier.value matches the recorded source vacancy ID."
+          },
+          {
+            "key": "Walkers — Walker's Shortbread\u0000https://careers.walkersshortbread.com/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "salaryRange",
+            "old": "GBP 45000 - 50000 YEAR",
+            "new": "£45000-£50000",
+            "classification": "EXPECTED",
+            "reason": "Explicit annual GBP bounds rendered in the approved salary format; currency and amounts preserved."
+          },
+          {
+            "key": "Walkers — Walker's Shortbread\u0000https://careers.walkersshortbread.com/vacancies/uk/engineer.html\u0000London\u0000",
+            "field": "location",
+            "old": "London, GB",
+            "new": "London, UK",
+            "classification": "EXPECTED",
+            "reason": "UK country spelling standardized; source city/state and recruitment country are unchanged."
+          }
+        ],
+        "unexplained": 0
+      },
+      "verified": true
+    },
+    {
+      "company": "wren-kitchens",
+      "platform": "eploy",
+      "fixture": "Synthetic fixed source data; actual old collector versus actual universal collector, not live vacancies",
+      "sourceFile": "companies code/wren-kitchens/src/sitemap.ts",
+      "sourceSha256": "89c1d5fb1b4657c6e9a450c9e8fea88bf566690f9329da87f68adf8bbe635de2",
+      "oldSourceJobs": 3,
+      "newSourceJobs": 3,
+      "sourceParity": true,
+      "oldStatus": "ok",
+      "universalStatus": "ok",
+      "comparison": {
+        "oldCount": 1,
+        "newCount": 1,
+        "missing": [],
+        "unexpected": [],
+        "oldDuplicates": [],
+        "newDuplicates": [],
+        "oldCollisionRecords": [],
+        "newCollisionRecords": [],
+        "differences": [],
+        "unexplained": 0
+      },
+      "verified": true
+    }
+  ]
+}

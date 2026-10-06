@@ -1,0 +1,864 @@
+[
+  {
+    "name": "Alice",
+    "slug": "alice",
+    "careersUrl": "https://www.comeet.com/jobs/alice/D5.005/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Alzheimer's Society",
+    "slug": "alzheimers-society",
+    "careersUrl": "https://careers.alzheimers.org.uk/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    },
+    "sitemapUrl": "https://careers.alzheimers.org.uk/sitemap.xml"
+  },
+  {
+    "name": "Aqua Security",
+    "slug": "aquasec",
+    "careersUrl": "https://www.comeet.com/jobs/aquasec/91.001/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Blockaid",
+    "slug": "blockaid",
+    "careersUrl": "https://www.comeet.com/jobs/blockaid/69.00B/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "B&M",
+    "slug": "bmstores",
+    "careersUrl": "https://jobs.bmstores.co.uk/vacancies/",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000,
+      "timeoutMs": 15000,
+      "sitemapUrl": "https://jobs.bmstores.co.uk/live-jobs.xml"
+    }
+  },
+  {
+    "name": "CC Nurseries",
+    "slug": "cc-nurseries",
+    "careersUrl": "https://www.jobtrain.co.uk/ccnurseries/Home/Job",
+    "platform": "jobtrain",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 100,
+      "timeoutMs": 15000
+    }
+  },
+  {
+    "name": "Cellebrite",
+    "slug": "cellebrite",
+    "careersUrl": "https://www.comeet.com/jobs/Cellebrite/C3.00F/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Checkmarx",
+    "slug": "checkmarx",
+    "careersUrl": "https://www.comeet.com/jobs/checkmarx/C0.008/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Classiq",
+    "slug": "classiq",
+    "careersUrl": "https://www.comeet.com/jobs/classiq/F7.008/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Compass Schools",
+    "slug": "compass-schools",
+    "careersUrl": "https://careers.compasscommunity.co.uk/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "sitemapUrl": "https://careers.compasscommunity.co.uk/sitemap.xml"
+    },
+    "employerNames": [
+      "Compass Schools"
+    ]
+  },
+  {
+    "name": "Coralogix",
+    "slug": "coralogix",
+    "careersUrl": "https://www.comeet.com/jobs/coralogix/06.004/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Curve",
+    "slug": "curve",
+    "careersUrl": "https://www.comeet.com/jobs/curve/E4.001/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Cycode",
+    "slug": "cycode",
+    "careersUrl": "https://www.comeet.com/jobs/cycode/A8.00D/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Cyera",
+    "slug": "cyera",
+    "careersUrl": "https://www.comeet.com/jobs/cyera/17.008/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Earnix",
+    "slug": "earnix",
+    "careersUrl": "https://www.comeet.com/jobs/earnix/93.00B/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Empathy",
+    "slug": "empathy",
+    "careersUrl": "https://www.comeet.com/jobs/empathy/F8.007/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Exchange Street Claims & Financial Services",
+    "slug": "exchange-street",
+    "careersUrl": "https://www.exchange-street.co.uk/candidate/search/results",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 800,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Frame Security",
+    "slug": "framesecurity",
+    "careersUrl": "https://www.comeet.com/jobs/framesecurity/FA.002/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Frasers Hospitality",
+    "slug": "frasers-hospitality",
+    "careersUrl": "https://jobs.malhdv.co.uk/vacancies/",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000,
+      "timeoutMs": 20000,
+      "sitemapUrl": "https://jobs.malhdv.co.uk/live-jobs.xml"
+    }
+  },
+  {
+    "name": "Get Recruited (UK) Ltd",
+    "slug": "get-recruited",
+    "careersUrl": "https://www.get-recruited.co.uk/jobs",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "sitemapUrl": "https://www.get-recruited.co.uk/job/sitemap.xml",
+      "maxPages": 400,
+      "delayMs": 600,
+      "timeoutMs": 30000
+    },
+    "sitemapUrl": "https://www.get-recruited.co.uk/job/sitemap.xml"
+  },
+  {
+    "name": "Guide Dogs",
+    "slug": "guide-dogs",
+    "careersUrl": "https://careers.guidedogs.org.uk/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    },
+    "sitemapUrl": "https://careers.guidedogs.org.uk/sitemap.xml"
+  },
+  {
+    "name": "Hackney Borough Council",
+    "slug": "hackney-borough-council",
+    "careersUrl": "https://recruitment.hackney.gov.uk/job-search/",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Harper May Ltd",
+    "slug": "harper-may",
+    "careersUrl": "https://www.harpermay.com/cm/jobs",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Intercity Technology",
+    "slug": "intercity-technology",
+    "careersUrl": "https://careers.intercity.technology/jobs",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Kaltura",
+    "slug": "kaltura",
+    "careersUrl": "https://www.comeet.com/jobs/kaltura/E2.00D/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "London Borough of Bexley",
+    "slug": "london-borough-of-bexley",
+    "careersUrl": "https://recruitment.bexley.gov.uk/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "London Borough of Hillingdon",
+    "slug": "london-borough-of-hillingdon",
+    "careersUrl": "https://jobs.hillingdon.gov.uk/vacancies/",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000,
+      "timeoutMs": 15000,
+      "sitemapUrl": "https://jobs.hillingdon.gov.uk/live-jobs.xml"
+    }
+  },
+  {
+    "name": "Long Term Futures",
+    "slug": "long-term-futures",
+    "careersUrl": "https://www.longtermfutures.co.uk/job-search/",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 800,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Louis Vuitton",
+    "slug": "louis-vuitton",
+    "careersUrl": "https://jobs.louisvuitton.com/",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Mayra Property Services",
+    "slug": "mayra-property-services",
+    "careersUrl": "https://wearemayra.com/en/karriere",
+    "platform": "supabase",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Mber London",
+    "slug": "mber-london",
+    "careersUrl": "https://jobtoday.com/gb/company/restaurant-bar-mber-restaurant-JEopwv",
+    "platform": "jobtoday",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Mega food centre",
+    "slug": "mega-food-centre",
+    "careersUrl": "https://www.megacentrerayleigh.co.uk/recruitment",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Mencap",
+    "slug": "mencap",
+    "careersUrl": "https://jobs.mencap.org.uk/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Michael Page Technology",
+    "slug": "michael-page-technology",
+    "careersUrl": "https://www.michaelpage.co.uk/careers",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Mindspace",
+    "slug": "mindspace",
+    "careersUrl": "https://www.comeet.com/jobs/mindspace/71.00B/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "monday.com",
+    "slug": "monday",
+    "careersUrl": "https://www.comeet.com/jobs/monday/41.00B/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Mountain Healthcare Ltd",
+    "slug": "mountain-healthcare-ltd",
+    "careersUrl": "https://mountainhealthcare.co.uk/careers",
+    "platform": "occy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "MWH Treatment",
+    "slug": "mwh-treatment",
+    "careersUrl": "https://careers.mwhtreatment.com/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    },
+    "sitemapUrl": "https://careers.mwhtreatment.com/sitemap.xml"
+  },
+  {
+    "name": "Nayax",
+    "slug": "nayax",
+    "careersUrl": "https://www.comeet.com/jobs/nayax/13.009/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "News UK",
+    "slug": "news-uk",
+    "careersUrl": "https://www.newscareers.co.uk/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000,
+      "timeoutMs": 15000,
+      "sitemapUrl": "https://www.newscareers.co.uk/live-jobs.xml"
+    }
+  },
+  {
+    "name": "No 35 Mackenzie Walk",
+    "slug": "no35-mackenzie-walk",
+    "careersUrl": "https://careers.portobellobrewery.com/venue/no35-mackenzie-walk",
+    "platform": "portobello",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Noma Security",
+    "slug": "noma-security",
+    "careersUrl": "https://www.comeet.com/jobs/noma_security/3A.005/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Northwood Hygiene Products Limited",
+    "slug": "northwood-hygiene-products-limited",
+    "careersUrl": "https://www.northwood.co.uk/careers",
+    "platform": "wordpress",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "oliver roberts ltd",
+    "slug": "oliver-roberts-ltd",
+    "careersUrl": "https://find-and-update.company-information.service.gov.uk/company/10596416/filing-history",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Operations Resources Limited",
+    "slug": "operations-resources-limited",
+    "careersUrl": "https://haystackapp.io/companies/operations-resources-limited",
+    "platform": "haystack",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Optibus",
+    "slug": "optibus",
+    "careersUrl": "https://www.comeet.com/jobs/optibus/D1.00C/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Osborne Clarke",
+    "slug": "osborne-clarke",
+    "careersUrl": "https://careers.osborneclarke.com/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 800,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Overwolf",
+    "slug": "overwolf",
+    "careersUrl": "https://www.comeet.com/jobs/overwolf/B1.001/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "P Ducker Systems Ltd",
+    "slug": "p-ducker-systems-ltd",
+    "careersUrl": "https://pdslimited.co.uk/careers/vacancies/",
+    "platform": "wordpress",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Papaya Global",
+    "slug": "papayaglobal",
+    "careersUrl": "https://www.comeet.com/jobs/papayaglobal/16.005/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Partnering Health Ltd",
+    "slug": "partnering-health-ltd",
+    "careersUrl": "https://phlgroup.co.uk/careers-home/",
+    "platform": "wordpress",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Aviation Inc",
+    "slug": "persivalenic",
+    "careersUrl": "https://www.comeet.com/jobs/persivalenic/D8.006/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Personetics",
+    "slug": "personetics",
+    "careersUrl": "https://www.comeet.com/jobs/personetics/83.00A/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "PGS LTD",
+    "slug": "pgs-ltd",
+    "careersUrl": "https://www.reed.co.uk/jobs/pgs-ltd-63908/p63908",
+    "platform": "reed",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Pinpoint Group Recruitment Ltd",
+    "slug": "pinpoint-group-recruitment-ltd",
+    "careersUrl": "https://www.pinpointgrp.co.uk/vacancies",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Pinpoint Resourcing Ltd",
+    "slug": "pinpoint-resourcing-ltd",
+    "careersUrl": "https://pinpointresourcing.co.uk/latest-vacancies/",
+    "platform": "reed",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Port",
+    "slug": "port",
+    "careersUrl": "https://www.comeet.com/jobs/port/59.004/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "PPG Health In Justice",
+    "slug": "ppghealthinjusticeweb",
+    "careersUrl": "https://ppghealthinjusticeweb.eploy.net/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "PRDC Dental",
+    "slug": "prdc-dental",
+    "careersUrl": "https://prdentalrecruitment.co.uk/jobs/",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Prince of Wales Medical Centre",
+    "slug": "prince-of-wales-medical-centre",
+    "careersUrl": "https://www.pwh.org.uk/",
+    "platform": "custom",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Remedio",
+    "slug": "remedio",
+    "careersUrl": "https://www.comeet.com/jobs/remedio/CA.000/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Restore",
+    "slug": "restore",
+    "careersUrl": "https://apply.restoreplc.com/vacancies/",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000,
+      "timeoutMs": 20000,
+      "sitemapUrl": "https://apply.restoreplc.com/live-jobs.xml"
+    }
+  },
+  {
+    "name": "Rodericks Dental Partners",
+    "slug": "rodericks-dental-partners",
+    "careersUrl": "https://careers.rodericksdentalpartners.co.uk/jobs/search",
+    "platform": "tribepad",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "SeeAbility",
+    "slug": "seeability",
+    "careersUrl": "https://careers.seeability.org/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "sitemapUrl": "https://careers.seeability.org/sitemap.xml"
+    }
+  },
+  {
+    "name": "SJC Partners",
+    "slug": "sjc-partners",
+    "careersUrl": "https://sjcpartners.com/jobs/",
+    "platform": "jobadder",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    }
+  },
+  {
+    "name": "Solidus Labs",
+    "slug": "soliduslabs",
+    "careersUrl": "https://www.comeet.com/jobs/soliduslabs/E6.007/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "TCFM",
+    "slug": "tcfm",
+    "careersUrl": "https://careers.tcfm.co.uk/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 1000,
+      "delayMs": 800,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "name": "Thetaray",
+    "slug": "thetaray",
+    "careersUrl": "https://www.comeet.com/jobs/thetaray/72.00F/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Thinking Schools Academy Trust",
+    "slug": "thinking-schools-academy-trust",
+    "careersUrl": "https://careers.tsatrust.org.uk/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    },
+    "sitemapUrl": "https://careers.tsatrust.org.uk/sitemap.xml"
+  },
+  {
+    "name": "Tower Hamlets",
+    "slug": "tower-hamlets",
+    "careersUrl": "https://www.jobs.towerhamlets.gov.uk/apply/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000,
+      "timeoutMs": 15000,
+      "sitemapUrl": "https://www.jobs.towerhamlets.gov.uk/apply/live-jobs.xml"
+    }
+  },
+  {
+    "name": "Trullion",
+    "slug": "trullion",
+    "careersUrl": "https://www.comeet.com/jobs/trullion/07.000/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Upwind Security",
+    "slug": "upwind",
+    "careersUrl": "https://www.comeet.com/jobs/upwind/49.004/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Viber",
+    "slug": "viber",
+    "careersUrl": "https://www.comeet.com/jobs/viber/04.002/",
+    "platform": "comeet",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000
+    }
+  },
+  {
+    "name": "Walkers — Walker's Shortbread",
+    "slug": "walkers-shortbread",
+    "careersUrl": "https://careers.walkersshortbread.com/vacancies/vacancy-search-results.aspx",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "auto",
+      "maxPages": 100
+    },
+    "sitemapUrl": "https://careers.walkersshortbread.com/sitemap.xml"
+  },
+  {
+    "name": "Wren Kitchens",
+    "slug": "wren-kitchens",
+    "careersUrl": "https://vacancies.wrencareers.com/vacancies/",
+    "platform": "eploy",
+    "country": "UK",
+    "options": {
+      "mode": "static",
+      "maxPages": 1000,
+      "timeoutMs": 20000,
+      "sitemapUrl": "https://vacancies.wrencareers.com/live-jobs.xml"
+    }
+  }
+]

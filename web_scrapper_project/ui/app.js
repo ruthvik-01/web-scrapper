@@ -31,6 +31,15 @@ const esc = value => String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&a
 const number = value => Number(value || 0).toLocaleString("en-GB");
 const day = value => value ? new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" }).format(new Date(`${value.slice(0, 10)}T12:00:00`)) : "Not run yet";
 const shortDay = value => value ? new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short" }).format(new Date(`${value.slice(0, 10)}T12:00:00`)) : "—";
+const deliveryTimestamp = name => {
+  const iso = Date.parse(`${name.slice(0, 10)}T00:00:00Z`);
+  if (Number.isFinite(iso)) return iso;
+  const match = /^(\d{1,2})-(\d{1,2})-(\d{2,4})$/.exec(name);
+  if (!match) return 0;
+  const year = Number(match[3]) < 100 ? 2000 + Number(match[3]) : Number(match[3]);
+  return Date.UTC(year, Number(match[2]) - 1, Number(match[1]));
+};
+const deliveryDay = name => deliveryTimestamp(name) ? day(new Date(deliveryTimestamp(name)).toISOString().slice(0, 10)) : name;
 const initials = name => name.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join("").toUpperCase();
 const tone = company => parseInt(company.id.slice(0, 2), 16) % 6;
 const avatar = company => `<span class="avatar tone-${tone(company)}">${esc(initials(company.name))}</span>`;
@@ -334,17 +343,17 @@ function renderExports() {
       `${company.name} ${company.aliases.join(" ")} ${company.careersUrl} ${company.summary?.process || ""}`.toLowerCase().includes(query));
   }
   const deliveries = state.deliveries.filter(delivery => !query || delivery.name.toLowerCase().includes(query));
-  const saved = deliveries.map(delivery => ({ date: Date.parse(`${delivery.name.slice(0, 10)}T00:00:00Z`) || 0, key: delivery.name, html: `<article class="panel export-card">
-    <div class="export-top"><span class="avatar tone-0">${icon("folder")}</span><span class="status completed">Saved delivery</span></div>
-    <h2>${esc(delivery.name)}</h2><p>Previous dated export</p>
+  const saved = deliveries.map(delivery => ({ date: deliveryTimestamp(delivery.name), key: delivery.name, html: `<article class="panel export-card">
+    <div class="export-top"><span class="avatar tone-0">${icon("folder")}</span><span class="status completed">${delivery.pipeline ? "Validated scraper run" : "Saved delivery"}</span></div>
+    <h2>${esc(deliveryDay(delivery.name))}</h2><p>${delivery.pipeline ? "Final dataset and quality report" : "Previous dated export"}</p>
     <div class="export-meta"><div><strong>${number(delivery.rows)}</strong><small>CSV ROWS</small></div></div>
-    <div class="export-actions"><a class="primary-button" href="/api/deliveries/${encodeURIComponent(delivery.name)}/companies.csv">${icon("download")}CSV</a>${delivery.hasZip ? `<a class="secondary-button" href="/api/deliveries/${encodeURIComponent(delivery.name)}/final.zip">${icon("folder")}Final ZIP</a>` : ""}</div>
+    <div class="export-actions"><a class="primary-button" href="/api/deliveries/${encodeURIComponent(delivery.name)}/companies.csv">${icon("download")}CSV</a>${delivery.pipeline && delivery.hasReport ? `<a class="secondary-button" target="_blank" rel="noopener noreferrer" href="/api/deliveries/${encodeURIComponent(delivery.name)}/report.json">${icon("external")}Open report</a><a class="secondary-button" target="_blank" rel="noopener noreferrer" href="/api/deliveries/${encodeURIComponent(delivery.name)}/rejections.json">${icon("external")}Open exclusions</a>` : ""}${delivery.hasZip ? `<a class="secondary-button" href="/api/deliveries/${encodeURIComponent(delivery.name)}/final.zip">${icon("folder")}Final ZIP</a>` : ""}</div>
   </article>` }));
   const current = companies.map(company => ({ date: Date.parse(company.summary?.scrapedAt || "") || 0, key: company.name, html: `<article class="panel export-card">
     <div class="export-top">${avatar(company)}${statusTag(company.status)}</div>
     <h2>${esc(company.name)}</h2><p>Collected ${day(company.summary.scrapedAt)} · ${esc(company.summary.process || "Auto")}</p>
     <div class="export-meta"><div><strong>${number(company.summary.locationRows)}</strong><small>CSV ROWS</small></div><div><strong>${number(company.summary.jobs)}</strong><small>JOBS</small></div><div><strong>${number(company.summary.reviewNotes)}</strong><small>LOCATION NOTES</small></div></div>
-    <div class="export-actions"><a class="primary-button" href="${downloadUrl(company.id, "csv")}">${icon("download")}CSV</a><a class="secondary-button" href="${downloadUrl(company.id, "code")}">${icon("code")}Code ZIP</a></div>
+    <div class="export-actions">${company.summary.exportReady === false ? '<span class="company-note">CSV unavailable — review report</span>' : `<a class="primary-button" href="${downloadUrl(company.id, "csv")}">${icon("download")}CSV</a>`}<a class="secondary-button" href="${downloadUrl(company.id, "code")}">${icon("code")}Code ZIP</a></div>
     <button class="export-review" data-open="${company.id}">Preview data & review report →</button>
   </article>` }));
   const exports = [...saved, ...current].sort((a, b) =>
@@ -408,9 +417,19 @@ function renderReport() {
   const report = state.detailRows.report;
   const excluded = {};
   for (const item of report.skipped || []) excluded[item.reason] = (excluded[item.reason] || 0) + 1;
-  $("#detail-body").innerHTML = `<div class="report-banner"><strong>Collection is not a guarantee of complete source data.</strong><br>Unknown city/state values stay empty. Missing source dates use the run day and are disclosed. Review the notes below before using uncertain details.</div>
+  const qualityLabels = {
+    duplicateJobIds: "Duplicate job IDs", duplicateJobUrls: "Duplicate job URLs", missingJobIds: "Missing job IDs",
+    nonUkJobs: "Non-UK jobs", contaminatedDescriptions: "Contaminated descriptions", titleOnlyDescriptions: "Title-only descriptions",
+    salaryBenefits: "Benefits in salary field", nonAnnualSalary: "Non-annual salary in salary field", invalidUrls: "Invalid job URLs",
+    invalidPostingDates: "Invalid posting dates", locationFailures: "Location failures",
+  };
+  const quality = report.quality || {};
+  const qualityRows = Object.entries(quality).map(([key, count]) => `<p class="report-note"><strong>${esc(qualityLabels[key] || key)}</strong> · ${number(count)}</p>`).join("");
+  const blocked = report.exportReady === false;
+  $("#detail-body").innerHTML = `<div class="report-banner"><strong>${blocked ? "No CSV was created because this run has no validated export." : "Collection is not a guarantee of complete source data."}</strong><br>Unknown fields stay blank. Review the checks and source notes before using the results.</div>
     <div class="report-grid">${[["Pages read", report.pagesVisited], ["Exported rows", report.rows], ["Date fallbacks", report.dateFallbacks?.length]].map(([label, count]) => `<div class="report-item"><strong>${number(count)}</strong><span>${label}</span></div>`).join("")}</div>
     <div class="report-section"><h3>Run details</h3><p class="report-note">Method: <strong>${esc(report.process)}</strong> · Window: ${esc(report.window?.from)} – ${esc(report.window?.to)} · Status: ${esc(report.status)}${report.limited ? " · Crawl limit reached" : ""}</p>
+    ${qualityRows ? `<h3>Output quality checks</h3><p class="report-note">${report.qualityPassed ? "All checks passed." : "One or more checks need review; CSV download is blocked."}</p>${qualityRows}` : ""}
     ${report.attempts?.length ? `<h3>Extraction attempts</h3>${report.attempts.map(attempt => `<div class="attempt-row"><strong>${esc(attempt.method)}</strong><span>${esc(attempt.status)}</span><span>${number(attempt.rows)} rows${attempt.reason ? ` · ${esc(attempt.reason)}` : ""}</span></div>`).join("")}` : ""}
     <h3>Excluded records</h3>${Object.keys(excluded).length ? Object.entries(excluded).map(([reason, count]) => `<p class="report-note"><strong>${count}</strong> · ${esc(reason.replaceAll("_", " "))}</p>`).join("") : '<p class="report-note">No filter exclusions were recorded.</p>'}
     <h3>Location notes (${report.dataNotes?.length || 0})</h3>${(report.dataNotes || []).map(note => `<p class="report-note"><code>${esc(note.jobId)}</code>${esc(note.reason)}</p>`).join("") || '<p class="report-note">No location-review notes were recorded.</p>'}

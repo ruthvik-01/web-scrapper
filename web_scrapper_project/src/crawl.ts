@@ -1,4 +1,4 @@
-import { setTimeout as sleep } from "node:timers/promises";
+import { pause as sleep, fetchWithRetries, paceOrigin, sharedCache, currentSignal, checkCancelled } from "./universal-runtime.js";
 import { createRequire } from "node:module";
 import { chromium, type Browser, type Page } from "playwright";
 import { load } from "cheerio";
@@ -6,7 +6,9 @@ import { atsBoard, enrichJob, mapAtsJobs } from "./ats.js";
 import { detectAts, discoverLinks, extractJobs, type Selectors } from "./extract.js";
 import { Geography } from "./geography.js";
 import { decodeJobApi } from "./api.js";
-import { canonicalUrl, dateWindow, normalizeJobs, parsePostedDate, ukLocation, type RawJob } from "./normalize.js";
+import { discoverWordPressApiRoot, wordpressJobCollections, wordpressJobs } from "./wordpress.js";
+import { assertAllowedJobSource, isNhsJobsUrl } from "./uk-scope.js";
+import { canonicalUrl, dateWindow, hasRoleContent, normalizeJobs, parsePostedDate, ukLocation, type RawJob } from "./normalize.js";
 
 const USER_AGENT = "UKCompanyJobScraper/0.1";
 
@@ -52,22 +54,32 @@ export class AccessPolicy {
   private async getRules(url: string): Promise<Rules> {
     const origin = new URL(url).origin;
     if (!this.rules.has(origin)) {
-      this.rules.set(origin, (async () => {
+      this.rules.set(origin, sharedCache(`robots:${origin}`, () => (async () => {
         const robotsUrl = `${origin}/robots.txt`;
-        const response = await fetch(robotsUrl, {
-          headers: { "User-Agent": USER_AGENT }, signal: AbortSignal.timeout(this.timeoutMs),
-        });
+        let target = robotsUrl;
+        let response: Response;
+        for (let redirects = 0; ; redirects++) {
+          assertAllowedJobSource(target);
+          response = await fetchWithRetries(target, { headers: { "User-Agent": USER_AGENT } }, this.timeoutMs, () => paceOrigin(target, this.delayMs));
+          if (![301, 302, 303, 307, 308].includes(response.status)) break;
+          const location = response.headers.get("location");
+          await response.body?.cancel();
+          if (!location || redirects >= 5) throw new Error("Cannot verify robots.txt redirect.");
+          target = new URL(location, target).href;
+        }
         if (response.status === 404 || response.status === 410) return robotsParser(robotsUrl, "");
         if (!response.ok) throw new Error(`Cannot verify robots.txt (HTTP ${response.status}); not crawling this origin.`);
         const content = await response.text();
         if (content.length > 500_000) throw new Error("robots.txt exceeds the safety limit.");
         return robotsParser(robotsUrl, content);
-      })());
+      })()));
     }
     return this.rules.get(origin)!;
   }
 
   async check(url: string): Promise<void> {
+    checkCancelled();
+    assertAllowedJobSource(url);
     const rules = await this.getRules(url);
     if (rules.isAllowed(url, USER_AGENT) === false) throw new Error("Disallowed by robots.txt.");
   }
@@ -80,43 +92,34 @@ export class AccessPolicy {
     if (delay > this.timeoutMs) throw new Error("robots.txt crawl delay exceeds timeout; increase --timeout-ms.");
     const remaining = (this.lastRequest.get(origin) || 0) + delay - Date.now();
     if (remaining > 0) await sleep(remaining);
+    await paceOrigin(url, delay);
     this.lastRequest.set(origin, Date.now());
   }
 
-  private async request(url: string, accept?: string): Promise<Response> {
-    for (let attempt = 0; attempt < 3; attempt++) {
-      await this.pace(url);
-      try {
-        const response = await fetch(url, {
-          headers: { "User-Agent": USER_AGENT, ...(accept ? { Accept: accept } : {}) },
-          signal: AbortSignal.timeout(this.timeoutMs), redirect: "manual",
-        });
-        if ([429, 502, 503, 504].includes(response.status) && attempt < 2) {
-          const seconds = Number(response.headers.get("retry-after"));
-          await response.body?.cancel();
-          await sleep(Number.isFinite(seconds) && seconds > 0 ? Math.min(seconds * 1000, 30_000) : (attempt + 1) * 1000);
-          continue;
-        }
-        return response;
-      } catch (error) {
-        if (attempt === 2 || !/timeout|abort|fetch failed|ECONNRESET|ETIMEDOUT/i.test(String(error))) throw error;
-        await sleep((attempt + 1) * 1000);
-      }
-    }
-    throw new Error("Request retries were exhausted.");
+  private async request(url: string, accept?: string, extra: RequestInit = {}): Promise<Response> {
+    return fetchWithRetries(url, { ...extra, headers: { "User-Agent": USER_AGENT, ...(accept ? { Accept: accept } : {}) } }, this.timeoutMs, () => this.pace(url));
+  }
+  async postJson(url: string, body: URLSearchParams): Promise<unknown> {
+    const response = await this.request(url, "application/json", { method: "POST", body });
+    if (!response.ok) throw new Error(`Public listing returned HTTP ${response.status}.`);
+    return response.json();
   }
 
-  async json(url: string, redirects = 0): Promise<unknown> {
+  async jsonPage(url: string, redirects = 0): Promise<{ url: string; headers: Headers; data: unknown }> {
     const response = await this.request(url, "application/json");
     if (response.status >= 300 && response.status < 400) {
       const next = canonicalUrl(response.headers.get("location") || "", url);
       if (!next || redirects >= 5) throw new Error("Invalid or excessive API redirects.");
-      return this.json(next, redirects + 1);
+      return this.jsonPage(next, redirects + 1);
     }
     if (!response.ok) throw new Error(`API returned HTTP ${response.status}.`);
     const body = await response.text();
     if (body.length > 20_000_000) throw new Error("API response exceeds 20 MB.");
-    return JSON.parse(body);
+    return { url, headers: response.headers, data: JSON.parse(body) };
+  }
+
+  async json(url: string, redirects = 0): Promise<unknown> {
+    return (await this.jsonPage(url, redirects)).data;
   }
 
   async html(url: string, redirects = 0): Promise<{ url: string; body: string }> {
@@ -136,7 +139,7 @@ function usefulDetail(job: RawJob, now: Date): boolean {
   const posted = parsePostedDate(job.postedDate, now);
   const window = dateWindow(now);
   if (posted && (posted < window.from || posted > window.to)) return false;
-  return !posted || !job.company || !job.description || !job.locations.some(ukLocation);
+  return !posted || !job.company || !hasRoleContent(job.description, job.title) || !job.locations.some(ukLocation);
 }
 
 function advertisedListingPages(html: string, pageUrl: string): number {
@@ -181,6 +184,7 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
   const completed = new Set<string>();
   const handledBoards = new Set<string>();
   const seenApiJobs = new Set<string>();
+  const handledWordPressRoots = new Map<string, boolean>();
   const methods = new Set<string>();
   const geography = new Geography();
   const redirects = new Map<string, string>();
@@ -199,7 +203,15 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
   let previousListingUrl = "";
   let staleListingPages = 0;
   const isListingPage = (url: string): boolean => new URL(url).pathname === new URL(start).pathname;
-  const isJobDetailPage = (url: string): boolean => /\/(?:jobs?|vacanc(?:y|ies)|positions?|roles?)\/[^/?]+\/?$/i.test(new URL(url).pathname);
+  const isJobDetailPage = (url: string): boolean => {
+    const path = new URL(url).pathname;
+    if (/\/Careers\/[^/]*VSP-\d+\/?$/i.test(path)) return false;
+    if (/\/Jobs\/Advert\/\d+(?:\/|$)/i.test(path)) return true;
+    if (/\/(?:jobs?|vacanc(?:y|ies)|positions?|roles?)\/\d+(?:\/|$)/i.test(path)) return true;
+    if (/\/(?:job|jobs|vacanc(?:y|ies)|posting)\/[^/]+\/[^/]+/i.test(path)) return true;
+    const match = /\/(?:jobs?|careers?|vacanc(?:y|ies)|positions?|roles?)\/([^/?]+)\/?$/i.exec(path);
+    return Boolean(match && !/^(?:search|results?|list(?:ings?)?|all|openings?|jobs?|careers?|vacanc(?:y|ies)|positions?|roles?)$/i.test(match[1]!));
+  };
   const isPaginationLink = (url: string, from: string): boolean => {
     const target = new URL(url), source = new URL(from);
     return target.origin === source.origin && target.pathname === source.pathname &&
@@ -261,57 +273,144 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
     queue.push({ url: target, seed });
   };
 
+  async function collectWordPressJobs(html: string, pageUrl: string): Promise<boolean> {
+    const root = discoverWordPressApiRoot(html, pageUrl);
+    if (!root) return false;
+    if (handledWordPressRoots.has(root)) return handledWordPressRoots.get(root)!;
+    handledWordPressRoots.set(root, false);
+    const requestJson = async (target: string) => {
+      if (requests >= maxPages) {
+        limited = true;
+        enqueue(target, undefined, pageUrl);
+        return undefined;
+      }
+      requests++;
+      progress("Reading public WordPress jobs…", target);
+      const response = await policy.jsonPage(target);
+      markVisited(response.url);
+      return response;
+    };
+    try {
+      const typesUrl = new URL("wp/v2/types", root).href;
+      const typesResponse = await requestJson(typesUrl);
+      if (!typesResponse) return false;
+      const collections = wordpressJobCollections(typesResponse.data, root);
+      if (!collections.length) return false;
+
+      for (const collection of collections) {
+        const endpoint = new URL(collection);
+        endpoint.searchParams.set("per_page", "100");
+        for (let page = 1; ; page++) {
+          endpoint.searchParams.set("page", String(page));
+          const target = endpoint.href;
+          const response = await requestJson(target);
+          if (!response) return true;
+          if (!Array.isArray(response.data)) {
+            reportIssue(target, "WordPress job collection returned an unsupported response shape.");
+            break;
+          }
+          recognized = true;
+          methods.add("API");
+          const totalPages = Number(response.headers.get("x-wp-totalpages"));
+          if (Number.isSafeInteger(totalPages) && totalPages > 0) {
+            listingPagesAdvertised = Math.max(listingPagesAdvertised, totalPages);
+          }
+          const batch = wordpressJobs(response.data, target, options.company);
+          for (const job of batch) {
+            const key = `${job.jobId}|${job.jobUrl}`;
+            if (seenApiJobs.has(key)) continue;
+            seenApiJobs.add(key);
+            if (mode !== "api" && usefulDetail(job, now) && job.jobUrl) enqueue(job.jobUrl, job, pageUrl);
+            else jobs.push(job);
+          }
+          if (Number.isSafeInteger(totalPages) && totalPages > 0) {
+            if (page >= totalPages) break;
+          } else if (response.data.length < 100) break;
+          if (requests >= maxPages) {
+            limited = true;
+            const next = new URL(endpoint);
+            next.searchParams.set("page", String(page + 1));
+            enqueue(next.href, undefined, pageUrl);
+            return true;
+          }
+        }
+      }
+      handledWordPressRoots.set(root, true);
+      return true;
+    } catch (error) {
+      reportIssue(root, error);
+      return false;
+    }
+  }
+
+  const skipHandledWordPressApi = (url: string, handled: boolean): boolean => {
+    if (!handled) return false;
+    return [...handledWordPressRoots].some(([root, found]) => found && url.startsWith(root));
+  };
+
   async function getPage(): Promise<Page> {
+    checkCancelled();
     if (page) return page;
     try {
       browser = await chromium.launch({
         headless: true,
+        timeout: timeoutMs,
         ...(options.browser && options.browser !== "chromium" ? { channel: options.browser } : {}),
       });
+      const signal = currentSignal();
+      const stopBrowser = () => { void browser?.close().catch(() => {}); };
+      signal?.addEventListener("abort", stopBrowser, { once: true });
+      browser.on("disconnected", () => signal?.removeEventListener("abort", stopBrowser));
+      if (signal?.aborted) { await browser.close(); signal.throwIfAborted(); }
     } catch (error) {
       throw new Error(`Cannot launch browser. Run "npx playwright install chromium" or use --browser chrome/--browser msedge. ${String(error)}`);
     }
     const context = await browser.newContext({ userAgent: USER_AGENT, serviceWorkers: "block" });
     await context.route("**/*", async route => {
-      const request = route.request();
-      if (["image", "media", "font"].includes(request.resourceType())) return route.abort();
-      if (["xhr", "fetch"].includes(request.resourceType()) && request.method() === "GET") {
-        try { await policy.check(request.url()); }
-        catch (error) {
-          if (new URL(request.url()).origin === new URL(start).origin || atsBoard(request.url())) reportIssue(request.url(), error);
-          return route.abort();
-        }
-      }
-      if (request.isNavigationRequest()) {
-        try {
-          await policy.pace(request.url());
-          // Playwright routing normally intercepts only the FIRST URL in an HTTP
-          // redirect chain. Fetch documents without auto-following, then navigate
-          // explicitly so every redirect target is checked before it is requested.
-          const response = await route.fetch({ maxRedirects: 0, timeout: timeoutMs });
-          try {
-            if (response.status() >= 300 && response.status() < 400) {
-              const next = canonicalUrl(response.headers().location || "", request.url());
-              if (!next) throw new Error("Document redirect has no valid HTTP(S) Location.");
-              await policy.check(next);
-              if (request.frame() === page?.mainFrame()) redirects.set(request.url(), next);
-              else enqueue(next, undefined, request.url());
-              await route.fulfill({ status: 200, contentType: "text/html", body: "" });
-            } else {
-              await route.fulfill({ response });
-            }
-          } finally {
-            await response.dispose();
+      try {
+        const request = route.request();
+        if (isNhsJobsUrl(request.url())) return await route.abort().catch(() => {});
+        if (["image", "media", "font"].includes(request.resourceType())) return await route.abort().catch(() => {});
+        if (["xhr", "fetch"].includes(request.resourceType()) && request.method() === "GET") {
+          try { await policy.check(request.url()); }
+          catch (error) {
+            if (new URL(request.url()).origin === new URL(start).origin || atsBoard(request.url())) reportIssue(request.url(), error);
+            return await route.abort().catch(() => {});
           }
-          return;
-        } catch (error) {
-          const relevant = request.frame() === page?.mainFrame() ||
-            new URL(request.url()).origin === new URL(start).origin || Boolean(atsBoard(request.url()));
-          if (relevant && !/timeout|ERR_|net::/i.test(String(error))) reportIssue(request.url(), error);
-          return route.abort();
         }
+        if (request.isNavigationRequest()) {
+          try {
+            await policy.pace(request.url());
+            // Playwright routing normally intercepts only the FIRST URL in an HTTP
+            // redirect chain. Fetch documents without auto-following, then navigate
+            // explicitly so every redirect target is checked before it is requested.
+            const response = await route.fetch({ maxRedirects: 0, timeout: timeoutMs });
+            try {
+              if (response.status() >= 300 && response.status() < 400) {
+                const next = canonicalUrl(response.headers().location || "", request.url());
+                if (!next) throw new Error("Document redirect has no valid HTTP(S) Location.");
+                await policy.check(next);
+                if (request.frame() === page?.mainFrame()) redirects.set(request.url(), next);
+                else enqueue(next, undefined, request.url());
+                await route.fulfill({ status: 200, contentType: "text/html", body: "" }).catch(() => {});
+              } else {
+                await route.fulfill({ response }).catch(() => {});
+              }
+            } finally {
+              await response.dispose().catch(() => {});
+            }
+            return;
+          } catch (error) {
+            const relevant = request.frame() === page?.mainFrame() ||
+              new URL(request.url()).origin === new URL(start).origin || Boolean(atsBoard(request.url()));
+            if (relevant && !/timeout|ERR_|net::/i.test(String(error))) reportIssue(request.url(), error);
+            return await route.abort().catch(() => {});
+          }
+        }
+        return await route.continue().catch(() => {});
+      } catch {
+        /* Route handling races on aborted pages are ignored. */
       }
-      return route.continue();
     });
     page = await context.newPage();
     page.on("response", response => {
@@ -322,7 +421,12 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
       const task = (async () => {
         try {
           const decoded = decodeJobApi(await response.json(), response.url(), options.company);
-          for (const job of decoded.jobs) jobs.push(await geography.resolve(job));
+          for (const job of decoded.jobs) {
+            const resolved = await geography.resolve(job);
+            if (mode !== "api" && !isJobDetailPage(page?.url() || start) && usefulDetail(resolved, now)) {
+              enqueue(resolved.jobUrl, resolved, response.url());
+            } else jobs.push(resolved);
+          }
           if (decoded.jobs.length) { recognized = true; methods.add("API"); }
         } catch { /* Non-job/invalid JSON responses are not extraction errors. */ }
       })();
@@ -341,7 +445,7 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
       for (let attempt = 0; attempt < 2; attempt++) {
         try {
           response = await current.goto(target, { waitUntil: isListingPage(target) ? "domcontentloaded" : "commit", timeout: timeoutMs });
-          if (response && [429, 502, 503, 504].includes(response.status()) && attempt < 1) {
+          if (response && [429, 500, 502, 503, 504].includes(response.status()) && attempt < 1) {
             await sleep((attempt + 1) * 1000);
             continue;
           }
@@ -361,6 +465,7 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
 
   try {
     while (queue.length && requests < maxPages) {
+      checkCancelled();
       const item = queue.shift()!;
       const url = item.url;
       if (completed.has(url)) continue;
@@ -433,6 +538,7 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
           methods.add("STATIC");
           const document = await policy.html(url);
           markVisited(document.url);
+          const wordpressHandled = await collectWordPressJobs(document.body, document.url);
           // Public JSON endpoints linked from careers pages need no browser.
           if (/^\s*[\[{]/.test(document.body)) {
             try {
@@ -453,10 +559,19 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
           const extracted = extractJobs(document.body, document.url, options.company, options.selectors);
           listingPagesAdvertised ||= advertisedListingPages(document.body, document.url);
           if (extracted.length) recognized = true;
-          for (const job of extracted) jobs.push(await geography.resolve(job));
+          const pageJobs: RawJob[] = [];
+          for (const job of extracted) pageJobs.push(await geography.resolve(job));
+          if (item.seed) {
+            const detail = pageJobs.find(job => job.jobId && job.jobId === item.seed!.jobId) ??
+              pageJobs.find(job => canonicalUrl(job.jobUrl) === canonicalUrl(item.seed!.jobUrl));
+            jobs.push(await geography.resolve(detail ? enrichJob(item.seed, detail) : item.seed));
+            if (!detail) reportIssue(url, "No matching detail vacancy found; retaining the public API fields.");
+          } else jobs.push(...pageJobs);
           const links = keepPagination(document.url,
             discoverLinks(document.body, document.url, options.selectors, start), extracted);
-          for (const link of links) enqueue(link, undefined, document.url);
+          if (!item.seed && !isJobDetailPage(document.url)) for (const link of links) {
+            if (!skipHandledWordPressApi(link, wordpressHandled)) enqueue(link, undefined, document.url);
+          }
           if (/__doPostBack\([^)]*(?:Pager|Pagination)/i.test(document.body) ||
               /<(?:button)[^>]*>[^<]*(?:load more|show more jobs)/i.test(document.body)) {
             reportIssue(url, "JavaScript pagination was found; use DOM mode to reach additional pages.");
@@ -467,6 +582,15 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
         const current = await getPage();
         if (pagesVisited) progress("Visiting another page…", url);
         await navigate(current, url);
+        if (/(^|\.)current-vacancies\.com$/i.test(new URL(current.url()).hostname) &&
+            /\/Jobs\/Advert\/\d+/i.test(new URL(current.url()).pathname)) {
+          await current.waitForFunction(() => {
+            const role = document.querySelector("#GlobalContent_HeaderTitle1 + div.container");
+            return (role?.textContent?.trim().length || 0) >= 80;
+          }, null, { timeout: Math.min(timeoutMs, 12_000) }).catch(() => {
+            reportIssue(current.url(), "Job advert did not render a complete role section before the extraction timeout.");
+          });
+        }
         markVisited(current.url());
         const pageJobs: RawJob[] = [];
         const fingerprints = new Set<string>();
@@ -479,6 +603,7 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
           if (redirected) await navigate(current, redirected);
           const pageUrl = current.url();
           const html = await current.content();
+          const wordpressHandled = await collectWordPressJobs(html, current.url());
           listingPagesAdvertised ||= advertisedListingPages(html, pageUrl);
           const title = await current.title();
           if (/just a moment|access denied|verify you are human|captcha/i.test(title)) {
@@ -495,7 +620,9 @@ export async function scrapeCompany(inputUrl: string, options: ScrapeOptions = {
             fingerprints.add(fingerprint);
           }
           const links = keepPagination(pageUrl, discoverLinks(html, pageUrl, options.selectors, start), extracted);
-          if (!item.seed) for (const link of links) enqueue(link, undefined, pageUrl);
+          if (!item.seed && !isJobDetailPage(pageUrl)) for (const link of links) {
+            if (!skipHandledWordPressApi(link, wordpressHandled)) enqueue(link, undefined, pageUrl);
+          }
           const fingerprint = JSON.stringify([links, [...fingerprints]]);
           const unchanged = step > 0 && fingerprint === lastFingerprint;
           markVisited(pageUrl);

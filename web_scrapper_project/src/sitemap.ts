@@ -1,5 +1,6 @@
 import { load } from "cheerio";
 import { AccessPolicy, type Issue, type ScrapeOptions } from "./crawl.js";
+import { collectorLog, checkCancelled } from "./universal-runtime.js";
 import { extractJobs } from "./extract.js";
 import { canonicalUrl, dateWindow, normalizeJobs, parsePostedDate, type RawJob } from "./normalize.js";
 import { Geography } from "./geography.js";
@@ -31,6 +32,7 @@ export async function scrapeJobSitemap(
     issues.push({ url, message: error instanceof Error ? error.message : String(error) });
   };
   while (maps.length && seenMaps.size < 10_000) {
+    checkCancelled();
     const url = maps.shift()!;
     if (seenMaps.has(url)) continue;
     seenMaps.add(url);
@@ -54,8 +56,9 @@ export async function scrapeJobSitemap(
   }
   if (maps.length) limited = true;
   const urls = [...jobUrls];
-  console.log(`[${options.company || start}] Discovered ${urls.length} job URLs across ${seenMaps.size} sitemap files.`);
+  collectorLog(`[${options.company || start}] Discovered ${urls.length} job URLs across ${seenMaps.size} sitemap files.`);
   for (const url of urls.slice(0, maxPages)) {
+    checkCancelled();
     try {
       const response = await policy.html(url);
       pagesVisited++;
@@ -70,7 +73,7 @@ export async function scrapeJobSitemap(
     } catch (error) {
       addIssue(url, error);
     }
-    if (pagesVisited % 10 === 0) console.log(`[${options.company || start}] Static extraction: ${pagesVisited}/${urls.length} job pages read.`);
+    if (pagesVisited % 10 === 0) collectorLog(`[${options.company || start}] Static extraction: ${pagesVisited}/${urls.length} job pages read.`);
   }
   if (urls.length > maxPages) limited = true;
   const normalized = normalizeJobs(jobs, now);

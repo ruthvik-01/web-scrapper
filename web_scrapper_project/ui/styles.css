@@ -231,7 +231,7 @@ input[type=checkbox]{accent-color:#8a8a8a;width:14px;height:14px}
 .export-meta div{flex:1;background:var(--surface-2);border:1px solid var(--line-soft);border-radius:6px;padding:9px 10px}
 .export-meta strong{font:14px var(--mono);display:block;color:var(--ink)}
 .export-meta small{font:7px var(--mono);letter-spacing:.8px;color:var(--muted-2)}
-.export-actions{display:flex;gap:9px}
+.export-actions{display:flex;gap:9px;flex-wrap:wrap}
 .export-actions .primary-button,.export-actions .secondary-button{flex:1;justify-content:center}
 .export-review{padding:8px 0;color:var(--ink-soft);font-size:10px;font-weight:550;text-align:left}
 .export-review:hover{color:var(--ink)}

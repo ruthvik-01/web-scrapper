@@ -11,6 +11,9 @@ test("source SQL-format publication timestamps retain their calendar day without
   assert.equal(parsePostedDate("2026-02-30 06:15:05"), "");
   assert.equal(parsePostedDate("2026-08-02 25:15:05"), "");
 });
+test("JavaScript Date.toString posting timestamps are normalized as UTC dates", () => {
+  assert.equal(parsePostedDate("Thu Sep 24 00:00:00 UTC 2026", now), "2026-09-24");
+});
 export const sample: RawJob = {
   jobId: "101", title: "Software Engineer", description: "<p>Build <b>software</b>.</p>",
   jobUrl: "https://example.com/jobs/101", postedDate: "2026-08-20", jdDeadline: "2026-10-01",
@@ -37,6 +40,9 @@ test("salary range uses explicit annual pay; hourly and daily pay ends the descr
   for (const pay of ["£40000 per annum", "£45000 annually", "GBP 50000 YEAR", "£60k /year"]) {
     assert.ok(normalizeJobs([{ ...base, salaryRange: pay }], now).rows[0]!.salaryRange, pay);
   }
+  assert.equal(normalizeJobs([{ ...base,
+    salaryRange: "£47,902 (in probation) rising to £50,423 per annum",
+  }], now).rows[0]!.salaryRange, "£47902-£50423");
   const alreadyAtEnd = normalizeJobs([{ ...base, salaryRange: "£15 per hour", description: "Build software.\n\nSalary: £15 per hour" }], now).rows[0]!;
   assert.equal((alreadyAtEnd.description.match(/Salary: £15 per hour/g) || []).length, 1);
 });
@@ -115,6 +121,12 @@ test("explicit UK country required; foreign London and Crown Dependencies exclud
   }
   assert.equal(ukLocation({ location: "Belfast, Northern Ireland" })?.city, "Belfast");
   assert.equal(ukLocation({ location: "Remote, UK" })?.city, "");
+  assert.equal(ukLocation({ location: "United Kingdom", state: "United Kingdom", country: "UK", resolved: true })?.state, "");
+  assert.deepEqual(ukLocation({ location: "Swadlincote, Derbyshire", country: "UK", resolved: true }), {
+    location: "Swadlincote, Derbyshire", city: "Swadlincote", state: "Derbyshire", country: "UK",
+  });
+  assert.equal(ukLocation({ location: "Putney, Greater London, Greater London", city: "Putney, Greater London",
+    state: "Greater London", country: "UK", resolved: true })?.city, "Putney");
 });
 
 test("duplicates are removed without collapsing different vacancies or salaries", () => {

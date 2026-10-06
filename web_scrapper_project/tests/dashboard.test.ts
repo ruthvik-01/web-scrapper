@@ -67,6 +67,68 @@ test("dated deliveries remain visible and downloadable without a workbook", asyn
   } finally { await fixture.close(); }
 });
 
+test("complete universal deliveries are counted and downloadable; partial ones stay unlisted", async () => {
+  const fixture = await dashboardFixture();
+  try {
+    const name = "2026-10-05-universal-06-00-00-123Z";
+    const complete = join(fixture.root, "output", name), partial = join(fixture.root, "output", "2026-10-05-universal-06-00-01-123Z");
+    await mkdir(complete, { recursive: true }); await mkdir(partial, { recursive: true });
+    await writeFile(join(complete, "companies.csv"), "jobId,title\n1,Engineer\n");
+    await writeFile(join(complete, "companies.json"), JSON.stringify([{ jobId: "1" }]));
+    await writeFile(join(partial, "summary.json"), "[]");
+    const response = await fetch(`${fixture.base}/api/deliveries`);
+    const data = await response.json();
+    assert.deepEqual(data.deliveries.map((item: { name: string; rows: number }) => [item.name, item.rows]), [[name, 1]]);
+    const csv = await fetch(`${fixture.base}/api/deliveries/${name}/companies.csv`);
+    assert.equal(csv.status, 200); assert.match(await csv.text(), /1,Engineer/);
+  } finally { await fixture.close(); }
+});
+
+for (const parent of ["", "universal-runs"]) {
+  for (const slug of ["universal", "aqua-security"]) {
+    test(`manifest exports support ${slug} runs under output/${parent}`, async () => {
+      const fixture = await dashboardFixture();
+      const name = `2026-10-06-${slug}-06-00-00-123Z-abcdef12`;
+      const folder = join(fixture.root, "output", parent, name);
+      try {
+        await mkdir(folder, { recursive: true });
+        await writeFile(join(folder, "companies.csv"), "jobId,title\n1,Engineer\n");
+        await writeFile(join(folder, "companies.json"), JSON.stringify([{ jobId: "1" }]));
+        for (const complete of [false, true]) {
+          await writeFile(join(folder, "manifest.json"), JSON.stringify({ complete }));
+          const data = await (await fetch(`${fixture.base}/api/deliveries`)).json();
+          assert.equal(data.deliveries.some((item: { name: string }) => item.name === name), complete);
+          const csv = await fetch(`${fixture.base}/api/deliveries/${name}/companies.csv`);
+          assert.equal(csv.status, complete ? 200 : 404);
+          if (complete) assert.match(await csv.text(), /1,Engineer/);
+        }
+      } finally { await fixture.close(); }
+    });
+  }
+}
+
+test("pipeline CSV and its audit report are available from website exports", async () => {
+  const fixture = await dashboardFixture();
+  try {
+    const folder = join(fixture.root, "output", "30-9-26");
+    await mkdir(folder, { recursive: true });
+    await writeFile(join(folder, "30-9-26.csv"), "jobId,title\n101,Engineer\n");
+    await writeFile(join(folder, "30-9-26-summary.json"), JSON.stringify({ finalRows: 110, quality: { duplicateJobIds: 0 } }));
+    await writeFile(join(folder, "rejections.json"), JSON.stringify([{ company: "Example", reason: "no_confirmed_uk_location" }]));
+    const response = await fetch(`${fixture.base}/api/deliveries`);
+    const delivery = (await response.json()).deliveries.find((item: { name: string }) => item.name === "30-9-26");
+    assert.deepEqual([delivery.rows, delivery.pipeline, delivery.hasReport], [110, true, true]);
+    const csv = await fetch(`${fixture.base}/api/deliveries/30-9-26/companies.csv`);
+    assert.equal(await csv.text(), "jobId,title\n101,Engineer\n");
+    const reportResponse = await fetch(`${fixture.base}/api/deliveries/30-9-26/report.json`);
+    assert.match(reportResponse.headers.get("content-disposition") || "", /^inline/);
+    const report = await reportResponse.json();
+    assert.equal(report.finalRows, 110);
+    const rejected = await (await fetch(`${fixture.base}/api/deliveries/30-9-26/rejections.json`)).json();
+    assert.equal(rejected[0].reason, "no_confirmed_uk_location");
+  } finally { await fixture.close(); }
+});
+
 test("batch start rejects CSRF, foreign origin, duplicates, and over-five selections", async () => {
   const fixture = await dashboardFixture();
   try {

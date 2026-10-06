@@ -69,7 +69,7 @@ test("mixed-board title scope rejects fallback employer labels and survives resu
     }
     const id = Number(request.url?.split("/")[2]);
     response.end(`<script type="application/ld+json">${JSON.stringify({
-      "@type": "JobPosting", title: titles[id - 1], description: "Serve customers.",
+      "@type": "JobPosting", title: titles[id - 1], identifier: String(id), description: "Serve customers.",
       url: `http://127.0.0.1:${port}${request.url}`,
       jobLocation: {address: {addressLocality: "London", addressCountry: "UK"}},
     })}</script>`);

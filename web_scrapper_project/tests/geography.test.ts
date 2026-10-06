@@ -167,6 +167,18 @@ test("work-arrangement labels never invent an address or override foreign countr
   }
 });
 
+test("the explicit Greater London region confirms a job-specific UK location", async () => {
+  const job = {
+    ...base,
+    ats: "Unknown",
+    locations: [{ location: "South West London, Greater London", city: "South West London", state: "Greater London" }],
+  };
+  const fixed = await new Geography(async () => ({ result: [] })).resolve(job);
+  const row = normalizeJobs([fixed], now).rows[0];
+  assert.equal(row?.country, "UK");
+  assert.match(row?.location || "", /South West London/);
+});
+
 test("unresolved areas are preserved and flagged, never fabricated into cities", async () => {
   const fixed = await new Geography(lookup).resolve({ ...base, visibleLocation: "Southern Water" });
   const normalized = normalizeJobs([fixed], now);
@@ -228,4 +240,21 @@ test("Eploy reads primary visible location and worktype, ignoring related-job ca
   assert.equal(job.locations[0]!.postcode, "PR1 1AA");
   const genericOnly = html.replace("Hybrid working available for this role.", "Build software.");
   assert.equal(extractJobs(genericOnly, base.jobUrl)[0]!.worktype, "");
+});
+
+test("a role's own UK work context confirms its named office without inheriting an HQ city", async () => {
+  const candidate: RawJob = { ...base, ats: "Eploy", title: "Graduate Quantity Surveyor - Plymouth",
+    description: "Join our Plymouth office and work on projects across various UK locations.",
+    roleDescription: "Join our Plymouth office and work on projects across various UK locations.",
+    visibleLocation: "Plymouth", locations: [{ location: "Plymouth", city: "Plymouth" }] };
+  const lookup: GeoLookup = async () => ({ result: [{ name_1: "Plymouth", local_type: "City", country: "England", county_unitary: "City of Plymouth" }] });
+  const confirmed = await new Geography(lookup).resolve(candidate);
+  assert.equal(confirmed.locations[0]!.country, "UK");
+  assert.equal(confirmed.locations[0]!.city, "Plymouth");
+  const ambiguous = await new Geography(lookup).resolve({ ...candidate,
+    roleDescription: "Join our Plymouth office and work on major projects." });
+  assert.equal(ambiguous.locations[0]!.country, "");
+  const team = await new Geography(lookup).resolve({ ...candidate, title: "Graduate Surveyor - Plymouth",
+    roleDescription: "Join our Plymouth team and work on projects across various UK locations." });
+  assert.equal(team.locations[0]!.country, "UK");
 });

@@ -68,8 +68,10 @@ export function mapImport(sheets: SheetData[], mapping: ImportMapping, sourceNam
   for (let r = mapping.headerRow + 1; r < sheet.rows.length; r++) {
     const row = sheet.rows[r]!;
     if (!row.some(value => value.trim())) { emptyRows++; continue; }
-    const link = (column: number | undefined) => column === undefined || column < 0 ? "" :
-      publicUrl(sheet.links[`${r}:${column}`] || "") || publicUrl(row[column] || "");
+    const link = (column: number | undefined) => {
+      if (column === undefined || column < 0) return "";
+      return publicUrl(row[column] || "") || publicUrl(sheet.links[`${r}:${column}`] || "");
+    };
     const url = link(mapping.urlColumn);
     if (!url) { rejected.push({ row: r + 1, reason: "Missing or invalid public HTTP(S) website/careers URL." }); continue; }
     const suppliedName = mapping.nameColumn < 0 ? "" : (row[mapping.nameColumn] || "").trim();

@@ -45,6 +45,16 @@ test("URL mapping uses hyperlinks, rejects unsafe values, and preserves row numb
   assert.throws(() => mapImport([sheet], { sheet: 0, headerRow: 0, nameColumn: 0, urlColumn: 99 }, "x"), /range/);
 });
 
+test("URL mapping prefers a visible URL over a different hyperlink target", () => {
+  const sheet: SheetData = {
+    name: "Companies",
+    rows: [["Company", "Career URL"], ["Dachser", "https://careers.dachser.com/search/?locationsearch=uk"]],
+    links: { "1:1": "https://careers.dachser.com/go/View-all-jobs/9360355/" },
+  };
+  const result = mapImport([sheet], { sheet: 0, headerRow: 0, nameColumn: 0, urlColumn: 1 }, "30-9-26.xlsx");
+  assert.equal(result.companies[0]!.careersUrl, "https://careers.dachser.com/search/?locationsearch=uk");
+});
+
 test("reader supports XLSX, XLSM, XLSB, legacy XLS, CSV and TSV without calculating formulas", async () => {
   const root = await mkdtemp(join(tmpdir(), "fieldwork-formats-"));
   try {

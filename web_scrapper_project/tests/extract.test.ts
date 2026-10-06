@@ -29,6 +29,21 @@ test("nested JSON-LD graphs, type arrays, and ItemList wrappers", () => {
   assert.equal(jobsFromJson({ ...job, "@type": ["Thing", "https://schema.org/JobPosting"] }, url).length, 1);
 });
 
+test("explicit detail-page location labels plus a UK postcode in the job URL recover missing structured location", () => {
+  const advert = "https://careers.example/dachser_europe/job/Northampton-HR-Officer-NN4-7HT/1369478355/";
+  const posting = {
+    "@type": "JobPosting", identifier: "1369478355", title: "HR Officer",
+    description: "Purpose of the role: Support the UK HR team.\n\nLocation: Northampton\n\nResponsibilities: Advise managers and employees.",
+    url: advert, datePosted: "Thu Sep 24 00:00:00 UTC 2026", hiringOrganization: { name: "Dachser" },
+  };
+  const [extracted] = extractJobs(`<script type="application/ld+json">${JSON.stringify(posting)}</script>`, advert, "Dachser");
+  assert.deepEqual(extracted?.locations, [{ location: "Northampton", city: "Northampton", country: "UK", postcode: "NN4 7HT" }]);
+  const normalized = normalizeJobs(extracted ? [extracted] : [], new Date("2026-09-30T12:00:00Z"));
+  assert.equal(normalized.rows.length, 1);
+  assert.equal(normalized.rows[0]?.country, "UK");
+  assert.equal(normalized.rows[0]?.postedDate, "2026-09-24");
+});
+
 test("multiple postings without source IDs do not inherit one listing-page ID", () => {
   const listing = "https://company.example/search/897";
   const postings = [
@@ -55,6 +70,32 @@ test("vacancy detail URLs override a shared company ID and supply missing IDs", 
   assert.equal(second[0]!.jobId, "56045");
 });
 
+test("current-vacancies detail uses only the role section when schema description is a title", () => {
+  const advert = "https://crosskeyshomes.current-vacancies.com/Jobs/Advert/4323701?cid=2041";
+  const html = `<h1>Power Platform Analyst</h1>
+    <div id="MergeCore_MergeField1">Salary £47,902 (in probation) rising to £50,423</div>
+    <script type="application/ld+json">${JSON.stringify({
+      "@type": "JobPosting", identifier: "2041", title: "Power Platform Analyst",
+      description: "Power Platform Analyst", url: advert, datePosted: "2026-09-22",
+      baseSalary: { currency: "GBP", value: { minValue: 47902, maxValue: 50423, unitText: "HOUR" } },
+      jobLocation: { address: { addressLocality: "Peterborough", addressCountry: "GB" } },
+    })}</script>
+    <div class="col-12 mt-0"><div id="GlobalContent_HeaderTitle1">The Vacancy</div>
+      <div class="container PLACEHOLDER"><p>Build reliable Power BI reports for housing teams.</p>
+      <p>Maintain Power Platform governance and improve data quality.</p></div>
+      <script>var docsLoaded = false; window.fake = "navigation garbage";</script>
+      <div id="GlobalContent_HeaderTitle2">The Company</div>
+      <div class="container">This unrelated company biography must not enter the job description.</div></div>`;
+  const [result] = extractJobs(html, advert, "Cross Keys Homes");
+  assert.equal(result?.jobId, "4323701");
+  assert.equal(result?.postedDate, "2026-09-22");
+  assert.match(result?.description || "", /Build reliable Power BI reports/);
+  assert.match(result?.description || "", /Maintain Power Platform governance/);
+  assert.doesNotMatch(result?.description || "", /docsLoaded|company biography|navigation garbage/);
+  assert.match(result?.salaryRange || "", /per annum/);
+  assert.match(result?.salaryRange || "", /47,902.*50,423/);
+});
+
 test("an unstructured position detail keeps its URL reference and isolates its role text", () => {
   const detailUrl = "https://company.example/careers/positions/dYZUhyQ0Pc7yrmUzmtUeK8";
   const html = `<aside id="position-info-box"><h3>Assistant Buyer</h3><div class="panel-body">
@@ -73,6 +114,36 @@ test("an unstructured position detail keeps its URL reference and isolates its r
   assert.equal(extracted[0]!.locations[0]?.location, "Altrincham - Neptune House");
   assert.equal(extracted[0]!.locations[0]?.city, "Altrincham");
   assert.equal(extracted[0]!.locations[0]?.postcode, "WA14 5GZ");
+});
+
+test("WordPress career detail pages extract visible role fields without treating the slug suffix as an ID", () => {
+  const detailUrl = "https://www.northwood.co.uk/career/oldham-production-operative-2/";
+  const html = `<header><span>Location Product Finder</span><ul><li>Product Finder</li></ul></header><main><h1>Oldham Production Operative</h1>
+    <ul><li>Oldham</li><li>Applications close October 2, 2026</li></ul>
+    <h2>Job Description</h2><p>As a Production Operative you’ll run machinery safely and efficiently.</p>
+    <p>The main focus of this role is safety, teamwork and working to high standards.</p>
+    <h3>Production Operative Duties</h3><ul><li>Operating and monitoring machinery.</li></ul>
+    <h2>Job Requirements</h2><p>Good communication and teamwork skills.</p>
+    <h2>Submit Application</h2><form><input name="email"></form></main>
+    <footer><p>Northwood House, Stafford Park 10, Telford</p></footer>`;
+  const extracted = extractJobs(html, detailUrl, "Northwood Hygiene Products Ltd");
+  assert.equal(extracted.length, 1);
+  assert.equal(extracted[0]!.title, "Oldham Production Operative");
+  assert.equal(extracted[0]!.jobUrl, detailUrl);
+  assert.equal(extracted[0]!.jobId, "");
+  assert.equal(extracted[0]!.locations[0]?.location, "Oldham");
+  assert.equal(extracted[0]!.jdDeadline, "October 2, 2026");
+  assert.match(extracted[0]!.description, /Operating and monitoring machinery/);
+  assert.doesNotMatch(extracted[0]!.description, /Submit Application|Northwood House|email/);
+});
+
+test("literal click destinations on career cards are discovered without running page scripts", () => {
+  const html = `<section><h2>Current Vacancies</h2>
+    <div onclick="window.location.href='/career/oldham-production-operative-2/'">
+      <h3>Oldham Production Operative</h3><p>Oldham</p></div></section>`;
+  assert.deepEqual(discoverLinks(html, "https://www.northwood.co.uk/careers/"), [
+    "https://www.northwood.co.uk/career/oldham-production-operative-2/",
+  ]);
 });
 
 test("malformed JSON script does not suppress valid scripts or hydration data", () => {
@@ -215,4 +286,18 @@ test("Greenhouse edits and Lever created timestamps are not substituted for post
 test("plain multi-location labels split at unambiguous separators", () => {
   assert.equal(schemaLocations("London, UK; Manchester, UK").length, 2);
   assert.equal(schemaLocations("London, Ontario, Canada").length, 1);
+});
+
+test("search facets and location taxonomies do not expand a job crawl", () => {
+  const source = "https://www.crowleycox.co.uk/search";
+  const html = `<a href="/job/accounts-assistant-london/277">Accounts Assistant</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.crowleycox.co.uk/job/accounts-assistant-london/277">Share</a>
+    <a href="/modules/fabricruitment/lists/jobs/search?filters%5Bfacets.location%5D%5B1%5D=London&page=1">London filter</a>
+    <a href="/jobs/location/london-london">London jobs</a>
+    <a href="/search?filters%5Bfacets.location%5D%5B1%5D=London&page=1">London (2)</a>
+    <a rel="next" href="/search?page=2">Next</a>`;
+  assert.deepEqual(discoverLinks(html, source), [
+    "https://www.crowleycox.co.uk/job/accounts-assistant-london/277",
+    "https://www.crowleycox.co.uk/search?page=2",
+  ]);
 });

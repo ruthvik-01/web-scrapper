@@ -73,6 +73,7 @@ test("newest exports places the latest company CSV before older dated deliveries
     await page.waitForFunction(() => document.querySelectorAll(".export-card").length === 2);
     assert.match(await page.locator(".export-card").first().textContent() || "", /Acme & Sons/);
     await page.getByLabel("Sort exports").selectOption("oldest");
-    assert.match(await page.locator(".export-card").first().textContent() || "", /2026-09-10-verified/);
+    assert.equal(await page.locator(".export-card").first().getByRole("link", { name: "CSV", exact: true }).getAttribute("href"),
+      "/api/deliveries/2026-09-10-verified/companies.csv");
   } finally { await browser.close(); await fixture.close(); }
 });

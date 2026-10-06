@@ -1,5 +1,63 @@
 # Changelog
 
+## 2026-10-06 - Project cleanup and dashboard export repair
+
+- Removed unused JEV project and 134 scratch/generated JSON files from the app; preserved local history under ignored dated output/archive. Kept required catalogs/configuration and audit/verification inputs; updated the historical repair helper's archived-run path.
+
+- Removed 36 unused root diagnostic files, captured pages and stale logs; [deletion manifest](docs/project-cleanup-2026-10-06.json). Historical deliveries and scripts remain intact.
+- Dashboard exports recognize company-slug runs and the default `output/universal-runs/` folder, enforcing complete manifests for downloads.
+- Added `npm start`; default typecheck covers maintained app/audit commands, with historical checks retained as `typecheck:all`. Updated stale CLI/browser checks and deployment catalog verification.
+- Evidence and remaining limits: [shared session](D:/Projects/Sessions/06-10-2026/uk-scrapper-project-cleanup.md).
+
+## 2026-10-05 — Universal Scraper Completion (All 75 Companies & Standalone Package)
+
+- Expanded universal scraper catalog to all 75 companies across 13 platform engines (Comeet, Eploy, Jobtrain, WordPress, Custom ATS, Reed, Haystack, Tribepad, JobAdder, Portobello, Occy, Supabase, JobToday) with strict deterministic UK-only finalization.
+- Modularized architecture: dedicated `src/filters.ts` for all UK location, date window, salary, and NHS exclusion logic; dedicated `src/common-utils.ts` for text/HTML cleaning, canonical URL resolution, and CSV serialization.
+- Dedicated output directory: all runs output into `output/universal-runs/<timestamp>-<runId>/`.
+- Created standalone, self-contained production folder `universal_scraper_production/` for team members with complete documentation.
+- Verification: 171 unit tests passing, 795 + 15 UK assertions passing, 53 fixture regressions passing, app/build passing, repeated multi-batch live scrapes verified with 100% exact match. [Report](docs/universal-implementation/README.md), [Progress](docs/universal-implementation/production-progress.md), [Shared History](D:/Projects/Sessions/05-10-2026/uk-scrapper-universal.md).
+
+## 2026-10-05 — Universal CLI completion
+
+- Added `scrape:universal` default-all command, exact name/slug selection and platform filtering; retained existing single-site command. Complete datasets now include combined JSON and use dated shared output folders listed/downloadable through dashboard Exports.
+- Added CLI file-output/default45/partial/selection tests and complete-versus-partial dashboard delivery coverage.148 unit tests,795 UK assertions and45 fixture comparisons pass; app typecheck/build pass. Classified67 broad historical script errors and the existing dashboard date-label failure as unrelated to universal execution.
+- Additional live checks: Coralogix7 UK rows, Blockaid1, Intercity Technology6; Curve no_matches0. Original3 live results preserved;38 remain not live-verified. Held30 and original company sources untouched. [Code/report](docs/universal-implementation/README.md), [shared history](D:/Projects/Sessions/05-10-2026/uk-scrapper-universal.md).
+
+## 2026-10-05 — Universal UK-only workflow
+
+- Added catalog/registry/orchestrator and CLI for 45 audited candidates; kept 30 holds and original company sources intact. Existing collectors/normalization/output gate are reused; identity scope precedes display rename, and partial/error CSVs are blocked.
+- Closed NHS robots-redirect bypass and comparison collision gap; added HTTP500 retry handling and explicit Jobtrain tenant job-search discovery.
+- Original UK cases795/0fail, fixed-source old/new comparisons45/45, unit suite143/143, app typecheck/build pass. Three completed live runs export20 UK rows; other42 are not live-verified. Broad legacy typecheck67 errors and dashboard label integration1 failure remain.
+- [Report and commands](docs/universal-implementation/README.md); [shared history](D:/Projects/Sessions/05-10-2026/uk-scrapper-universal.md). No deletions, historical output changes, commit or push.
+
+## 2026-09-30 — Validated job data and full rerun
+
+- Fixed Cross Keys advert role extraction, rendered-detail waiting, title-only XHR enrichment, source posting dates, and visible annual versus hourly pay; added focused regression tests.
+- Added a final 15-column export gate for IDs, URLs, UK location, usable description, dates, annual salary, benefits, and duplicate job keys. Invalid candidates retain reasons in company reports.
+- Prevented social-share/faceted-search crawl expansion; retained source town/county fields and required job-specific UK context rather than a company default.
+- Reran eight companies without editing the old CSV: 92 valid rows over 311 pages versus 70 baseline rows; 188 excluded candidates are logged. Dachser's 18 German jobs are absent, and CV Technical now contributes 39 localized rows. Currie & Brown remains partial because one live advert lacks role/location fields.
+- Passed 113 unit tests, 48 browser integrations, production typecheck, and final row audit. No commit or push.
+
+## 2026-09-30 — Location evidence and live browser follow-up
+
+- Tightened Greater London country confirmation to require the job's explicit location text, so a gazetteer-inferred state cannot turn ambiguous London into UK during reprocessing.
+- Corrected-source dashboard runs completed Crone Corkill (16), Cross Keys Homes (8), Crowley Cox (5), Cura Terrae (12), and UK-filtered Dachser (18); latest saved CV Technical output has 39 rows. The interrupted live batch left Currie & Brown and Curtis Fox reruns pending. Packaged audit remains 92 validated rows over 311 pages.
+- App typecheck passes; focused location tests pass 25/25. Full unit suite passes 116/117; the single Windows temp-file rename `EPERM` in `run-state.test.ts` passes when isolated. Dashboard browser reload was blocked by browser policy after the tab became unreachable. No data edits, commit, or push.
+
+## 2026-09-30 — Pagination and identifier regressions
+
+- Corrected listing/detail classification for search and named careers boards, and prevented related-job controls on detail pages from expanding the crawl.
+- Prioritized WordPress REST post IDs over repeated generic JSON-LD identifiers.
+- Fresh Cross Keys Homes run found nine candidates and exported eight valid unique rows; one bare-city location was transparently skipped. Unit 107/107, browser 47/47, app typecheck, and CSV/JSON schema comparison pass.
+- Ran Cross Keys Homes from the dashboard and verified the live report and eight job rows in the browser: 13 pages, nine candidates, eight exports, one location-filtered exclusion, no extraction/access errors.
+
+## 2026-09-30 — WordPress career feed and detail extraction
+
+- Added discovery of custom WordPress job post types through the public REST type index and pagination using `X-WP-TotalPages`; detail records enrich the API rows with page content and job-specific IDs.
+- Fixed location extraction on WordPress career pages to stay within `.single-post__content`, avoiding the “Product Finder” site navigation, and added safe literal `onclick`/data destination discovery without executing scripts.
+- Live Northwood scrape found 12 candidates with distinct IDs. Seven were outside the selected date window and five current jobs were excluded because the source gives only a bare place name; strict UK location validation remains unchanged. No export was produced.
+- Focused extraction tests 2/2, WordPress pagination integration 1/1, geography tests 17/17, and application typecheck pass.
+
 ## 2026-09-28 — Dashboard data visibility and upload recovery
 
 - Fixed DOM pagination for count-based “Load N more of M remaining” controls and sent live page/job/action updates to the existing dashboard progress panel. A bounded Côte check reached ten batches and 104 job links; 13 affected integration tests pass.
@@ -301,3 +359,18 @@ Reduced collection from 90 to the requested 48 company folders plus shared frame
 - Verified local 1,200-page HTML and 260-URL sitemap fixtures; fresh Crone 14/14 and Cross Keys 7/7 job IDs are clean. Côte found 94 distinct jobs but remains partial due site rate limits and empty details. Audit and before/after comparison are in `docs/superpowers/plans/2026-09-29-dynamic-crawl-audit.md`.
 - Unit 105/105, browser 44/44, active TypeScript and UI syntax passed; full TypeScript retains 67 historical one-off-script errors. No commit or push because the user-required data/check gate did not pass.
 
+- Data audit of the separate dated 70-row output found blockers: 18 Germany jobs in a UK delivery; corrupted Cross Keys descriptions and missing dates; hourly pay in salary fields; false salary values and apparent location mismatches at other sources. Dashboard Cross Keys descriptions are also title-only/short snippets. Keep this delivery out of release until corrected and re-audited.
+
+## 2026-09-30 — Final CLI delivery and persistence readiness
+
+- Added final-delivery producer and tested location consolidation: one vacancy row retains all explicit locations, and conflicting shared fields block delivery. CSV generation validates source records and re-reads the written file. Final company CSV, JSON and report counts agree.
+- Produced `output/30-9-26/30-9-26.csv` with 110 jobs across eight companies, preserving the original 70-row CSV. Recorded 169 current exclusions and the withdrawn Curtis advert separately.
+- Confirmed Currie advert 21863 genuinely lacks primary role/location fields in static and rendered HTML; Curtis advert 93 returns HTTP 410. Fresh affected-company runs completed through CLI.
+- Fixed dashboard readiness before final persistence; deterministic regression and full concurrent unit suite pass. Final gates: 120 unit tests, 25 focused geography/API tests, app typecheck, whitespace diff and CSV read-back pass.
+
+## 2026-09-30 — Dashboard pipeline reports
+
+- Shared the final normalizer, quality checks and multi-location merge across dashboard workers, CLI runs and dated delivery packaging.
+- Fieldwork retains reports for empty runs, exposes quality failures in the report panel and blocks unsafe CSV downloads.
+- Exports now lists the `30-9-26` pipeline delivery with links to its CSV, summary report and rejection ledger.
+- App typecheck, UI syntax, and focused finalizer/run-state/dashboard checks pass. Standard test launch hits a sandbox `spawn EPERM`; compiled focused tests pass.

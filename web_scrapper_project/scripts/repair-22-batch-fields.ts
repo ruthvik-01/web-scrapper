@@ -5,7 +5,7 @@ import { outputCsv, type OutputRow } from "../src/output.js";
 const workspace = resolve(import.meta.dirname, "..", "..");
 const source = resolve(workspace, "output", "22-9-26 batch");
 const destination = resolve(workspace, "output", "22-9-26 batch-corrected-fields");
-const ltfRun = resolve(workspace, "web_scrapper_project", "jev-scraper", "runs", "longtermfutures-co-uk-1790058116121");
+const ltfRun = resolve(workspace, "output", "2026-10-06-project-cleanup", "archive", "jev-runs", "longtermfutures-co-uk-1790058116121");
 const priorTcfm = resolve(workspace, "output", "akhil-tcfm-verified-2026-09-18", "tcfm", "jobs.csv");
 
 type Row = OutputRow & Record<string, string>;

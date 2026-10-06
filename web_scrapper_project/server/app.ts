@@ -82,18 +82,50 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
   await mkdir(outputRoot, { recursive: true });
   const realOutputRoot = await realpath(outputRoot);
   if (!inside(await realpath(dataRoot), realOutputRoot)) throw new Error("Output directory must remain within the data root.");
+  const deliveryNamePattern = String.raw`\d{4}-\d{2}-\d{2}-(?:verified|main-uk-scrape|[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}-\d{2}-\d{2}-\d{3}Z(?:-[a-f0-9]{8})?)`;
+  const datedDelivery = new RegExp(`^${deliveryNamePattern}$`);
+  const deliveryRoute = new RegExp(`^/api/deliveries/(${deliveryNamePattern}|\\d{1,2}-\\d{1,2}-\\d{2,4})/(companies\\.csv|final\\.zip|report\\.json|rejections\\.json|provenance\\.json)$`);
+  const manifestRun = /-\d{2}-\d{2}-\d{2}-\d{3}Z-[a-f0-9]{8}$/;
+  const deliveryRoots = async () => {
+    const roots = [outputRoot];
+    try {
+      const nested = await safeFile(outputRoot, "universal-runs");
+      const stat = await lstat(nested);
+      if (stat.isDirectory() && !stat.isSymbolicLink()) roots.push(nested);
+    } catch { /* Optional universal output folder may not exist. */ }
+    return roots;
+  };
   const deliveries = async () => {
-    const entries = await readdir(outputRoot, { withFileTypes: true });
-    const found = [] as { name: string; rows: number; hasZip: boolean }[];
-    for (const entry of entries) {
-      if (!entry.isDirectory() || !/^\d{4}-\d{2}-\d{2}-(?:verified|main-uk-scrape)$/.test(entry.name)) continue;
-      const directory = resolve(outputRoot, entry.name);
+    const entries = (await Promise.all((await deliveryRoots()).map(async root =>
+      (await readdir(root, { withFileTypes: true })).map(entry => ({ entry, root }))
+    ))).flat();
+    const found = [] as { name: string; rows: number; hasZip: boolean; hasReport: boolean; pipeline: boolean; directory: string }[];
+    for (const { entry, root } of entries) {
+      const pipeline = /^\d{1,2}-\d{1,2}-\d{2,4}$/.test(entry.name);
+      if (!entry.isDirectory() || (!pipeline && !datedDelivery.test(entry.name)) || found.some(item => item.name === entry.name)) continue;
+      const directory = resolve(root, entry.name);
       try {
-        await safeFile(directory, "companies.csv");
-        const rows = await jsonFile<unknown[]>(resolve(directory, "companies.json"), []);
+        if (manifestRun.test(entry.name)) {
+          const manifest = JSON.parse(await readFile(await safeFile(directory, "manifest.json"), "utf8"));
+          if (manifest.complete !== true) continue;
+        }
+        await safeFile(directory, pipeline ? `${entry.name}.csv` : "companies.csv");
+        let rowCount = 0;
+        if (pipeline) {
+          try {
+            const reportPath = await safeFile(directory, `${entry.name}-summary.json`);
+            const report = JSON.parse(await readFile(reportPath, "utf8"));
+            rowCount = Number(report.finalRows) || 0;
+          } catch { /* The CSV remains listed if an older delivery has no report. */ }
+        } else {
+          const rows = await jsonFile<unknown[]>(resolve(directory, "companies.json"), []);
+          rowCount = Array.isArray(rows) ? rows.length : 0;
+        }
         let hasZip = false;
         try { await safeFile(directory, "final.zip"); hasZip = true; } catch { /* Some working exports have no package. */ }
-        found.push({ name: entry.name, rows: Array.isArray(rows) ? rows.length : 0, hasZip });
+        let hasReport = false;
+        if (pipeline) try { await safeFile(directory, `${entry.name}-summary.json`); hasReport = true; } catch { /* Optional for older deliveries. */ }
+        found.push({ name: entry.name, rows: rowCount, hasZip, hasReport, pipeline, directory });
       } catch { /* Ignore incomplete dated folders. */ }
     }
     return found.sort((a, b) => b.name.localeCompare(a.name));
@@ -176,7 +208,7 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
     const saved = result(company);
     if (latest) {
       if (latest.status === "failed") return saved ? "needs-review" : "failed";
-      if (latest.status === "empty") return saved ? "completed" : "no-jobs";
+      if (latest.status === "empty") return Number(saved?.summary.jobs ?? 0) > 0 ? "completed" : "no-jobs";
       if (latest.status === "interrupted" || latest.status === "needs-review") return "needs-review";
       if (latest.status === "completed") return "completed";
     }
@@ -274,6 +306,15 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
           if (!inside(realOutputRoot, await realpath(dirname(directory)))) throw new Error("Company output path is outside the project.");
           const summary = await runner(company, directory, note);
           item.summary = summary;
+          // Keep a completed source report available even when it has no rows,
+          // so the dashboard can show why the source returned no jobs.
+          let hasReport = true;
+          try { await safeFile(directory, "scrape-report.json"); } catch { hasReport = false; }
+          if (hasReport) {
+            state.results[company.id] = { directory, summary };
+            company.resultDir = directory;
+            company.summary = summary;
+          }
           const unsupported = String(summary.status) === "unsupported";
           const jobs = Number(summary.jobs ?? 0);
           const empty = !unsupported && jobs === 0;
@@ -285,14 +326,17 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
             // not be exported and must not be shown as collected.
             item.status = "empty";
             item.error = "The scrape finished but produced no jobs, so nothing is exported for this company.";
+          } else if (summary.exportReady === false) {
+            item.status = "needs-review";
+            const quality = summary.quality as Record<string, unknown> | undefined;
+            const failures = Object.entries(quality || {}).filter(([, count]) => Number(count) > 0)
+              .map(([name, count]) => `${name}: ${count}`);
+            item.error = `Quality checks need review${failures.length ? ` (${failures.join(", ")})` : ""}. CSV export is blocked.`;
           } else {
             item.status = "completed";
-            state.results[company.id] = { directory, summary };
-            company.resultDir = directory;
-            company.summary = summary;
           }
           if (item.status !== "completed") {
-            item.metrics = { ...(item.metrics as CompanyMetrics), stage: "FAILED", operation: item.error || "No usable jobs", error: item.error };
+            item.metrics = { ...(item.metrics as CompanyMetrics), stage: item.status === "needs-review" ? "REVIEW" : "FAILED", operation: item.error || "No usable jobs", error: item.error };
           }
         } catch (error) {
           item.status = "failed";
@@ -311,8 +355,8 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
     run.status = run.status === "stopping" ? "stopped" :
       failed || run.items.some(item => ["needs-review", "empty"].includes(item.status)) ? "needs-review" : "completed";
     run.finishedAt = new Date().toISOString();
-    active = undefined;
     await save();
+    active = undefined;
   }
 
   const server = createServer(async (request, response) => {
@@ -350,15 +394,30 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
         catch { throw Object.assign(new Error("Invalid JSON."), { status: 400 }); }
       }
       if (url.pathname === "/api/deliveries" && request.method === "GET") {
-        return json(200, { deliveries: await deliveries() });
+        return json(200, { deliveries: (await deliveries()).map(({ directory, ...delivery }) => delivery) });
       }
-      const deliveryFile = /^\/api\/deliveries\/(\d{4}-\d{2}-\d{2}-(?:verified|main-uk-scrape))\/(companies\.csv|final\.zip)$/.exec(url.pathname);
+      const deliveryFile = deliveryRoute.exec(url.pathname);
       if (deliveryFile && request.method === "GET") {
-        const directory = resolve(outputRoot, deliveryFile[1]!);
-        const contents = await readFile(await safeFile(directory, deliveryFile[2]!));
+        const name = deliveryFile[1]!;
+        const file = deliveryFile[2]!;
+        const pipeline = /^\d{1,2}-\d{1,2}-\d{2,4}$/.test(name);
+        const diskName = pipeline
+          ? file === "companies.csv" ? `${name}.csv`
+            : file === "report.json" ? `${name}-summary.json`
+              : file
+          : file;
+        if (!pipeline && file !== "companies.csv" && file !== "final.zip") return json(404, { error: "Not found." });
+        const delivery = (await deliveries()).find(item => item.name === name);
+        if (!delivery) return json(404, { error: "Not found." });
+        const directory = delivery.directory;
+        if (manifestRun.test(name)) {
+          const manifest = await jsonFile<{ complete?: boolean }>(await safeFile(directory, "manifest.json"), {});
+          if (manifest.complete !== true) return json(404, { error: "Run is incomplete." });
+        }
+        const contents = await readFile(await safeFile(directory, diskName));
         response.writeHead(200, {
-          "Content-Type": deliveryFile[2] === "companies.csv" ? "text/csv; charset=utf-8" : "application/zip",
-          "Content-Disposition": `attachment; filename="${deliveryFile[1]}-${deliveryFile[2]}"`,
+          "Content-Type": file.endsWith(".csv") ? "text/csv; charset=utf-8" : file.endsWith(".zip") ? "application/zip" : "application/json; charset=utf-8",
+          "Content-Disposition": file.endsWith(".json") ? `inline; filename="${name}-${file}"` : `attachment; filename="${name}-${file}"`,
         });
         return response.end(contents);
       }
@@ -593,6 +652,14 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
           }
           const file = kind === "csv" ? "jobs.csv" : kind === "report" ? "scrape-report.json" : undefined;
           if (!file) return json(400, { error: "Choose csv, code, or report." });
+          if (kind === "csv") {
+            const reportPath = await safeFile(directory, "scrape-report.json").catch(async () => {
+              const outputDir = await safeFile(directory, "output");
+              return safeFile(outputDir, "scrape-report.json");
+            });
+            const report = JSON.parse(await readFile(reportPath, "utf8"));
+            if (report.exportReady === false) return json(409, { error: "CSV export is blocked because there are no valid rows or quality checks need review. Open the company report for details." });
+          }
           // Older runs may have outputs under output/; prefer root files.
           const contents = await readFile(await safeFile(directory, file).catch(async () => {
             const outputDir = await safeFile(directory, "output");

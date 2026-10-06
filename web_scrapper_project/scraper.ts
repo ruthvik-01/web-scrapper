@@ -5,7 +5,8 @@ import { parseArgs } from "node:util";
 import type { ScrapeOptions } from "./src/crawl.js";
 import { object } from "./src/normalize.js";
 import { scrapeWebsite } from "./src/strategy.js";
-import { outputCsv, outputRows } from "./src/output.js";
+import { outputCsv } from "./src/output.js";
+import { finalizeScrapeResult } from "./src/final-dataset.js";
 import type { Selectors } from "./src/extract.js";
 
 export { scrapeCompany } from "./src/crawl.js";
@@ -79,17 +80,20 @@ async function main(): Promise<void> {
   }
   const url = positionals[0]!;
   const result = await scrapeWebsite(url, options);
-  const exportedRows = outputRows(result, values.company);
+  const finalized = finalizeScrapeResult(result, values.company);
+  result.rows = finalized.rows;
+  result.report = finalized.report;
+  const exportedRows = finalized.rows;
   const directory = resolve(values.out || "output");
   await mkdir(directory, { recursive: true });
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
   const stem = resolve(directory, `${new URL(url).hostname}-${timestamp}`);
   await writeFile(`${stem}.json`, JSON.stringify(exportedRows, null, 2) + "\n", { flag: "wx" });
-  await writeFile(`${stem}.csv`, outputCsv(exportedRows), { flag: "wx" });
+  if (finalized.report.exportReady) await writeFile(`${stem}.csv`, outputCsv(exportedRows), { flag: "wx" });
   await writeFile(`${stem}.report.json`, JSON.stringify(result.report, null, 2) + "\n", { flag: "wx" });
-  console.log(`${result.rows.length} UK location rows | ${result.report.status} | ${result.report.window.from} through ${result.report.window.to}`);
-  console.log(`JSON: ${stem}.json\nCSV: ${stem}.csv\nReport: ${stem}.report.json`);
-  if (result.report.status === "partial" || result.report.status === "unsupported") process.exitCode = 2;
+  console.log(`${result.rows.length} validated UK job rows | ${result.report.status} | ${result.report.window.from} through ${result.report.window.to}`);
+  console.log(`JSON: ${stem}.json\n${finalized.report.exportReady ? `CSV: ${stem}.csv\n` : "CSV not written: output quality checks need review.\n"}Report: ${stem}.report.json`);
+  if (result.report.status === "partial" || result.report.status === "unsupported" || !finalized.report.exportReady) process.exitCode = 2;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

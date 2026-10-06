@@ -2,11 +2,19 @@
   "extends": "./tsconfig.json",
   "include": [
     "scraper.ts",
+    "universal.ts",
     "batch.ts",
     "src/**/*.ts",
     "server/**/*.ts",
     "tests/**/*.ts",
     "scripts/package-batch.ts",
-    "scripts/run-five-companies.ts"
+    "scripts/run-five-companies.ts",
+    "scripts/finalize-delivery.ts",
+    "scripts/build-universal-config.ts",
+    "scripts/check-company-uk-scope.ts",
+    "scripts/compare-scrapers.ts",
+    "scripts/regress-universal.ts",
+    "scripts/report-universal.ts",
+    "scripts/verify-universal-deployment.ts"
   ]
 }

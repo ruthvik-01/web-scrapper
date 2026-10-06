@@ -1,0 +1,10 @@
+# Production universal scraper execution plan
+
+Request: compact production code, one workflow/API/CLI,45 approved configs only, controlled concurrency/shared-origin throttling, request/company/run deadlines, safe manifests/outputs, existing UK/normalizer/output behavior retained. User explicitly authorizes repository implementation; no repeated design approval.
+
+1. Establish fresh148-unit/795-UK/45-fixture/app/build baseline; preserve dirty main and all original company sources.
+2. Consolidate src/universal.ts workflow into root universal.ts; expose scrapeAll/scrapeCompany/scrapePlatform and have CLI call those functions. Keep compatible exported low-level functions from the same entry for existing tests; update imports, remove only our superseded module. Universal-specific production layer remains5 files: universal.ts, companies.ts, platforms.ts, uk-scope.ts, universal-runtime.ts. Existing proven collector/normalizer libraries remain dependencies, explicitly distinguished from this layer.
+3. TDD bounded worker scheduling, per-origin pacing, company/run cancellation, repeated company flags and failure isolation; implement one run-scoped runtime helper with AsyncLocalStorage. Wire cancellation into all collector HTTP/DOM/geography operations; retain centralized retry rules and permanent-error behavior.
+4. TDD run manifests, structured per-company timing/status/rejection summaries, output-write failure isolation, unique collision-safe run folders, complete-only publication with manifest last. Keep15 columns and existing dashboard routes; no latest-dataset overwrite.
+5. Run new narrow tests, then full unit/UK/fixture/app/build/full-typecheck/browser checks; classify unchanged legacy errors. Attempt additional live sources with honest LIVE_SUCCESS/LIVE_ZERO/LIVE_FAILED/BLOCKED/NOT_TESTED status and inspect zero results.
+6. Update relevant snapshots/history and deployment instructions/API/file-count scope. Verify install/build in a clean temporary copy if practical, without historical scripts or outputs. No commit/push, held admission, original scraper deletion or speculative abstraction.

@@ -13,6 +13,7 @@ export function detectAts(url: string): string {
   if (/(^|\.)smartrecruiters\.com$/.test(host)) return "SmartRecruiters";
   if (/(^|\.)recruitee\.com$/.test(host)) return "Recruitee";
   if (/(^|\.)workable\.com$/.test(host)) return "Workable";
+  if (/(^|\.)softgarden\.(io|de)$/.test(host)) return "Softgarden";
   if (/(^|\.)icims\.com$/.test(host)) return "iCIMS";
   if (/(^|\.)taleo\.net$/.test(host)) return "Taleo";
   if (/(^|\.)jobs\.nhs\.uk$/.test(host)) return "NHS Jobs";
@@ -61,15 +62,18 @@ function salary(value: unknown): string {
 function idFromUrl(value: string): string {
   try {
     const url = new URL(value);
-    const match = /(?:^|[-/])(\d+)(?:\.[a-z0-9]+)?\/?$/i.exec(decodeURIComponent(url.pathname));
+    const path = decodeURIComponent(url.pathname);
+    const match = /(?:^|[-/])(\d+)(?:\.[a-z0-9]+)?\/?$/i.exec(path);
     if (match) return match[1]!;
-    const segments = decodeURIComponent(url.pathname).split("/").filter(Boolean);
+    const segMatch = /(?:^|\/)(?:job|jobs|vacanc(?:y|ies)|posting|position)\/(\d+)(?:[/?#]|$)/i.exec(path);
+    if (segMatch) return segMatch[1]!;
+    const segments = path.split("/").filter(Boolean);
     const last = segments.at(-1) || "";
-    if (/(?:^|\/)positions?\/[^/]+\/?$/i.test(url.pathname) &&
+    if (/(?:^|\/)positions?\/[^/]+\/?$/i.test(path) &&
         /^[A-Za-z0-9_-]{12,}$/.test(last) && /\d/.test(last)) return last;
-    for (const key of ["job", "job_id", "posting", "posting_id", "vacancy", "vacancy_id", "id"]) {
-      const value = url.searchParams.get(key);
-      if (value && /^\d+$/.test(value)) return value;
+    for (const key of ["job", "job_id", "posting", "posting_id", "vacancy", "vacancy_id", "jobDbPVId", "id"]) {
+      const val = url.searchParams.get(key);
+      if (val && /^\d+$/.test(val)) return val;
     }
     return "";
   } catch { return ""; }
@@ -333,11 +337,83 @@ export function extractJobs(html: string, url: string, company = "", selectors?:
         jdDeadline: deadline, locations: [{ location, country: officialUkPolice ? 'UK' : '' }], ats: detectAts(url) });
     }
   }
-  return jobs.map(job => ({
-    ...job,
-    jobId: vacancyIdFromUrl(job.jobUrl) || (job.jobId && !/^(?:https?:)?\/\//i.test(job.jobId) && !job.jobId.startsWith("/")
-      ? job.jobId : idFromUrl(job.jobId || "") || idFromUrl(job.jobUrl) || (jobs.length === 1 ? idFromUrl(url) : "")),
-  }));
+  // Common WordPress custom-post detail pages render their fields as ordinary
+  // headings and paragraphs rather than JobPosting JSON-LD or metadata classes.
+  if (!jobs.length && /\/career\/[^/]+\/?$/i.test(new URL(url).pathname)) {
+    const title = $('main h1, article h1, h1').first().text().trim();
+    const wordpressContent = $('.single-post__content').first();
+    const main = wordpressContent.length ? wordpressContent : $('article, main').first();
+    const text = plainText(main.html() || $.root().html() || '');
+    const descriptionMatch = /(?:job description|about the role)\s*([\s\S]*?)(?=\b(?:submit application|apply now|application form)\b|$)/i.exec(text);
+    const description = descriptionMatch?.[1]?.trim() || '';
+    const location = /\bLocation\s*:?\s*([^\n]+)/i.exec(text)?.[1]?.trim() ||
+      main.find('li').map((_, node) => $(node).text().trim()).get().find(value => value && !/applications? close|deadline/i.test(value)) || '';
+    const deadline = /\bApplications? close\s+([^\n]+)/i.exec(text)?.[1]?.trim() || '';
+    if (title && description.length >= 40) {
+      jobs.push({ title, description, roleDescription: description, jobUrl: url, company,
+        locations: location ? [{ location }] : [], jdDeadline: deadline, ats: detectAts(url) });
+    }
+  }
+  // This ATS publishes JobPosting metadata whose description is sometimes only
+  // the title. The role text is the container following "The Vacancy"; later
+  // sibling containers are company/about/benefits content, not job duties.
+  const advert = new URL(url);
+  if (/(^|\.)current-vacancies\.com$/i.test(advert.hostname) && /\/Jobs\/Advert\/\d+/i.test(advert.pathname)) {
+    const vacancy = $('#GlobalContent_HeaderTitle1').nextAll('div.container').first();
+    const role = plainText(vacancy.html());
+    const id = vacancyIdFromUrl(url);
+    if (role.length >= 80 && id) {
+      const visiblePay = $('[id="MergeCore_MergeField1"]').first().text().replace(/^\s*Salary\s*/i, '').trim();
+      const visibleLocation = $('[id="MergeCore_MergeField2"]').first().text().replace(/^\s*Location\s*/i, '').trim();
+      let matching = jobs.filter(job => vacancyIdFromUrl(job.jobUrl) === id);
+      if (!matching.length && !jobs.length) {
+        const title = $('h1').first().text().trim();
+        if (title) {
+          jobs.push({ jobId: id, title, description: role, roleDescription: role,
+            jobUrl: url, company, locations: visibleLocation ? [{ location: visibleLocation }] : [],
+            ats: detectAts(url) });
+          matching = jobs;
+        }
+      }
+      for (const job of matching) {
+        job.description = role;
+        job.roleDescription = role;
+        if (visiblePay && /\b(?:per\s+(?:annum|year|hour|day)|hourly|daily|p\.?a\.?)\b|\/(?:hr|hour|day|yr|year)\b/i.test(visiblePay)) {
+          job.salaryRange = visiblePay;
+        } else if (visiblePay && Number(/£\s*([\d,]+)/.exec(visiblePay)?.[1]?.replace(/,/g, "")) >= 10_000 &&
+                   !/\b(?:benefit|bonus|allowance|subsidy)\b/i.test(visiblePay.replace(/\bplus\b[\s\S]*$/i, ""))) {
+          job.salaryRange = `${visiblePay} per annum`;
+          (job.notes ||= []).push("Annual period inferred from the advertised five-figure salary; structured HOUR unit conflicts with the visible amount.");
+        } else if (visiblePay && /\bHOUR\b/i.test(job.salaryRange || '')) {
+          (job.notes ||= []).push('Visible salary has no reliable pay period; annual salary is left empty.');
+        }
+      }
+    }
+  }
+  return jobs.map(job => {
+    const hasLocation = job.locations.some(location =>
+      Boolean(text(location.location) || text(location.city) || text(location.state) || text(location.country)));
+    if (!hasLocation) {
+      const sourceText = plainText(job.roleDescription || job.description);
+      const locationLabel = /^\s*(?:(?:job|work|base)\s+)?location\s*:?\s*(.+?)\s*$/im.exec(sourceText)?.[1]
+        ?.split(/\s*[|;]\s*/)[0]?.trim() || "";
+      if (locationLabel) {
+        const pagePath = new URL(job.jobUrl).pathname;
+        const postcodeMatch = /\b([A-Z]{1,2}\d[A-Z\d]?)\s*[- ]\s*(\d[A-Z]{2})\b/i.exec(`${sourceText}\n${pagePath}`);
+        const postcode = postcodeMatch ? `${postcodeMatch[1]} ${postcodeMatch[2]}`.toUpperCase() : "";
+        const explicitUk = /\b(?:UK|United Kingdom|Great Britain|England|Scotland|Wales|Northern Ireland)\b/i.test(locationLabel);
+        const confirmedUk = Boolean(postcode || explicitUk);
+        const city = postcode && /^[\p{L}.' -]+$/u.test(locationLabel) ? locationLabel : "";
+        job.locations = [{ location: locationLabel, city, country: confirmedUk ? "UK" : "", postcode }];
+        job.visibleLocation ||= locationLabel;
+      }
+    }
+    const wordpressCareerPath = /\/career\/[^/]+\/?$/i.test(new URL(job.jobUrl).pathname);
+    const fallbackId = job.jobId && !/^(?:https?:)?\/\//i.test(job.jobId) && !job.jobId.startsWith("/")
+      ? job.jobId
+      : idFromUrl(job.jobId || "") || idFromUrl(job.jobUrl) || (jobs.length === 1 ? idFromUrl(url) : "");
+    return { ...job, jobId: vacancyIdFromUrl(job.jobUrl) || (wordpressCareerPath ? job.jobId || "" : fallbackId) };
+  });
 }
 
 const careers = /(?:career|jobs?|vacanc|opportunit|openings?|join[-_ ]?us|positions?|recruit)/i;
@@ -359,8 +435,13 @@ export function discoverLinks(html: string, pageUrl: string, selectors?: Selecto
   const inScope = (url: string): boolean => {
     const target = new URL(url);
     if (/^\/(?:industry|white-paper)(?:\/|$)/i.test(target.pathname) ||
-        /\/(?:download[a-z]*|privacypolicy|privacy[-_]policy|cookie[-_]policy|terms[-_]and[-_]conditions)(?:\/|$)/i.test(target.pathname) ||
-        target.searchParams.get("post_type") === "industry") return false;
+        /(?:^|\.)(?:facebook\.com|twitter\.com|x\.com|linkedin\.com|instagram\.com)$/i.test(target.hostname) ||
+        /\/jobs?\/(?:location|category|sector|type|salary)(?:\/|$)/i.test(target.pathname) ||
+        [...target.searchParams.keys()].some(key =>
+          /^filters?\[/.test(key) && !scope.searchParams.has(key)) ||
+        /\/(?:download[a-z]*|privacypolicy|privacy[-_]policy|cookie[-_]policy|terms[-_]and[-_]conditions|data[-_]security|imprint|legal)(?:\/|$)/i.test(target.pathname) ||
+        target.searchParams.get("post_type") === "industry" ||
+        /\?-[0-9]\./i.test(url) || /jobSearchContainer|internalLink|jobAboLink/i.test(url)) return false;
     if (!scopedFields.length || new URL(url).origin !== scope.origin) return true;
     if (target.pathname === scope.pathname) return scopedFields.every(key => target.searchParams.get(key) === scope.searchParams.get(key));
     return /\/(?:jobs?|vacanc(?:y|ies)|positions?|roles?)\/[^/]+/i.test(target.pathname);
@@ -368,7 +449,7 @@ export function discoverLinks(html: string, pageUrl: string, selectors?: Selecto
   const add = (href: string | undefined): void => {
     const url = href && resolveLink(href);
     if (url && inScope(url) && !/\.(?:pdf|zip|png|jpg|svg|mp4|docx?)(?:\?|$)/i.test(url) &&
-        !/(?:^|\/)(?:vacancy-apply\.aspx|registration\.aspx|apply|application|login|signin)(?:\/|[?#]|$)/i.test(url)) links.add(url);
+        !/(?:^|\/)(?:vacancy-apply\.aspx|registration\.aspx|apply|application|login|signin|sign[-_]in|sign[-_]up|signup)(?:\/|[?#]|$)/i.test(url)) links.add(url);
   };
   $("a[href], iframe[src]").each((_, node) => {
     const element = $(node);
@@ -393,6 +474,20 @@ export function discoverLinks(html: string, pageUrl: string, selectors?: Selecto
       // Application forms are never needed for job extraction.
       if (!/(?:^|\/)(?:apply|application|login|signin)(?:\/|[?#]|$)/i.test(absolute)) add(absolute);
     }
+  });
+  // Some card builders use literal navigation attributes instead of anchors.
+  // Read only a destination string; never execute page-provided JavaScript.
+  $("[onclick], [data-href], [data-url], [data-link]").each((_, node) => {
+    const element = $(node);
+    const literal = element.attr("data-href") || element.attr("data-url") || element.attr("data-link") || "";
+    const click = element.attr("onclick") || "";
+    const destination = literal || /(?:window\.)?location(?:\.href)?\s*=\s*['"]([^'"]+)['"]|location\.assign\(\s*['"]([^'"]+)['"]\s*\)/i.exec(click)?.slice(1).find(Boolean) || "";
+    const resolved = destination && resolveLink(destination);
+    if (!resolved) return;
+    const target = new URL(resolved);
+    const likelyJob = /\/(?:career|jobs?|vacanc(?:y|ies)|positions?|roles?)\/[^/]+\/?$/i.test(target.pathname);
+    const companyPage = target.hostname.replace(/^www\./i, "").toLowerCase() === scope.hostname.replace(/^www\./i, "").toLowerCase();
+    if (companyPage && likelyJob && inScope(resolved)) add(resolved);
   });
   for (const selector of [selectors?.jobLinksOnly || selectors?.jobLinks, selectors?.next]) {
     if (selector) $(selector).each((_, node) => add($(node).attr("href")));
