@@ -67,45 +67,20 @@ test("dated deliveries remain visible and downloadable without a workbook", asyn
   } finally { await fixture.close(); }
 });
 
-test("complete universal deliveries are counted and downloadable; partial ones stay unlisted", async () => {
+test("exports ignore artifacts from an unrelated runner", async () => {
   const fixture = await dashboardFixture();
+  const name = "2026-10-06-external-06-00-00-123Z-abcdef12";
   try {
-    const name = "2026-10-05-universal-06-00-00-123Z";
-    const complete = join(fixture.root, "output", name), partial = join(fixture.root, "output", "2026-10-05-universal-06-00-01-123Z");
-    await mkdir(complete, { recursive: true }); await mkdir(partial, { recursive: true });
-    await writeFile(join(complete, "companies.csv"), "jobId,title\n1,Engineer\n");
-    await writeFile(join(complete, "companies.json"), JSON.stringify([{ jobId: "1" }]));
-    await writeFile(join(partial, "summary.json"), "[]");
-    const response = await fetch(`${fixture.base}/api/deliveries`);
-    const data = await response.json();
-    assert.deepEqual(data.deliveries.map((item: { name: string; rows: number }) => [item.name, item.rows]), [[name, 1]]);
-    const csv = await fetch(`${fixture.base}/api/deliveries/${name}/companies.csv`);
-    assert.equal(csv.status, 200); assert.match(await csv.text(), /1,Engineer/);
+    const folder = join(fixture.root, "output", name);
+    await mkdir(folder, { recursive: true });
+    await writeFile(join(folder, "companies.csv"), "jobId,title\n1,Engineer\n");
+    await writeFile(join(folder, "companies.json"), "[]");
+    await writeFile(join(folder, "manifest.json"), JSON.stringify({ complete: true }));
+    const data = await (await fetch(`${fixture.base}/api/deliveries`)).json();
+    assert.equal(data.deliveries.some((item: { name: string }) => item.name === name), false);
+    assert.equal((await fetch(`${fixture.base}/api/deliveries/${name}/companies.csv`)).status, 404);
   } finally { await fixture.close(); }
 });
-
-for (const parent of ["", "universal-runs"]) {
-  for (const slug of ["universal", "aqua-security"]) {
-    test(`manifest exports support ${slug} runs under output/${parent}`, async () => {
-      const fixture = await dashboardFixture();
-      const name = `2026-10-06-${slug}-06-00-00-123Z-abcdef12`;
-      const folder = join(fixture.root, "output", parent, name);
-      try {
-        await mkdir(folder, { recursive: true });
-        await writeFile(join(folder, "companies.csv"), "jobId,title\n1,Engineer\n");
-        await writeFile(join(folder, "companies.json"), JSON.stringify([{ jobId: "1" }]));
-        for (const complete of [false, true]) {
-          await writeFile(join(folder, "manifest.json"), JSON.stringify({ complete }));
-          const data = await (await fetch(`${fixture.base}/api/deliveries`)).json();
-          assert.equal(data.deliveries.some((item: { name: string }) => item.name === name), complete);
-          const csv = await fetch(`${fixture.base}/api/deliveries/${name}/companies.csv`);
-          assert.equal(csv.status, complete ? 200 : 404);
-          if (complete) assert.match(await csv.text(), /1,Engineer/);
-        }
-      } finally { await fixture.close(); }
-    });
-  }
-}
 
 test("pipeline CSV and its audit report are available from website exports", async () => {
   const fixture = await dashboardFixture();

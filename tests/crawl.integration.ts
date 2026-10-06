@@ -1,18 +1,11 @@
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
 import { once } from "node:events";
-import { mkdtemp, readFile, readdir, rm } from "node:fs/promises";
-import { join } from "node:path";
-import { tmpdir } from "node:os";
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
 import { after, before, test } from "node:test";
 import { scrapeCompany } from "../src/crawl.js";
 import { COLUMNS } from "../src/normalize.js";
-import { OUTPUT_COLUMNS } from "../src/output.js";
 import { scrapeJobSitemap } from "../src/sitemap.js";
 
-const run = promisify(execFile);
 const now = new Date("2026-09-15T12:00:00Z");
 const options = { now, delayMs: 0, renderWaitMs: 100, timeoutMs: 10_000, maxPages: 30 };
 let server: Server;
@@ -391,27 +384,5 @@ test("WordPress custom career API follows its advertised total pages and enriche
   } finally {
     source.closeAllConnections();
     await new Promise<void>(resolveClose => source.close(() => resolveClose()));
-  }
-});
-
-test("CLI writes correctly shaped CSV, JSON, and reports without overwriting earlier runs", async () => {
-  const directory = await mkdtemp(join(tmpdir(), "uk-scraper-test-"));
-  try {
-    // This fixture date is relative to actual run time; no production --now bypass is exposed.
-    const args = ["--import", "tsx", "scraper.ts", `${base}/jobs/101`, "--company", "ABC",
-      "--out", directory, "--delay-ms", "0", "--render-wait-ms", "50"];
-    await run(process.execPath, args, { cwd: process.cwd(), timeout: 30_000 });
-    await run(process.execPath, args, { cwd: process.cwd(), timeout: 30_000 });
-    const files = await readdir(directory);
-    assert.equal(files.length, 6);
-    const rowsFile = files.find(file => file.endsWith(".json") && !file.endsWith(".report.json"))!;
-    const rows = JSON.parse(await readFile(join(directory, rowsFile), "utf8")) as Record<string, string>[];
-    // The filter can legitimately produce zero rows when tests run after the fixture's window.
-    for (const row of rows) assert.deepEqual(Object.keys(row), [...OUTPUT_COLUMNS]);
-    const csv = await readFile(join(directory, files.find(file => file.endsWith(".csv"))!), "utf8");
-    assert.ok(csv.startsWith("\uFEFF" + OUTPUT_COLUMNS.join(",")));
-  } finally {
-    // Remove only the unique temporary directory created by this test.
-    await rm(directory, { recursive: true, force: true });
   }
 });

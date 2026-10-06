@@ -82,33 +82,17 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
   await mkdir(outputRoot, { recursive: true });
   const realOutputRoot = await realpath(outputRoot);
   if (!inside(await realpath(dataRoot), realOutputRoot)) throw new Error("Output directory must remain within the data root.");
-  const deliveryNamePattern = String.raw`\d{4}-\d{2}-\d{2}-(?:verified|main-uk-scrape|[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}-\d{2}-\d{2}-\d{3}Z(?:-[a-f0-9]{8})?)`;
+  const deliveryNamePattern = String.raw`\d{4}-\d{2}-\d{2}-(?:verified|main-uk-scrape)`;
   const datedDelivery = new RegExp(`^${deliveryNamePattern}$`);
   const deliveryRoute = new RegExp(`^/api/deliveries/(${deliveryNamePattern}|\\d{1,2}-\\d{1,2}-\\d{2,4})/(companies\\.csv|final\\.zip|report\\.json|rejections\\.json|provenance\\.json)$`);
-  const manifestRun = /-\d{2}-\d{2}-\d{2}-\d{3}Z-[a-f0-9]{8}$/;
-  const deliveryRoots = async () => {
-    const roots = [outputRoot];
-    try {
-      const nested = await safeFile(outputRoot, "universal-runs");
-      const stat = await lstat(nested);
-      if (stat.isDirectory() && !stat.isSymbolicLink()) roots.push(nested);
-    } catch { /* Optional universal output folder may not exist. */ }
-    return roots;
-  };
   const deliveries = async () => {
-    const entries = (await Promise.all((await deliveryRoots()).map(async root =>
-      (await readdir(root, { withFileTypes: true })).map(entry => ({ entry, root }))
-    ))).flat();
+    const entries = await readdir(outputRoot, { withFileTypes: true });
     const found = [] as { name: string; rows: number; hasZip: boolean; hasReport: boolean; pipeline: boolean; directory: string }[];
-    for (const { entry, root } of entries) {
+    for (const entry of entries) {
       const pipeline = /^\d{1,2}-\d{1,2}-\d{2,4}$/.test(entry.name);
       if (!entry.isDirectory() || (!pipeline && !datedDelivery.test(entry.name)) || found.some(item => item.name === entry.name)) continue;
-      const directory = resolve(root, entry.name);
+      const directory = resolve(outputRoot, entry.name);
       try {
-        if (manifestRun.test(entry.name)) {
-          const manifest = JSON.parse(await readFile(await safeFile(directory, "manifest.json"), "utf8"));
-          if (manifest.complete !== true) continue;
-        }
         await safeFile(directory, pipeline ? `${entry.name}.csv` : "companies.csv");
         let rowCount = 0;
         if (pipeline) {
@@ -410,10 +394,6 @@ export async function createDashboard(options: AppOptions): Promise<{ server: Se
         const delivery = (await deliveries()).find(item => item.name === name);
         if (!delivery) return json(404, { error: "Not found." });
         const directory = delivery.directory;
-        if (manifestRun.test(name)) {
-          const manifest = await jsonFile<{ complete?: boolean }>(await safeFile(directory, "manifest.json"), {});
-          if (manifest.complete !== true) return json(404, { error: "Run is incomplete." });
-        }
         const contents = await readFile(await safeFile(directory, diskName));
         response.writeHead(200, {
           "Content-Type": file.endsWith(".csv") ? "text/csv; charset=utf-8" : file.endsWith(".zip") ? "application/zip" : "application/json; charset=utf-8",

@@ -10,5 +10,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["scraper.ts", "batch.ts", "src/**/*.ts", "scripts/**/*.ts", "server/**/*.ts", "tests/**/*.ts"]
+  "include": ["src/**/*.ts", "server/**/*.ts", "tests/**/*.ts"]
 }

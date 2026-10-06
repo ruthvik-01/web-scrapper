@@ -1,11 +1,9 @@
-# Fieldwork current context
+# Fieldwork current scope
 
-Purpose confirmed by the user on 6 October 2026: local spreadsheet imports, selected-company careers scraping, confirmed UK exports, and URL/user-manifest batch commands.
+User scope: only the UI-based Fieldwork app on GitHub. Retain ui/, server/, shared src/, relevant tests, Windows setup/start/location launchers and app configuration/documentation.
 
-The separate 75-company runner/catalog and production audit/build tooling, copied comparison helpers and historical one-off scripts are outside this app. Original files, historical documentation and source snapshots remain in the local dated output archive, unpublished. Keep company inputs user-provided.
+Inputs come from spreadsheet uploads or an optional default workbook. Preserve imports, selected-company queues, per-company extraction settings, progress, quality-gated exports, portable code and private history. Keep UK/date/salary/NHS safeguards and the 15-column contract.
 
-Retain ATS adapters, UK/NHS restrictions, source-date/salary rules, request safeguards, the 15-column contract, quality finalization and generic packaging. Default typecheck covers every retained TypeScript file; there is no historical-script exclusion or compiled catalog entry point.
+Commands are start/ui and typecheck/test/check. There are no standalone scraping, manifest packaging, build or catalog commands. Unrelated artifacts and retired source/history remain locally archived outside the repository.
 
-Commands: start, scrape, batch, package:batch and check from package.json. Git commands run inside this independent project checkout; app files are at GitHub root.
-
-Evidence: [restoration report](docs/fieldwork-restoration.md). Detailed local history: [shared session](D:/Projects/Sessions/06-10-2026/uk-scrapper-fieldwork-scope.md). Saved results do not establish current source availability.
+Detailed local evidence: [session](D:/Projects/Sessions/06-10-2026/uk-scrapper-fieldwork-scope.md).

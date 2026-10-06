@@ -1,7 +1,6 @@
 import { copyFile, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { scrapeWebsite } from "../src/strategy.js";
-import type { CompanyConfig } from "../src/company-runner.js";
 import { outputCsv } from "../src/output.js";
 import { finalizeScrapeResult } from "../src/final-dataset.js";
 import type { Company } from "./catalog.js";
@@ -9,7 +8,7 @@ import type { Company } from "./catalog.js";
 let finished = false;
 process.on("disconnect", () => { if (!finished) process.exit(1); });
 
-type SiteConfig = CompanyConfig & Pick<Company, "mode" | "apiUrl" | "selectors" | "maxPages" | "renderWaitMs">;
+type SiteConfig = Pick<Company, "name" | "slug" | "workbookRow" | "careersUrl" | "sitemapUrl" | "mode" | "apiUrl" | "selectors" | "maxPages" | "renderWaitMs">;
 export async function prepareCode(root: string, directory: string, config: SiteConfig): Promise<void> {
   const code = resolve(directory, "code");
   await mkdir(resolve(code, "src"), { recursive: true });
@@ -29,10 +28,9 @@ export async function prepareCode(root: string, directory: string, config: SiteC
     'import { writeFile } from "node:fs/promises";',
     'import { scrapeWebsite } from "./src/strategy.js";',
     'import type { ScrapeOptions } from "./src/crawl.js";',
-    'import type { CompanyConfig } from "./src/company-runner.js";',
     'import { outputCsv } from "./src/output.js";',
     'import { finalizeScrapeResult } from "./src/final-dataset.js";',
-    `const company: CompanyConfig & ScrapeOptions = ${JSON.stringify(config, null, 2)};`,
+    `const company: ScrapeOptions & { name: string; slug: string; workbookRow: number; careersUrl: string; sitemapUrl: string } = ${JSON.stringify(config, null, 2)};`,
     'const directory = resolve(dirname(fileURLToPath(import.meta.url)), "..");',
     '  const result = await scrapeWebsite(company.careersUrl, { ...company, company: company.name });',
     '  const finalized = finalizeScrapeResult(result, company.name);',

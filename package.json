@@ -3,16 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Local Fieldwork dashboard and URL/manifest scraping for confirmed UK jobs.",
+  "description": "Local Fieldwork dashboard for importing company spreadsheets and exporting confirmed UK jobs.",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
     "ui": "tsx server/main.ts",
     "start": "npm run ui",
-    "scrape": "tsx scraper.ts",
-    "batch": "tsx batch.ts",
-    "package:batch": "tsx scripts/package-batch.ts",
     "typecheck": "tsc --noEmit",
     "typecheck:app": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",

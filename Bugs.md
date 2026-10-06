@@ -1,9 +1,5 @@
-# Fieldwork repairs and limits
+# UI repairs and limits
 
-Fixed: portable dashboard/batch code inherited main/types paths for a compiled catalog entry absent from those packages. Removed the unrelated root metadata; regression tests now require any declared entry to exist.
+Portable code no longer declares absent compiled entry points. Generated configuration is typed correctly, and readiness is read from the finalized report; a worker regression compiles generated code.
 
-Fixed: generated dashboard scraper code inferred mode as an unrestricted string and accessed exportReady through the source report type. The generator now types its configuration explicitly and reads readiness from the finalized report; a regression compiles the downloaded code.
-
-Access restrictions, changed markup, unsupported feeds/pagination and ambiguous geography can still prevent extraction. Missing dates do not establish recency; failed/limited/empty runs do not prove zero vacancies. Review reports rather than inferring completeness.
-
-Live sample comparison: [restoration report](docs/fieldwork-restoration.md).
+Access restrictions, unsupported feeds/pagination and ambiguous geography remain source limits. Missing dates do not prove recency and failed/limited/empty results do not prove zero vacancies. Review reports.
