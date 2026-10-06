@@ -1,5 +1,4 @@
 node_modules/
-dist-universal/
 output/
 .env
 .env.*
@@ -13,11 +12,4 @@ COMPANIE LIST.xlsx
 # Non-website artifacts: per-company packaged code dumps, batch data files, local helpers
 companies code/
 companies-*.json
-!config/companies-held.json
 push.ps1
-
-# Reproducible diagnostic snapshots; maintained input catalogs stay tracked.
-docs/universal-implementation/fixtures/
-docs/universal-implementation/uk-regression/*.json
-docs/universal-implementation/implementation-manifest.json
-

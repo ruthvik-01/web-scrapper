@@ -1,4 +1,4 @@
-import { pause as sleep, fetchWithRetries, paceOrigin, sharedCache, currentSignal, checkCancelled } from "./universal-runtime.js";
+import { pause as sleep, fetchWithRetries, paceOrigin, sharedCache, currentSignal, checkCancelled } from "./request-runtime.js";
 import { createRequire } from "node:module";
 import { chromium, type Browser, type Page } from "playwright";
 import { load } from "cheerio";

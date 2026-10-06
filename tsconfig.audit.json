@@ -1,7 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "include": [
-    "scripts/audit-company-scrapers.ts",
-    "scripts/check-company-uk-scope.ts"
-  ]
-}

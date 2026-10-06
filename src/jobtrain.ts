@@ -1,6 +1,6 @@
 import { load } from "cheerio";
 import { AccessPolicy, type ScrapeOptions, type Issue } from "./crawl.js";
-import { collectorLog, checkCancelled } from "./universal-runtime.js";
+import { collectorLog, checkCancelled } from "./request-runtime.js";
 import { extractJobs } from "./extract.js";
 import { canonicalUrl, dateWindow, normalizeJobs, plainText, type RawJob } from "./normalize.js";
 

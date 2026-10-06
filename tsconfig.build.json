@@ -1,6 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": { "noEmit": false, "declaration": true, "outDir": "dist-universal", "rootDir": "." },
-  "include": ["universal.ts", "src/**/*.ts"],
-  "exclude": ["src/scraper-comparison.ts"]
-}

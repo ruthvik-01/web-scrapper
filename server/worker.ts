@@ -28,9 +28,11 @@ export async function prepareCode(root: string, directory: string, config: SiteC
     'import { fileURLToPath } from "node:url";',
     'import { writeFile } from "node:fs/promises";',
     'import { scrapeWebsite } from "./src/strategy.js";',
+    'import type { ScrapeOptions } from "./src/crawl.js";',
+    'import type { CompanyConfig } from "./src/company-runner.js";',
     'import { outputCsv } from "./src/output.js";',
     'import { finalizeScrapeResult } from "./src/final-dataset.js";',
-    `const company = ${JSON.stringify(config, null, 2)};`,
+    `const company: CompanyConfig & ScrapeOptions = ${JSON.stringify(config, null, 2)};`,
     'const directory = resolve(dirname(fileURLToPath(import.meta.url)), "..");',
     '  const result = await scrapeWebsite(company.careersUrl, { ...company, company: company.name });',
     '  const finalized = finalizeScrapeResult(result, company.name);',
@@ -39,7 +41,7 @@ export async function prepareCode(root: string, directory: string, config: SiteC
     '  if (finalized.report.exportReady) await writeFile(resolve(directory, "jobs.csv"), outputCsv(rows));',
     '  await writeFile(resolve(directory, "export-rows.json"), JSON.stringify(rows, null, 2));',
     '  await writeFile(resolve(directory, "scrape-report.json"), JSON.stringify(result.report, null, 2));',
-    '  if (["partial", "unsupported"].includes(result.report.status) || !result.report.exportReady) process.exitCode = 2;',
+    '  if (["partial", "unsupported"].includes(result.report.status) || !finalized.report.exportReady) process.exitCode = 2;',
   ].join("\n");
   await writeFile(resolve(code, "scrape.ts"), entry + "\n");
   await writeFile(resolve(directory, "README.md"), `# ${config.name}\n\nRun \`npm ci\` and \`npm run scrape\` inside \`code/\`. For DOM/browser fallback, also run \`npx playwright install chromium\`.\n\nMode: ${config.mode || "auto"}. The CSV has 15 columns. Missing fields, including posting dates, stay blank when the source does not provide them. The JSON report records validation checks, exclusions, and location merges. Public sources only: access restrictions and unsupported schemas are reported, not bypassed.\n\nSource: ${config.careersUrl}\n`);

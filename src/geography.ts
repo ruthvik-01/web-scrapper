@@ -1,4 +1,4 @@
-import { pause as sleep, fetchWithRetries, paceOrigin, checkCancelled } from "./universal-runtime.js";
+import { pause as sleep, fetchWithRetries, paceOrigin, checkCancelled } from "./request-runtime.js";
 import { array, isUkCountry, object, text, type JobLocation, type RawJob } from "./normalize.js";
 
 type Json = Record<string, unknown>;

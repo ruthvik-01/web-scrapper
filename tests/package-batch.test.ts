@@ -32,6 +32,10 @@ test('eight-company packaging keeps shared code, separate results, empty posted 
     assert.equal(Object.keys(files).filter(p=>/^code\/[^/]+\/scrape.ts$/.test(p)).length,8);
     assert.ok(!Object.keys(files).some(p=>p.endsWith('.log') || p.includes('/results/') || /code\/company-\d\/src\//.test(p)));
     assert.ok(files['code/universal_scraper/src/batch.ts']);
+    const sharedPackage=JSON.parse(Buffer.from(files['code/universal_scraper/package.json']!).toString());
+    for (const entry of [sharedPackage.main,sharedPackage.types].filter(Boolean)) {
+      assert.ok(files[`code/universal_scraper/${entry}`],`Declared package entry missing: ${entry}`);
+    }
     assert.equal(JSON.parse(await readFile(resolve(dir,'validation.json'),'utf8')).csvRows,8);
     const first = resolve(dir,companies[0]!.slug);
     const invalid = JSON.parse(await readFile(resolve(first,'export-rows.json'),'utf8'));

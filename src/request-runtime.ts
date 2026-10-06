@@ -2,11 +2,11 @@ import { AsyncLocalStorage } from "node:async_hooks";
 import { setTimeout as sleep } from "node:timers/promises";
 import { assertAllowedJobSource } from "./uk-scope.js";
 
-export type ProductionLog = Record<string, string | number | boolean>;
+export type RequestLog = Record<string, string | number | boolean>;
 export interface RequestMetrics { requests: number; retries: number }
 interface Runtime {
   signal: AbortSignal; origins: Map<string, { next: number; tail: Promise<void> }>; cache: Map<string, unknown>; metrics: RequestMetrics;
-  logger?: (event: ProductionLog) => void; company?: string; platform?: string;
+  logger?: (event: RequestLog) => void; company?: string; platform?: string;
 }
 const scopes = new AsyncLocalStorage<Runtime>();
 export const currentSignal = () => scopes.getStore()?.signal;

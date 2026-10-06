@@ -2,7 +2,7 @@ import { scrapeJobtrain } from "./jobtrain.js";
 import { scrapeComeet } from "./comeet.js";
 import { scrapeLaatZoho, scrapeZohoRecruit } from "./zoho.js";
 import { scrapeEwJobManager } from "./wp-job-manager.js";
-import { collectorLog, checkCancelled } from "./universal-runtime.js";
+import { collectorLog, checkCancelled } from "./request-runtime.js";
 
 import { AccessPolicy, scrapeCompany, type ScrapeOptions } from "./crawl.js";
 import { scrapeJobSitemap } from "./sitemap.js";

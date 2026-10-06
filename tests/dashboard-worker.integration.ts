@@ -2,7 +2,9 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { once } from "node:events";
 import { createServer } from "node:http";
-import { copyFile, cp, mkdtemp, readFile, rm } from "node:fs/promises";
+import { copyFile, cp, mkdtemp, readFile, rm, symlink } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import { join, resolve, sep } from "node:path";
 import { tmpdir } from "node:os";
 import { createDashboard } from "../server/app.js";
@@ -56,6 +58,14 @@ test("real worker process discovers a local sitemap, runs the scraper, and creat
     assert.equal(rows.rows[0].jobId, "real-worker-1");
     const folder = join(root, "output", companies[0]!.slug, "runs", result.runs[0].id);
     assert.match(await readFile(join(folder, "code/scrape.ts"), "utf8"), /Local Fixture/);
+    const portablePackage = JSON.parse(await readFile(join(folder, "code/package.json"), "utf8"));
+    for (const entry of [portablePackage.main, portablePackage.types].filter(Boolean)) {
+      await readFile(join(folder, "code", entry));
+    }
+    await symlink(join(projectRoot, "node_modules"), join(folder, "code/node_modules"), "junction");
+    await promisify(execFile)(process.execPath, [join(projectRoot, "node_modules/typescript/bin/tsc"), "--noEmit"], {
+      cwd: join(folder, "code"),
+    });
     assert.match(await readFile(join(folder, "jobs.csv"), "utf8"), /Test Engineer/);
   } finally {
     await app.close();
