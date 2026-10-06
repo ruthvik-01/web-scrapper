@@ -1,9 +1,0 @@
-Company: Data Device Corporation
-Jobs in original file: 15
-Removed as listing/search-page contamination (Step 0): 4
-Jobs with title/description boilerplate stripped (Step 1): 22
-Jobs with extraction-artifact fixes applied (Step 2): 0
-Fields nulled for content-sanity failure, by field (Step 3): {"salaryRange":8,"employmentType":2}
-Jobs removed at final check (Step 4, by rule violated): 8
-Jobs kept: 3
-Jobs with salary mentioned in description but salaryRange empty (flagged, not removed): 2

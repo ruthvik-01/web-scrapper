@@ -1,9 +1,0 @@
-Company: Stake Center Locating
-Jobs in original file: 482
-Removed as listing/search-page contamination (Step 0): 4
-Jobs with title/description boilerplate stripped (Step 1): Titles=478, Descriptions=478
-Jobs with extraction-artifact fixes applied (Step 2): 0
-Fields nulled for content-sanity failure, by field (Step 3): {}
-Jobs removed at final check (Step 4, by rule violated): {'Missing required field: description': 478}
-Jobs kept: 0
-Jobs with salary mentioned in description but salaryRange empty (flagged, not removed): 0
